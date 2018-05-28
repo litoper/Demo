@@ -1,9 +1,13 @@
 package com.example.kadh.demo;
 
+import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
+import android.view.View;
+import android.widget.Toast;
 
 import com.ashokvarma.bottomnavigation.BottomNavigationBar;
 import com.ashokvarma.bottomnavigation.BottomNavigationItem;
@@ -13,6 +17,8 @@ import com.example.kadh.base.BaseActivity;
 import java.util.ArrayList;
 
 import butterknife.BindView;
+import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 /**
  * @author: kadh
@@ -24,17 +30,24 @@ import butterknife.BindView;
 
 public class MianActivity extends BaseActivity {
     @BindView(R.id.common_toolbar)
-    Toolbar mCommonToolbar;
+    Toolbar              mCommonToolbar;
     @BindView(R.id.activity_main_vp)
-    ViewPager mVp;
+    ViewPager            mVp;
     @BindView(R.id.activity_main_bnb)
-    BottomNavigationBar mBnb;
+    BottomNavigationBar  mBnb;
+    @BindView(R.id.activity_main_fabtn)
+    FloatingActionButton mFaBtn;
     private TextBadgeItem mBadgeItem;
 
     @Override
     public void configViews() {
         initBottomNavigationBar();
         initViewPager();
+        initFaBtn();
+    }
+
+    private void initFaBtn() {
+        mFaBtn.show();
     }
 
     private void initViewPager() {
@@ -129,4 +142,25 @@ public class MianActivity extends BaseActivity {
         return true;
     }
 
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        // TODO: add setContentView(...) invocation
+        ButterKnife.bind(this);
+    }
+
+    @OnClick({R.id.common_toolbar, R.id.activity_main_vp, R.id.activity_main_fabtn, R.id.activity_main_bnb})
+    public void onViewClicked(View view) {
+        switch (view.getId()) {
+            case R.id.common_toolbar:
+                break;
+            case R.id.activity_main_vp:
+                break;
+            case R.id.activity_main_fabtn:
+                Toast.makeText(this, "fabtn", Toast.LENGTH_SHORT).show();
+                break;
+            case R.id.activity_main_bnb:
+                break;
+        }
+    }
 }
