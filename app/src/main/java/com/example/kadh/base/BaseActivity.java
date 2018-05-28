@@ -16,6 +16,7 @@ import com.example.kadh.demo.R;
 import com.example.kadh.utils.StatusBarCompat;
 
 import butterknife.ButterKnife;
+import butterknife.Unbinder;
 
 /**
  * @author: kadh
@@ -32,11 +33,12 @@ public abstract class BaseActivity extends AppCompatActivity {
     protected Context mContext;
     protected int statusBarColor = 0;
     protected View statusBarView = null;
+    private Unbinder mUnbinder;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
+        mContext = this;
         setContentView(getLayoutId());
         if (statusBarColor == 0) {
             statusBarView = StatusBarCompat.compat(this, ContextCompat.getColor(this, R.color.colorPrimaryDark));
@@ -44,8 +46,9 @@ public abstract class BaseActivity extends AppCompatActivity {
             statusBarView = StatusBarCompat.compat(this, statusBarColor);
         }
         transparent19and20();
-        mContext = this;
-        ButterKnife.bind(this);
+
+        mUnbinder = ButterKnife.bind(this);
+
         mCommonToolbar = ButterKnife.findById(this, R.id.common_toolbar);
         if (mCommonToolbar != null) {
             initToolBar();
@@ -53,6 +56,12 @@ public abstract class BaseActivity extends AppCompatActivity {
         }
         initDatas();
         configViews();
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        mUnbinder.unbind();
     }
 
     protected void transparent19and20() {
@@ -66,13 +75,14 @@ public abstract class BaseActivity extends AppCompatActivity {
     /**
      * 对各种控件进行设置、适配、填充数据
      */
+
     public abstract void configViews();
 
-    public abstract int getLayoutId();
+    public abstract void initDatas();
 
     public abstract void initToolBar();
 
-    public abstract void initDatas();
+    public abstract int getLayoutId();
 
 
     protected void gone(final View... views) {

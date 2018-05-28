@@ -11,6 +11,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import butterknife.ButterKnife;
+import butterknife.Unbinder;
 
 /**
  * @author: kadh
@@ -27,6 +28,7 @@ public abstract class BaseFragment extends Fragment {
     protected Context mContext;
     protected LayoutInflater inflater;
     protected FragmentActivity activity;
+    private Unbinder mUnbinder;
 
     @Nullable
     @Override
@@ -41,10 +43,16 @@ public abstract class BaseFragment extends Fragment {
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        ButterKnife.bind(this, view);
+        mUnbinder = ButterKnife.bind(this, view);
         attachView();
         initDatas();
         configViews();
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        mUnbinder.unbind();
     }
 
     @LayoutRes
