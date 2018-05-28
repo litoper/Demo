@@ -72,6 +72,7 @@ public class NetworkUtils {
         return info != null && info.isAvailable();
     }
 
+
     /**
      * 判断网络是否连接
      * <p>需添加权限 {@code <uses-permission android:name="android.permission
@@ -83,6 +84,25 @@ public class NetworkUtils {
     public static boolean isConnected(Context context) {
         NetworkInfo info = getActiveNetworkInfo(context);
         return info != null && info.isConnected();
+    }
+
+    /**
+     * 检查是否有网络连接
+     *
+     * @param context
+     * @return
+     */
+    public static boolean isNetworkAvailable(Context context) {
+        ConnectivityManager manager = (ConnectivityManager) context.getApplicationContext().getSystemService(
+                Context.CONNECTIVITY_SERVICE);
+        if (null == manager) {
+            return false;
+        }
+        NetworkInfo info = manager.getActiveNetworkInfo();
+        if (null == info || !info.isAvailable()) {
+            return false;
+        }
+        return true;
     }
 
     /**

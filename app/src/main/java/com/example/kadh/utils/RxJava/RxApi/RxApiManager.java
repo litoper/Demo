@@ -75,7 +75,7 @@ public class RxApiManager {
     }
 
     private static OkHttpClient initOkHttp() {
-        OkHttpClient httpClient = new OkHttpClient.Builder()
+        return new OkHttpClient.Builder()
                 .addInterceptor(new Interceptor() {
                     @Override
                     public Response intercept(Chain chain) throws IOException {
@@ -101,7 +101,6 @@ public class RxApiManager {
                 .writeTimeout(READ_TIMEOUT, TimeUnit.SECONDS)
                 .readTimeout(READ_TIMEOUT, TimeUnit.SECONDS)
                 .build();
-        return httpClient;
     }
 
     public void getCode(Subscriber<BaseResponse<String>> subscriber) {
