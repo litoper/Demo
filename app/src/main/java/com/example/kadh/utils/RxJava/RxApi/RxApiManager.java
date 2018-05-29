@@ -29,8 +29,13 @@ import retrofit2.adapter.rxjava.RxJavaCallAdapterFactory;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 /**
- * Created by metaire on 2017/3/27.
+ * @author: kadh
+ * @email : 36870855@qq.com
+ * @date : 2018/5/28
+ * @blog : http://www.nicaicaicai.com
+ * @desc :
  */
+
 
 public class RxApiManager {
     private RxApiService mRxApiService;
