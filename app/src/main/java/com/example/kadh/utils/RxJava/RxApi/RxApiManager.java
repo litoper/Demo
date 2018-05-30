@@ -4,6 +4,7 @@ package com.example.kadh.utils.RxJava.RxApi;
 import android.content.pm.PackageManager;
 
 import com.example.kadh.app.App;
+import com.example.kadh.ui.login.LoginModel;
 import com.example.kadh.utils.RxJava.BaseResponse;
 import com.example.kadh.utils.RxJava.RxInterceptor.HttpLoggingInterceptor;
 import com.example.kadh.utils.RxJava.RxInterceptor.RxHeaderInterceptor;
@@ -13,18 +14,18 @@ import com.franmontiel.persistentcookiejar.persistence.SharedPrefsCookiePersisto
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
-import org.reactivestreams.Subscriber;
-
 import java.io.File;
+import java.util.List;
 import java.util.concurrent.TimeUnit;
 
-import io.reactivex.Flowable;
+import io.reactivex.Observable;
+import io.reactivex.Observer;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
 import okhttp3.Cache;
 import okhttp3.OkHttpClient;
 import retrofit2.Retrofit;
-import retrofit2.adapter.rxjava.RxJavaCallAdapterFactory;
+import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 /**
@@ -55,7 +56,7 @@ public class RxApiManager {
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl(RxConstant.Url.BASE)
                 .client(initOkHttp())
-                .addCallAdapterFactory(RxJavaCallAdapterFactory.create())
+                .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
                 .addConverterFactory(GsonConverterFactory.create(gson))
                 .build();
         mRxApiService = retrofit.create(RxApiService.class);
@@ -113,19 +114,26 @@ public class RxApiManager {
         return okHttpClient;
     }
 
-    public void getCode(Subscriber<BaseResponse<String>> subscriber) {
-        Flowable flowable = mRxApiService.CheckVersion(version);
-        toSubscribe(flowable, subscriber);
+    public void getCode(Observer<BaseResponse<String>> observer) {
+        Observable observable = mRxApiService.checkVersion(version);
+        toSubscribe(observable, observer);
+    }
+
+
+    public void login(Observer<BaseResponse<List<LoginModel>>> observer, String username, String password) {
+        Observable observable = mRxApiService.login(username, password, version);
+        toSubscribe(observable, observer);
     }
 
 
     // * subscribeOn(): 指定 subscribe() 发生在 IO 线程
     // * observeOn(): 指定 Subscriber 的回调发生在主线程
     //添加线程管理并订阅
-    private void toSubscribe(Flowable flowable, Subscriber s) {
-        flowable.subscribeOn(Schedulers.io())
+    private void toSubscribe(Observable observable, Observer observer) {
+        observable
+                .subscribeOn(Schedulers.io())
                 .unsubscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(s);
+                .subscribe(observer);
     }
 }

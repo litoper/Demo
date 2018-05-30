@@ -1,16 +1,14 @@
 package com.example.kadh.ui;
 
-import android.util.Log;
-
 import com.example.kadh.R;
 import com.example.kadh.base.BaseActivity;
+import com.example.kadh.demo.MianActivity;
+import com.example.kadh.ui.login.LoginActivity;
+import com.example.kadh.utils.RxJava.RxApi.RxApiManager;
 
-import java.util.concurrent.TimeUnit;
+import java.util.List;
 
-import io.reactivex.Flowable;
-import io.reactivex.Observable;
-import io.reactivex.android.schedulers.AndroidSchedulers;
-import io.reactivex.functions.Consumer;
+import okhttp3.Cookie;
 
 /**
  * @author: kadh
@@ -20,6 +18,7 @@ import io.reactivex.functions.Consumer;
  * @desc :
  */
 public class WelcomeActivity extends BaseActivity {
+    private static final String TAG = "WelcomeActivity";
 
     @Override
     public void configViews() {
@@ -28,21 +27,45 @@ public class WelcomeActivity extends BaseActivity {
 
     @Override
     public void initDatas() {
-        Flowable
-                .timer(2000, TimeUnit.SECONDS)
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Consumer<Long>() {
-                    @Override
-                    public void accept(Long aLong) throws Exception {
+        checkCookie();
+//        Observable
+//                .timer(3000, TimeUnit.MILLISECONDS)
+//                .subscribeOn(Schedulers.io())
+//                .unsubscribeOn(Schedulers.io())
+//                .observeOn(AndroidSchedulers.mainThread())
+//                .subscribe(new DefaultObserver<Long>() {
+//                    @Override
+//                    protected void onStart() {
+//                        super.onStart();
+//                    }
+//
+//                    @Override
+//                    public void onNext(Long aLong) {
+//                        Log.d(TAG, "onNext() called with: aLong = 000000000000000");
+//                        checkCookie();
+//                        Log.d(TAG, "onNext() called with: aLong = 111111111111111");
+//                    }
+//
+//                    @Override
+//                    public void onError(Throwable e) {
+//
+//                    }
+//
+//                    @Override
+//                    public void onComplete() {
+//                        Log.d(TAG, "onComplete() called");
+//                        cancel();
+//                    }
+//                });
+    }
 
-                    }
-                });
-        Observable.timer(2000, TimeUnit.MILLISECONDS).observeOn(AndroidSchedulers.mainThread()).subscribe(new Consumer<Long>() {
-            @Override
-            public void accept(Long aLong) throws Exception {
-                Log.d("WelcomeActivity", "aLong:" + aLong);
-            }
-        });
+    private void checkCookie() {
+        List<Cookie> cookies = RxApiManager.getRxApi().getCookiePersistor().loadAll();
+        if (cookies.isEmpty()) {
+            openActivity(LoginActivity.class);
+        } else {
+            openActivity(MianActivity.class);
+        }
     }
 
     @Override

@@ -1,6 +1,7 @@
 package com.example.kadh.base;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
@@ -134,6 +135,42 @@ public abstract class BaseActivity extends AppCompatActivity {
         if (statusBarView != null) {
             statusBarView.setBackgroundColor(statusBarColor);
         }
+    }
+
+    /**
+     * 当无参数需要传递时，可调用单参的该函数
+     */
+    public void openActivity(Class<?> pClass) {
+        openActivity(pClass, null);
+    }
+
+    /**
+     * 当无参数需要传递,但有返回结果，可向Bundle传递null
+     */
+    public void openActivity(Class<?> pClass, int requestCode) {
+        openActivity(pClass, null, requestCode);
+    }
+
+    /**
+     * 传递不带返回值的意图
+     */
+    public void openActivity(Class<?> pClass, Bundle pBundle) {
+        Intent i = new Intent(this, pClass);
+        if (pBundle != null) {
+            i.putExtras(pBundle);
+        }
+        startActivity(i);
+    }
+
+    /**
+     * 传递带有返回值的activity，简化了意图的代码
+     */
+    public void openActivity(Class<?> pClass, Bundle pBundle, int requestCode) {
+        Intent i = new Intent(this, pClass);
+        if (pBundle != null) {
+            i.putExtras(pBundle);
+        }
+        startActivityForResult(i, requestCode);
     }
 
 }

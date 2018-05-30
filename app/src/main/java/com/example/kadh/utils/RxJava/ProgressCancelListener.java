@@ -10,5 +10,5 @@ package com.example.kadh.utils.RxJava;
 
 
 public interface ProgressCancelListener {
-    void onCancelProgress(String from);
+    void onCancelProgress(String origin);
 }

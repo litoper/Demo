@@ -71,7 +71,7 @@ public class ProgressDialogHandler extends Handler {
                     @Override
                     public void onDismiss(DialogInterface dialog) {
                         if (mProgressCancelListener != null) {
-                            mProgressCancelListener.onCancelProgress("dialog.onDismiss()");
+                            mProgressCancelListener.onCancelProgress("触摸");
                         }
                     }
                 });

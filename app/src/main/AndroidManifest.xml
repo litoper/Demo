@@ -22,6 +22,11 @@
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
 
+    <uses-permission android:name="android.permission.GET_ACCOUNTS" />
+    <uses-permission android:name="android.permission.READ_PROFILE" />
+    <uses-permission android:name="android.permission.READ_CONTACTS" />
+    <uses-permission android:name="android.permission.WRITE_CONTACTS" />
+
 
     <application
         android:name="com.example.kadh.app.App"
@@ -41,6 +46,7 @@
         </activity>
 
         <activity android:name=".demo.MianActivity" />
+        <activity android:name=".ui.login.LoginActivity" />
 
     </application>
 </manifest>
