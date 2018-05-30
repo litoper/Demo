@@ -26,7 +26,7 @@ public class App extends Application {
 
     private void initUtils() {
         AppUtils.init(this);
-        SpUtil.init(this, getPackageName() + "_preference", Context.MODE_MULTI_PROCESS);
+        SpUtil.init(this, getPackageName() + SpUtil.PREFS, Context.MODE_MULTI_PROCESS);
     }
 
     public static synchronized App getApp() {

@@ -1,13 +1,20 @@
 package com.example.kadh.ui;
 
+import android.support.design.widget.CoordinatorLayout;
+
 import com.example.kadh.R;
 import com.example.kadh.base.BaseActivity;
 import com.example.kadh.demo.MianActivity;
 import com.example.kadh.ui.login.LoginActivity;
 import com.example.kadh.utils.RxJava.RxApi.RxApiManager;
+import com.jakewharton.rxbinding2.view.RxView;
 
 import java.util.List;
 
+import butterknife.BindView;
+import butterknife.OnClick;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.functions.Consumer;
 import okhttp3.Cookie;
 
 /**
@@ -19,44 +26,22 @@ import okhttp3.Cookie;
  */
 public class WelcomeActivity extends BaseActivity {
     private static final String TAG = "WelcomeActivity";
+    @BindView(R.id.activity_welcomt_root)
+    CoordinatorLayout mRoot;
 
     @Override
     public void configViews() {
+        RxView.clicks(mRoot).subscribeOn(AndroidSchedulers.mainThread()).subscribe(new Consumer<Object>() {
+            @Override
+            public void accept(Object o) throws Exception {
+                openActivity(LoginActivity.class);
+            }
+        });
 
     }
 
     @Override
     public void initDatas() {
-        checkCookie();
-//        Observable
-//                .timer(3000, TimeUnit.MILLISECONDS)
-//                .subscribeOn(Schedulers.io())
-//                .unsubscribeOn(Schedulers.io())
-//                .observeOn(AndroidSchedulers.mainThread())
-//                .subscribe(new DefaultObserver<Long>() {
-//                    @Override
-//                    protected void onStart() {
-//                        super.onStart();
-//                    }
-//
-//                    @Override
-//                    public void onSubNext(Long aLong) {
-//                        Log.d(TAG, "onSubNext() called with: aLong = 000000000000000");
-//                        checkCookie();
-//                        Log.d(TAG, "onSubNext() called with: aLong = 111111111111111");
-//                    }
-//
-//                    @Override
-//                    public void onError(Throwable e) {
-//
-//                    }
-//
-//                    @Override
-//                    public void onComplete() {
-//                        Log.d(TAG, "onComplete() called");
-//                        cancel();
-//                    }
-//                });
     }
 
     private void checkCookie() {
@@ -77,5 +62,10 @@ public class WelcomeActivity extends BaseActivity {
     public int getLayoutId() {
         hideStatusBar();
         return R.layout.activity_welcome;
+    }
+
+
+    @OnClick(R.id.activity_welcomt_root)
+    public void onViewClicked() {
     }
 }

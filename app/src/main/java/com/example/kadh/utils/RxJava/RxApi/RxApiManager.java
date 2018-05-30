@@ -126,8 +126,8 @@ public class RxApiManager {
     }
 
 
-    // * subscribeOn(): 指定 subscribe() 发生在 IO 线程
-    // * observeOn(): 指定 Subscriber 的回调发生在主线程
+    // subscribeOn(): 指定 subscribe() 发生在 IO 线程
+    // observeOn(): 指定 Subscriber 的回调发生在主线程
     //添加线程管理并订阅
     private void toSubscribe(Observable observable, Observer observer) {
         observable
