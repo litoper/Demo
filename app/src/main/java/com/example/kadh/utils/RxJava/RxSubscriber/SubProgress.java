@@ -4,11 +4,11 @@ import android.content.Context;
 import android.util.Log;
 import android.widget.Toast;
 
+import com.example.kadh.BuildConfig;
 import com.example.kadh.app.App;
-import com.example.kadh.demo.BuildConfig;
 import com.example.kadh.utils.NetworkUtils;
-import com.example.kadh.utils.RxJava.ProgressCancelListener;
 import com.example.kadh.utils.RxJava.BaseResponse;
+import com.example.kadh.utils.RxJava.ProgressCancelListener;
 import com.example.kadh.utils.RxJava.ProgressDialogHandler;
 import com.google.gson.JsonParseException;
 

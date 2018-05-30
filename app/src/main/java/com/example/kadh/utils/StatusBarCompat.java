@@ -8,7 +8,8 @@ import android.support.v4.content.ContextCompat;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.example.kadh.demo.R;
+import com.example.kadh.R;
+
 
 /**
  * @author: kadh

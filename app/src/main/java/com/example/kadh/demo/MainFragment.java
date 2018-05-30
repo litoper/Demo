@@ -3,6 +3,7 @@ package com.example.kadh.demo;
 import android.annotation.SuppressLint;
 import android.widget.TextView;
 
+import com.example.kadh.R;
 import com.example.kadh.base.BaseFragment;
 
 import butterknife.BindView;

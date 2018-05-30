@@ -25,6 +25,7 @@ import java.util.Set;
 
 public class SpUtil {
 
+    public static final String COOKIE_PATH = "CookiePersistence";
     private static SpUtil prefsUtil;
     public Context context;
     public SharedPreferences prefs;

@@ -8,6 +8,7 @@ import android.view.Menu;
 import com.ashokvarma.bottomnavigation.BottomNavigationBar;
 import com.ashokvarma.bottomnavigation.BottomNavigationItem;
 import com.ashokvarma.bottomnavigation.TextBadgeItem;
+import com.example.kadh.R;
 import com.example.kadh.base.BaseActivity;
 
 import java.util.ArrayList;

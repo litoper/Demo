@@ -12,7 +12,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.WindowManager;
 
-import com.example.kadh.demo.R;
+import com.example.kadh.R;
 import com.example.kadh.utils.StatusBarCompat;
 
 import butterknife.ButterKnife;
