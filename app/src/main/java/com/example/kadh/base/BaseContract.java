@@ -12,14 +12,10 @@ public interface BaseContract {
 
         void attachView(T view);
 
-        void detachView();
+
     }
 
     interface BaseView {
-
-        void showError();
-
-        void complete();
 
     }
 }

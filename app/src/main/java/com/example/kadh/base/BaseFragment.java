@@ -44,7 +44,7 @@ public abstract class BaseFragment extends Fragment {
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         mUnbinder = ButterKnife.bind(this, view);
-        attachView();
+//        attachView();
         initDatas();
         configViews();
     }
@@ -62,7 +62,7 @@ public abstract class BaseFragment extends Fragment {
 
     protected abstract void initDatas();
 
-    protected abstract void attachView();
+//    protected abstract void attachView();
 
     public FragmentActivity getSupportActivity() {
         return super.getActivity();

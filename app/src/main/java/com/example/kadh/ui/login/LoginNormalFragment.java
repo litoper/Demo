@@ -4,19 +4,21 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import com.example.kadh.R;
 import com.example.kadh.base.BaseFragment;
 import com.example.kadh.utils.NullUtils;
+import com.example.kadh.utils.RxJava.BaseResponse;
+import com.example.kadh.utils.RxJava.RxApi.RxApiManager;
+import com.example.kadh.utils.RxJava.RxSubscriber.SubOnNextImpl;
+import com.example.kadh.utils.RxJava.RxSubscriber.SubProgress;
 import com.example.kadh.utils.SpUtil;
-import com.jakewharton.rxbinding2.widget.RxTextView;
+
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.OnClick;
-import butterknife.Unbinder;
-import io.reactivex.Observable;
-import io.reactivex.functions.BiFunction;
-import io.reactivex.functions.Consumer;
 
 /**
  * @author: kadh
@@ -25,8 +27,8 @@ import io.reactivex.functions.Consumer;
  * @blog : http://www.nicaicaicai.com
  * @desc :
  */
-public class LoginNormalFragment extends BaseFragment {
-    private static final String TAG = "LoginNormalFragment";
+public class LoginNormalFragment extends BaseFragment implements LoginContract.Presenter {
+    private static final String TAG = "88888888888";
 
     @BindView(R.id.login_normal_btn_clear)
     Button mBtnClear;
@@ -42,9 +44,6 @@ public class LoginNormalFragment extends BaseFragment {
     Button mBtnFastlogin;
     @BindView(R.id.login_normal_btn_forget)
     Button mBtnForget;
-    Unbinder unbinder;
-    private String mUsername;
-    private String mPassword;
 
     @Override
     public int getLayoutResId() {
@@ -54,48 +53,42 @@ public class LoginNormalFragment extends BaseFragment {
     @Override
     protected void configViews() {
 
-
     }
 
     @Override
     protected void initDatas() {
-        mUsername = SpUtil.getInstance().getString(SpUtil.LOGIN_USERNAME);
-        mPassword = SpUtil.getInstance().getString(SpUtil.LOGIN_PASSWORD);
-        mEtUsername.setText(NullUtils.filterNull(mUsername));
-        mEtPassword.setText(NullUtils.filterNull(mPassword));
-
-        Observable<CharSequence> valueUsername = RxTextView.textChanges(mEtUsername).skipInitialValue();
-        Observable<CharSequence> valuePassword = RxTextView.textChanges(mEtPassword).skipInitialValue();
-
-        Observable.
-                combineLatest(
-                        valueUsername,
-                        valuePassword,
-                        new BiFunction<CharSequence, CharSequence, Boolean>() {
-                            @Override
-                            public Boolean apply(CharSequence charSequence, CharSequence charSequence2) throws Exception {
-                                Log.d(TAG, "apply() called with: charSequence = [" + charSequence + "], charSequence2 = [" + charSequence2 + "]");
-                                return NullUtils.isNullOrEmpty(String.valueOf(charSequence)) && NullUtils.isNullOrEmpty(String.valueOf(charSequence2));
-                            }
-                        }).
-                subscribe(new Consumer<Boolean>() {
-                    @Override
-                    public void accept(Boolean aBoolean) throws Exception {
-                        Log.d(TAG, "accept() called with: aBoolean = [" + aBoolean + "]");
-                        if (aBoolean) {
-
-                        } else {
-                            Log.d(TAG, "accept() called with: aBoolean = [" + aBoolean + "]");
-                        }
-                    }
-                }).
-                isDisposed();
-
+        String password = SpUtil.getInstance().getString(SpUtil.LOGIN_PASSWORD);
+        String username = SpUtil.getInstance().getString(SpUtil.LOGIN_USERNAME);
+        mEtPassword.setText(NullUtils.filterNull(password));
+        mEtUsername.setText(NullUtils.filterNull(username));
+        if (!NullUtils.isNull(username) && !NullUtils.isNull(password)) {
+            processLogin();
+        }
     }
 
-    @Override
-    protected void attachView() {
+    private void processLogin() {
+        String username = mEtUsername.getText().toString().trim();
+        String password = mEtPassword.getText().toString().trim();
 
+        if (NullUtils.isEmpty(username)) {
+            Toast.makeText(mContext, "请输入用户名", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        if (NullUtils.isEmpty(password)) {
+            Toast.makeText(mContext, "请输入密码", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        SubOnNextImpl<BaseResponse<List<LoginModel>>> loginListener = new SubOnNextImpl<BaseResponse<List<LoginModel>>>() {
+            @Override
+            public void onSubSuccess(BaseResponse<List<LoginModel>> baseResponse) {
+                List<LoginModel> loginModels = baseResponse.data;
+                Log.d(TAG, "loginModels:" + loginModels);
+                Toast.makeText(mContext, "loginModels:" + loginModels, Toast.LENGTH_SHORT).show();
+            }
+        };
+        RxApiManager.getRxApi().login(new SubProgress<BaseResponse<List<LoginModel>>>(loginListener, mContext, 0), username, password);
     }
 
     @OnClick({R.id.login_normal_btn_clear, R.id.login_normal_et_username, R.id.login_normal_btn_eye, R.id.login_normal_et_password, R.id.login_normal_btn_login, R.id.login_normal_btn_fastlogin, R.id.login_normal_btn_forget})
@@ -110,11 +103,17 @@ public class LoginNormalFragment extends BaseFragment {
             case R.id.login_normal_et_password:
                 break;
             case R.id.login_normal_btn_login:
+                processLogin();
                 break;
             case R.id.login_normal_btn_fastlogin:
                 break;
             case R.id.login_normal_btn_forget:
                 break;
         }
+    }
+
+    @Override
+    public void attachView(LoginContract.View view) {
+
     }
 }
