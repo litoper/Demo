@@ -1,85 +1,96 @@
 package com.example.kadh.utils.RxJava.RxSubscriber;
 
+
 import android.content.Context;
 import android.util.Log;
 import android.widget.Toast;
 
+import com.example.kadh.BuildConfig;
 import com.example.kadh.app.App;
-import com.example.kadh.demo.BuildConfig;
 import com.example.kadh.utils.NetworkUtils;
-import com.example.kadh.utils.RxJava.ProgressCancelListener;
 import com.example.kadh.utils.RxJava.BaseResponse;
-import com.example.kadh.utils.RxJava.ProgressDialogHandler;
 import com.google.gson.JsonParseException;
 
 import java.io.FileNotFoundException;
 import java.net.ConnectException;
 import java.net.SocketTimeoutException;
 
-import retrofit2.adapter.rxjava.HttpException;
-import rx.Subscriber;
+import io.reactivex.annotations.NonNull;
+import io.reactivex.observers.DisposableObserver;
+import retrofit2.HttpException;
 
 /**
- * @author: nicai
- * @email : nicaicai
- * @blog : nicaicaicai
- * @time : 2017/12/5
+ * @author: kadh
+ * @email : 36870855@qq.com
+ * @date : 2018/5/30
+ * @blog : http://www.nicaicaicai.com
  * @desc :
  */
-
-public class SubProgress<T> extends Subscriber<T> implements ProgressCancelListener {
-
-//    public static final String PROFRESS_LOADING = "加载中...";
-//    public static final String PROFRESS_LOGINING = "登录中...";
-//    public static final String PROFRESS_UPLOADING = "上传中...";
-//    public static final String PROFRESS_LAUNCHING = "发布中...";
-//    public static final String PROFRESS_DOWNLOADING = "下载中...";
-//    public static final String PROFRESS_UPDATING = "同步中...";
-
-    private SubOnNextImpl<T> mStateListener;
+public class SubProgress<T> extends DisposableObserver<T> {
+    private static final String TAG = "SubProgress";
+    private SubOnNextImpl<T> mSubListener;
     private Context mContext;
-    private ProgressDialogHandler mHandler;
+    private SubDialog mDialog;
 
-    public SubProgress(SubOnNextImpl<T> mStateListener, Context context, int tag) {
-        this.mStateListener = mStateListener;
+    public SubProgress(@NonNull SubOnNextImpl<T> subListener, Context context, int tag) {
+        this.mSubListener = subListener;
         this.mContext = context;
         if (tag != 0) {
-            this.mHandler = new ProgressDialogHandler(context, this, true, tag);
+            this.mDialog = new SubDialog(context, this, false, tag);
         }
     }
 
     @Override
-    public void onStart() {
+    protected void onStart() {
         super.onStart();
-        showProgressDialog();
-        if (mStateListener != null) {
-            mStateListener.onSubStart();
-        }
+        showDialog();
+        mSubListener.onSubStart();
         //检查是否有网络连接
         if (!NetworkUtils.isNetworkAvailable(mContext)) {
-            if (mStateListener != null) {
-                mStateListener.onSubError(new ConnectException());
-            }
+            mSubListener.onSubError(new ConnectException());
             Toast.makeText(mContext, "当前网络不可用，请检查网络情况", Toast.LENGTH_SHORT).show();
             // 一定好主动调用下面这一句,取消本次Subscriber订阅
-            onCancelProgress("onStart()");
+            dismissDialog("无网络");
         }
     }
 
     @Override
-    public void onCompleted() {
-        if (mStateListener != null) {
-            mStateListener.onSubCompleted();
+    public void onNext(T t) {
+        BaseResponse baseResponse = (BaseResponse) t;
+        mSubListener.onSubNext(t);
+
+        if (baseResponse.success) {
+            mSubListener.onSubSuccess(t);
+        } else {
+            //110为未登录状态
+            if ("110".equals(baseResponse.msg)) {
+                Toast.makeText(mContext, "110", Toast.LENGTH_SHORT).show();
+//                Intent intent = new Intent(mContext, LoginActivity.class);
+//                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
+//                mContext.startActivity(intent);
+            } else {
+                mSubListener.onSubFalse(t);
+                //默认false给予吐司提示,上方case里内容的接口已做处理则不提示
+                switch (baseResponse.msg) {
+                    case "请升级到新版本，以支持流程新模式审批！":
+                        break;
+                    default:
+                        Toast.makeText(App.getApp(), baseResponse.msg, Toast.LENGTH_SHORT).show();
+                        break;
+                }
+            }
         }
-        onCancelProgress("onCompleted()");
     }
 
     @Override
     public void onError(Throwable e) {
-        if (mStateListener != null) {
-            //网络访问失败借口回调
-            mStateListener.onSubError(e);
-        }
+        //网络访问失败借口回调
+        mSubListener.onSubError(e);
+        doErrorHint(e);
+        dismissDialog("网络错误");
+    }
+
+    private void doErrorHint(Throwable e) {
         if (BuildConfig.DEBUG) {
             if (e instanceof SocketTimeoutException) {
                 Toast.makeText(App.getApp(), "连接超时！", Toast.LENGTH_SHORT).show();
@@ -97,72 +108,31 @@ public class SubProgress<T> extends Subscriber<T> implements ProgressCancelListe
                 e.printStackTrace();
             }
         } else {
-
             Toast.makeText(App.getApp(), "系统错误, 请联系研发中心处理!", Toast.LENGTH_SHORT).show();
         }
-        onCancelProgress("onError()");
     }
 
     @Override
-    public void onNext(T t) {
-        BaseResponse baseResponse = (BaseResponse) t;
+    public void onComplete() {
+        mSubListener.onSubCompleted();
+        dismissDialog("完成");
+    }
 
-        if (mStateListener != null) {
-            mStateListener.onMsgNext(t);
+    public void dismissDialog(String origin) {
+        Log.e(TAG, "进度条取消:" + origin + " isDisposed : " + this.isDisposed());
+        if (!this.isDisposed()) {
+            this.dispose();
         }
 
-        if (baseResponse.success) {
-            if (mStateListener != null) {
-                mStateListener.onSubNext(t);
-            }
-        } else {
-            //未登录状态
-            if ("110".equals(baseResponse.msg)) {
-                Toast.makeText(mContext, "110", Toast.LENGTH_SHORT).show();
-//                Intent intent = new Intent(mContext, LoginActivity.class);
-//                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
-//                mContext.startActivity(intent);
-            } else {
-
-                if (mStateListener != null) {
-                    mStateListener.onSubFailed(t);
-                }
-
-                switch (baseResponse.msg) {
-                    case "请升级到新版本，以支持流程新模式审批！":
-                        break;
-                    /**
-                     * 默认false给予吐司提示,上方case里内容的接口已做处理则不提示
-                     */
-                    default:
-                        Toast.makeText(App.getApp(), baseResponse.msg, Toast.LENGTH_SHORT).show();
-                        break;
-                }
-            }
+        if (mDialog != null) {
+            mDialog.dismissSubDialog();
+            mDialog = null;
         }
     }
 
-
-    @Override
-    public void onCancelProgress(String from) {
-        Log.e("onCancelProgress", "from:" + from + "    isUnsubscribed: " + this.isUnsubscribed());
-        if (!this.isUnsubscribed()) {
-            this.unsubscribe();
-        }
-        dismissProgressDialog();
-    }
-
-    private void showProgressDialog() {
-        if (mHandler != null) {
-            mHandler.obtainMessage(ProgressDialogHandler.SHOW_PROGRESS_DIALOG).sendToTarget();
+    private void showDialog() {
+        if (mDialog != null) {
+            mDialog.initSubDialog();
         }
     }
-
-    private void dismissProgressDialog() {
-        if (mHandler != null) {
-            mHandler.obtainMessage(ProgressDialogHandler.DISMISS_PROGRESS_DIALOG).sendToTarget();
-            mHandler = null;
-        }
-    }
-
 }

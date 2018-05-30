@@ -25,7 +25,7 @@ public class NullUtils {
         return true;
     }
 
-    public static boolean isNullOrEmpty(String str) {
+    public static boolean isNull(String str) {
         if (str == null || "".equals(str) || "null".equalsIgnoreCase(str)) {
             return true;
         }
@@ -38,11 +38,11 @@ public class NullUtils {
         return true;
     }
 
-    public static boolean isNullOrEmpty(List list) {
+    public static boolean isNull(List list) {
         return list == null || list.isEmpty();
     }
 
-    public static boolean isNullOrEmpty(Map map) {
+    public static boolean isNull(Map map) {
         return map == null || map.isEmpty();
     }
 

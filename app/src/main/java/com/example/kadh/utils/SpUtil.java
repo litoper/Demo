@@ -25,10 +25,16 @@ import java.util.Set;
 
 public class SpUtil {
 
+    public static final String COOKIE_PATH = "CookiePersistence";
     private static SpUtil prefsUtil;
     public Context context;
     public SharedPreferences prefs;
     public SharedPreferences.Editor editor;
+    public static final String PREFS = "_preference";
+    public static final String LOGIN = "login";
+    public static final String LOGIN_USERNAME = "username";
+    public static final String LOGIN_PASSWORD = "password";
+
 
     public synchronized static SpUtil getInstance() {
         return prefsUtil;
@@ -207,7 +213,7 @@ public class SpUtil {
     /**
      * 得到保存数据的方法，我们根据默认值得到保存的数据的具体类型，然后调用相对于的方法获取值
      */
-    public Object get(Context context, String fileName, String key, Object defaultObject) {
+    public Object get(String key, Object defaultObject) {
         if (defaultObject instanceof String) {
             return prefs.getString(key, (String) defaultObject);
         } else if (defaultObject instanceof Integer) {
@@ -220,6 +226,23 @@ public class SpUtil {
             return prefs.getLong(key, (Long) defaultObject);
         }
         return null;
+    }
+
+    public void put(String key, Object object) {
+        if (object instanceof String) {
+            editor.putString(key, (String) object);
+        } else if (object instanceof Integer) {
+            editor.putInt(key, (Integer) object);
+        } else if (object instanceof Boolean) {
+            editor.putBoolean(key, (Boolean) object);
+        } else if (object instanceof Float) {
+            editor.putFloat(key, (Float) object);
+        } else if (object instanceof Long) {
+            editor.putLong(key, (Long) object);
+        } else {
+            editor.putString(key, object.toString());
+        }
+        editor.apply();
     }
 
     public SpUtil remove(String key) {
