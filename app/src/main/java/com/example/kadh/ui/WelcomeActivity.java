@@ -40,10 +40,10 @@ public class WelcomeActivity extends BaseActivity {
 //                    }
 //
 //                    @Override
-//                    public void onNext(Long aLong) {
-//                        Log.d(TAG, "onNext() called with: aLong = 000000000000000");
+//                    public void onSubNext(Long aLong) {
+//                        Log.d(TAG, "onSubNext() called with: aLong = 000000000000000");
 //                        checkCookie();
-//                        Log.d(TAG, "onNext() called with: aLong = 111111111111111");
+//                        Log.d(TAG, "onSubNext() called with: aLong = 111111111111111");
 //                    }
 //
 //                    @Override

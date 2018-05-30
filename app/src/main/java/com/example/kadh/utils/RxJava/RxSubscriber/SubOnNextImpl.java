@@ -25,15 +25,31 @@ public abstract class SubOnNextImpl<T> implements SubOnNextListener<T> {
     }
 
     @Override
-    public void onSubFailed(T t) {
+    public void onSubFalse(T t) {
 
     }
 
     @Override
-    public abstract void onSubNext(T t);
+    public abstract void onSubSuccess(T t);
 
     @Override
-    public void onMsgNext(T t) {
+    public void onSubNext(T t) {
 
     }
+}
+
+
+interface SubOnNextListener<T> {
+
+    void onSubStart();
+
+    void onSubCompleted();
+
+    void onSubError(Throwable e);
+
+    void onSubFalse(T t);
+
+    void onSubSuccess(T t);
+
+    void onSubNext(T t);
 }
