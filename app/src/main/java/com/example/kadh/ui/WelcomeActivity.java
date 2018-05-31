@@ -4,18 +4,14 @@ import android.support.design.widget.CoordinatorLayout;
 
 import com.example.kadh.R;
 import com.example.kadh.base.BaseActivity;
-import com.example.kadh.demo.MianActivity;
+import com.example.kadh.common.AppComponent;
 import com.example.kadh.ui.login.LoginActivity;
-import com.example.kadh.utils.RxJava.RxApi.RxApiManager;
 import com.jakewharton.rxbinding2.view.RxView;
-
-import java.util.List;
 
 import butterknife.BindView;
 import butterknife.OnClick;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.functions.Consumer;
-import okhttp3.Cookie;
 
 /**
  * @author: kadh
@@ -44,13 +40,13 @@ public class WelcomeActivity extends BaseActivity {
     public void initDatas() {
     }
 
-    private void checkCookie() {
-        List<Cookie> cookies = RxApiManager.getRxApi().getCookiePersistor().loadAll();
-        if (cookies.isEmpty()) {
-            openActivity(LoginActivity.class);
-        } else {
-            openActivity(MianActivity.class);
-        }
+    public void checkCookie() {
+//        List<Cookie> cookies = RxApiManager.getRxApi().getCookiePersistor().loadAll();
+//        if (cookies.isEmpty()) {
+//            openActivity(LoginActivity.class);
+//        } else {
+//            openActivity(MianActivity.class);
+//        }
     }
 
     @Override
@@ -62,6 +58,10 @@ public class WelcomeActivity extends BaseActivity {
     public int getLayoutId() {
         hideStatusBar();
         return R.layout.activity_welcome;
+    }
+
+    @Override
+    protected void setupActivityComponent(AppComponent appComponent) {
     }
 
 

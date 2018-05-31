@@ -14,6 +14,7 @@ import com.ashokvarma.bottomnavigation.BottomNavigationItem;
 import com.ashokvarma.bottomnavigation.TextBadgeItem;
 import com.example.kadh.R;
 import com.example.kadh.base.BaseActivity;
+import com.example.kadh.common.AppComponent;
 
 import java.util.ArrayList;
 
@@ -31,11 +32,11 @@ import butterknife.OnClick;
 
 public class MianActivity extends BaseActivity {
     @BindView(R.id.common_toolbar)
-    Toolbar              mCommonToolbar;
+    Toolbar mCommonToolbar;
     @BindView(R.id.activity_main_vp)
-    ViewPager            mVp;
+    ViewPager mVp;
     @BindView(R.id.activity_main_bnb)
-    BottomNavigationBar  mBnb;
+    BottomNavigationBar mBnb;
     @BindView(R.id.activity_main_fabtn)
     FloatingActionButton mFaBtn;
     private TextBadgeItem mBadgeItem;
@@ -128,6 +129,11 @@ public class MianActivity extends BaseActivity {
     @Override
     public int getLayoutId() {
         return R.layout.activity_main;
+    }
+
+    @Override
+    protected void setupActivityComponent(AppComponent appComponent) {
+
     }
 
     @Override
