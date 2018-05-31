@@ -10,8 +10,6 @@ package com.example.kadh.base;
 public interface BaseContract {
     interface BasePresenter<T> {
 
-        void attachView(T view);
-
 
     }
 

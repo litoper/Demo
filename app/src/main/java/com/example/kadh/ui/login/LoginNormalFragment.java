@@ -1,7 +1,6 @@
 package com.example.kadh.ui.login;
 
 import android.util.Log;
-import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
@@ -10,15 +9,12 @@ import com.example.kadh.R;
 import com.example.kadh.base.BaseFragment;
 import com.example.kadh.utils.NullUtils;
 import com.example.kadh.utils.RxJava.BaseResponse;
-import com.example.kadh.utils.RxJava.RxApi.RxApiManager;
 import com.example.kadh.utils.RxJava.RxSubscriber.SubOnNextImpl;
-import com.example.kadh.utils.RxJava.RxSubscriber.SubProgress;
 import com.example.kadh.utils.SpUtil;
 
 import java.util.List;
 
 import butterknife.BindView;
-import butterknife.OnClick;
 
 /**
  * @author: kadh
@@ -88,32 +84,7 @@ public class LoginNormalFragment extends BaseFragment implements LoginContract.P
                 Toast.makeText(mContext, "loginModels:" + loginModels, Toast.LENGTH_SHORT).show();
             }
         };
-        RxApiManager.getRxApi().login(new SubProgress<BaseResponse<List<LoginModel>>>(loginListener, mContext, 0), username, password);
+//        RxApiManager.getRxApi().login(new SubProgress<BaseResponse<List<LoginModel>>>(loginListener, mContext, 0), username, password);
     }
 
-    @OnClick({R.id.login_normal_btn_clear, R.id.login_normal_et_username, R.id.login_normal_btn_eye, R.id.login_normal_et_password, R.id.login_normal_btn_login, R.id.login_normal_btn_fastlogin, R.id.login_normal_btn_forget})
-    public void onViewClicked(View view) {
-        switch (view.getId()) {
-            case R.id.login_normal_btn_clear:
-                break;
-            case R.id.login_normal_et_username:
-                break;
-            case R.id.login_normal_btn_eye:
-                break;
-            case R.id.login_normal_et_password:
-                break;
-            case R.id.login_normal_btn_login:
-                processLogin();
-                break;
-            case R.id.login_normal_btn_fastlogin:
-                break;
-            case R.id.login_normal_btn_forget:
-                break;
-        }
-    }
-
-    @Override
-    public void attachView(LoginContract.View view) {
-
-    }
 }

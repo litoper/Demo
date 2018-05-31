@@ -48,10 +48,6 @@ public class LoginVerifyFragment extends BaseFragment {
 
     }
 
-    @Override
-    protected void attachView() {
-
-    }
 
     @OnClick({R.id.login_vercode_et_phone, R.id.login_vercode_et_code, R.id.login_vercode_btn_sendCode, R.id.login_vercode_btn_verlogin, R.id.login_vercode_btn_forget})
     public void onViewClicked(View view) {

@@ -1,25 +1,24 @@
 package com.example.kadh.demo;
 
-import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
-import android.view.View;
-import android.widget.Toast;
 
 import com.ashokvarma.bottomnavigation.BottomNavigationBar;
 import com.ashokvarma.bottomnavigation.BottomNavigationItem;
 import com.ashokvarma.bottomnavigation.TextBadgeItem;
 import com.example.kadh.R;
 import com.example.kadh.base.BaseActivity;
+import com.example.kadh.component.AppComponent;
+import com.example.kadh.component.DaggerMainComponent;
 
 import java.util.ArrayList;
 
+import javax.inject.Inject;
+
 import butterknife.BindView;
-import butterknife.ButterKnife;
-import butterknife.OnClick;
 
 /**
  * @author: kadh
@@ -29,7 +28,7 @@ import butterknife.OnClick;
  * @desc :
  */
 
-public class MianActivity extends BaseActivity {
+public class MianActivity extends BaseActivity implements MainContract.View {
     @BindView(R.id.common_toolbar)
     Toolbar              mCommonToolbar;
     @BindView(R.id.activity_main_vp)
@@ -39,6 +38,9 @@ public class MianActivity extends BaseActivity {
     @BindView(R.id.activity_main_fabtn)
     FloatingActionButton mFaBtn;
     private TextBadgeItem mBadgeItem;
+
+    @Inject
+    MainPresenter mPresenter;
 
     @Override
     public void configViews() {
@@ -131,6 +133,11 @@ public class MianActivity extends BaseActivity {
     }
 
     @Override
+    protected void setupActivityComponent(AppComponent appComponent) {
+        DaggerMainComponent.builder().appComponent(appComponent).build().inject(this);
+    }
+
+    @Override
     public void initToolBar() {
         mCommonToolbar.setTitle("标题栏");
         mCommonToolbar.setNavigationIcon(R.drawable.common_back);
@@ -144,24 +151,7 @@ public class MianActivity extends BaseActivity {
     }
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        // TODO: add setContentView(...) invocation
-        ButterKnife.bind(this);
-    }
+    public void processVersion() {
 
-    @OnClick({R.id.common_toolbar, R.id.activity_main_vp, R.id.activity_main_fabtn, R.id.activity_main_bnb})
-    public void onViewClicked(View view) {
-        switch (view.getId()) {
-            case R.id.common_toolbar:
-                break;
-            case R.id.activity_main_vp:
-                break;
-            case R.id.activity_main_fabtn:
-                Toast.makeText(this, "fabtn", Toast.LENGTH_SHORT).show();
-                break;
-            case R.id.activity_main_bnb:
-                break;
-        }
     }
 }

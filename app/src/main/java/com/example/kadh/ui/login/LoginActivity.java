@@ -8,6 +8,7 @@ import android.support.v4.view.ViewPager;
 import com.example.kadh.R;
 import com.example.kadh.base.BaseActivity;
 import com.example.kadh.base.TabAdapter;
+import com.example.kadh.component.AppComponent;
 import com.example.kadh.view.RippleBackground;
 
 import java.util.ArrayList;
@@ -73,6 +74,11 @@ public class LoginActivity extends BaseActivity {
     public int getLayoutId() {
         hideStatusBar();
         return R.layout.activity_login;
+    }
+
+    @Override
+    protected void setupActivityComponent(AppComponent appComponent) {
+
     }
 
 

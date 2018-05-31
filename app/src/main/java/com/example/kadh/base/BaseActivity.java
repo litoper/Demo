@@ -14,10 +14,11 @@ import android.view.View;
 import android.view.WindowManager;
 
 import com.example.kadh.R;
+import com.example.kadh.app.App;
+import com.example.kadh.component.AppComponent;
 import com.example.kadh.utils.StatusBarCompat;
 
 import butterknife.ButterKnife;
-import butterknife.Unbinder;
 
 /**
  * @author: kadh
@@ -34,7 +35,6 @@ public abstract class BaseActivity extends AppCompatActivity {
     protected Context mContext;
     protected int statusBarColor = 0;
     protected View statusBarView = null;
-    private Unbinder mUnbinder;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -48,8 +48,8 @@ public abstract class BaseActivity extends AppCompatActivity {
         }
         transparent19and20();
 
-        mUnbinder = ButterKnife.bind(this);
-
+        ButterKnife.bind(this);
+        setupActivityComponent(App.getApp().getAppComponent());
         mCommonToolbar = ButterKnife.findById(this, R.id.common_toolbar);
         if (mCommonToolbar != null) {
             initToolBar();
@@ -62,7 +62,6 @@ public abstract class BaseActivity extends AppCompatActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        mUnbinder.unbind();
     }
 
     protected void transparent19and20() {
@@ -84,6 +83,8 @@ public abstract class BaseActivity extends AppCompatActivity {
     public abstract void initToolBar();
 
     public abstract int getLayoutId();
+
+    protected abstract void setupActivityComponent(AppComponent appComponent);
 
 
     protected void gone(final View... views) {
