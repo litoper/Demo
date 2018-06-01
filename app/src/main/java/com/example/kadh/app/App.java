@@ -9,6 +9,7 @@ import com.example.kadh.module.AppModule;
 import com.example.kadh.module.RxApiModule;
 import com.example.kadh.utils.AppUtils;
 import com.example.kadh.utils.SpUtil;
+import com.socks.library.KLog;
 
 /**
  * @author: kadh
@@ -19,8 +20,8 @@ import com.example.kadh.utils.SpUtil;
  */
 
 public class App extends Application {
-    private static App          sApp;
-    private        AppComponent mAppComponent;
+    private static App sApp;
+    private AppComponent mAppComponent;
 
     @Override
     public void onCreate() {
@@ -41,6 +42,8 @@ public class App extends Application {
     private void initUtils() {
         AppUtils.init(this);
         SpUtil.init(this, getPackageName() + SpUtil.PREFS, Context.MODE_MULTI_PROCESS);
+        KLog.init(true, "88888888");
+
     }
 
     public static synchronized App getApp() {

@@ -4,7 +4,7 @@ import android.content.Context;
 
 import com.example.kadh.module.AppModule;
 import com.example.kadh.module.RxApiModule;
-import com.example.kadh.utils.RxJava.RxApi.RxApiManager;
+import com.example.kadh.utils.RxJava.RxApi.RxApi;
 import com.example.kadh.utils.RxJava.RxApi.RxApiUtils;
 
 import dagger.Component;
@@ -23,5 +23,5 @@ public interface AppComponent {
 
     RxApiUtils getRxApiUtils();
 
-    RxApiManager getRxApi();
+    RxApi getRxApi();
 }

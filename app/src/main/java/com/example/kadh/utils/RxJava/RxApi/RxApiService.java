@@ -1,7 +1,7 @@
 package com.example.kadh.utils.RxJava.RxApi;
 
 
-import com.example.kadh.ui.login.LoginModel;
+import com.example.kadh.bean.LoginBean;
 import com.example.kadh.utils.RxJava.BaseResponse;
 
 import java.util.List;
@@ -24,28 +24,28 @@ import retrofit2.http.Query;
 interface RxApiService {
 
 
-    @GET(RxUrl.Url.CHECKVERSION)
+    @GET(RxApiUrl.Url.CHECKVERSION)
     Observable<BaseResponse<String>> checkVersion(@Query("appVersion") String version);
 
     @FormUrlEncoded
-    @POST(RxUrl.Url.LOGIN)
-    Observable<BaseResponse<List<LoginModel>>> login(
+    @POST(RxApiUrl.Url.LOGIN)
+    Observable<BaseResponse<List<LoginBean>>> login(
             @Field("name") String username,
             @Field("password") String password,
             @Field("version") String version);
 
-//    @GET(RxUrl.Url.CHECKVERSION + NICAI)
+//    @GET(RxApiUrl.Url.CHECKVERSION + NICAI)
 //    Observable<BaseResponse<UpDateModel>> checkVersion(@Query("appVersion") String version);
 
 //    @FormUrlEncoded
-//    @POST(RxUrl.Url.UPDATEUPHONE + NICAI)
+//    @POST(RxApiUrl.Url.UPDATEUPHONE + NICAI)
 //    Observable<BaseResponse<String>> upDateUphone(
 //            @Field("uphone") String uphone,
 //            @Field("ushort_phone") String ushort_phone,
 //            @Field("version") String version);
 
 //    @Multipart
-//    @POST(RxUrl.Url.UPLOADFIELD + NICAI)
+//    @POST(RxApiUrl.Url.UPLOADFIELD + NICAI)
 //    Observable<BaseResponse<List<UpFieldModel>>> upLoadField(@Part MultipartBody.Part file, @Query("version") String version, @Query("fileName") String filename);
 
 //    @Streaming

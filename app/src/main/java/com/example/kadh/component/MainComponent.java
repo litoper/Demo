@@ -1,6 +1,7 @@
 package com.example.kadh.component;
 
-import com.example.kadh.demo.MianActivity;
+import com.example.kadh.ui.home.MianActivity;
+import com.example.kadh.ui.login.fragment.LoginNormalFragment;
 
 import dagger.Component;
 
@@ -8,4 +9,5 @@ import dagger.Component;
 public interface MainComponent {
     MianActivity inject(MianActivity activity);
 
+    LoginNormalFragment inject(LoginNormalFragment fragment);
 }

@@ -10,6 +10,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.example.kadh.app.App;
+import com.example.kadh.component.AppComponent;
+
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
 
@@ -22,7 +25,6 @@ import butterknife.Unbinder;
  */
 
 public abstract class BaseFragment extends Fragment {
-
 
     protected View parentView;
     protected Context mContext;
@@ -44,7 +46,8 @@ public abstract class BaseFragment extends Fragment {
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         mUnbinder = ButterKnife.bind(this, view);
-//        attachView();
+        setupActivityComponent(App.getApp().getAppComponent());
+        attachView();
         initDatas();
         configViews();
     }
@@ -62,10 +65,16 @@ public abstract class BaseFragment extends Fragment {
 
     protected abstract void initDatas();
 
-//    protected abstract void attachView();
+    protected abstract void attachView();
+
+    protected abstract void setupActivityComponent(AppComponent appComponent);
 
     public FragmentActivity getSupportActivity() {
         return super.getActivity();
+    }
+
+    protected View getParentView() {
+        return parentView;
     }
 
     @Override

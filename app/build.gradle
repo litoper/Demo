@@ -68,4 +68,6 @@ dependencies {
     annotationProcessor 'com.google.dagger:dagger-compiler:2.0.2'
     compileOnly 'org.glassfish:javax.annotation:10.0-b28'
 
+    //log
+    implementation 'com.github.zhaokaiqiang.klog:library:1.6.0'
 }
