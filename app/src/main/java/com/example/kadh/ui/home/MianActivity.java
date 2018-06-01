@@ -1,4 +1,4 @@
-package com.example.kadh.demo;
+package com.example.kadh.ui.home;
 
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
@@ -30,11 +30,11 @@ import butterknife.BindView;
 
 public class MianActivity extends BaseActivity implements MainContract.View {
     @BindView(R.id.common_toolbar)
-    Toolbar              mCommonToolbar;
+    Toolbar mCommonToolbar;
     @BindView(R.id.activity_main_vp)
-    ViewPager            mVp;
+    ViewPager mVp;
     @BindView(R.id.activity_main_bnb)
-    BottomNavigationBar  mBnb;
+    BottomNavigationBar mBnb;
     @BindView(R.id.activity_main_fabtn)
     FloatingActionButton mFaBtn;
     private TextBadgeItem mBadgeItem;
@@ -56,10 +56,10 @@ public class MianActivity extends BaseActivity implements MainContract.View {
     private void initViewPager() {
         ArrayList<Fragment> fragments = new ArrayList<>();
 
-        MainFragment frgCompany = new MainFragment("公司");
-        MainFragment frgWork = new MainFragment("工作");
-        MainFragment frgTxl = new MainFragment("通讯录");
-        MainFragment frgMy = new MainFragment("我的");
+        MainFragmentView frgCompany = new MainFragmentView("公司");
+        MainFragmentView frgWork = new MainFragmentView("工作");
+        MainFragmentView frgTxl = new MainFragmentView("通讯录");
+        MainFragmentView frgMy = new MainFragmentView("我的");
 
         fragments.add(frgCompany);
         fragments.add(frgWork);
@@ -152,6 +152,16 @@ public class MianActivity extends BaseActivity implements MainContract.View {
 
     @Override
     public void processVersion() {
+
+    }
+
+    @Override
+    public void showError() {
+
+    }
+
+    @Override
+    public void complete() {
 
     }
 }

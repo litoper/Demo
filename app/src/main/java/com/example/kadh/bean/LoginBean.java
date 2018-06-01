@@ -1,4 +1,6 @@
-package com.example.kadh.ui.login;
+package com.example.kadh.bean;
+
+import com.example.kadh.bean.base.BaseBean;
 
 /**
  * @author: kadh
@@ -7,7 +9,7 @@ package com.example.kadh.ui.login;
  * @blog : http://www.nicaicaicai.com
  * @desc :
  */
-public class LoginModel {
+public class LoginBean extends BaseBean {
     private String token;
     private String userName;
     private String userIco;
@@ -56,7 +58,7 @@ public class LoginModel {
 
     @Override
     public String toString() {
-        return "LoginModel{" +
+        return "LoginBean{" +
                 "token='" + token + '\'' +
                 ", userName='" + userName + '\'' +
                 ", userIco='" + userIco + '\'' +

@@ -28,11 +28,11 @@ import retrofit2.HttpException;
  */
 public class SubProgress<T> extends DisposableObserver<T> {
     private static final String TAG = "SubProgress";
-    private SubOnNextImpl<T> mSubListener;
+    private SubNextImpl<T> mSubListener;
     private Context mContext;
     private SubDialog mDialog;
 
-    public SubProgress(@NonNull SubOnNextImpl<T> subListener, Context context, int tag) {
+    public SubProgress(Context context, int tag, @NonNull SubNextImpl<T> subListener) {
         this.mSubListener = subListener;
         this.mContext = context;
         if (tag != 0) {

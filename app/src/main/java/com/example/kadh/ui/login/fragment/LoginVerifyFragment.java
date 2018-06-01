@@ -1,4 +1,4 @@
-package com.example.kadh.ui.login;
+package com.example.kadh.ui.login.fragment;
 
 import android.view.View;
 import android.widget.Button;
@@ -6,6 +6,7 @@ import android.widget.EditText;
 
 import com.example.kadh.R;
 import com.example.kadh.base.BaseFragment;
+import com.example.kadh.component.AppComponent;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -45,6 +46,16 @@ public class LoginVerifyFragment extends BaseFragment {
 
     @Override
     protected void initDatas() {
+
+    }
+
+    @Override
+    protected void attachView() {
+
+    }
+
+    @Override
+    protected void setupActivityComponent(AppComponent appComponent) {
 
     }
 

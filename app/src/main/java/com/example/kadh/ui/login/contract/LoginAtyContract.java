@@ -1,4 +1,4 @@
-package com.example.kadh.ui.login;
+package com.example.kadh.ui.login.contract;
 
 import com.example.kadh.base.BaseContract;
 
@@ -9,12 +9,12 @@ import com.example.kadh.base.BaseContract;
  * @blog : http://www.nicaicaicai.com
  * @desc :
  */
-public interface LoginContract {
+public interface LoginAtyContract {
     interface View extends BaseContract.BaseView {
 
     }
 
     interface Presenter extends BaseContract.BasePresenter<View> {
-        
+
     }
 }

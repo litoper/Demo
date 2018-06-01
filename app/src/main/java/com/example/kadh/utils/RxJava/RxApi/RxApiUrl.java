@@ -8,7 +8,7 @@ package com.example.kadh.utils.RxJava.RxApi;
  * @desc :
  */
 
-public interface RxUrl {
+public interface RxApiUrl {
     class Url {
 
         static final String WECHAT_APP_ID = "wx30bac70f9067a5bf";

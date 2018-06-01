@@ -8,7 +8,7 @@ package com.example.kadh.utils.RxJava.RxSubscriber;
  * @desc :
  */
 
-public abstract class SubOnNextImpl<T> implements SubOnNextListener<T> {
+public abstract class SubNextImpl<T> implements SubNextListener<T> {
     @Override
     public void onSubStart() {
 
@@ -25,21 +25,21 @@ public abstract class SubOnNextImpl<T> implements SubOnNextListener<T> {
     }
 
     @Override
-    public void onSubFalse(T t) {
+    public void onSubFalse(T response) {
 
     }
 
     @Override
-    public abstract void onSubSuccess(T t);
+    public abstract void onSubSuccess(T response);
 
     @Override
-    public void onSubNext(T t) {
+    public void onSubNext(T response) {
 
     }
 }
 
 
-interface SubOnNextListener<T> {
+interface SubNextListener<T> {
 
     void onSubStart();
 
@@ -47,9 +47,9 @@ interface SubOnNextListener<T> {
 
     void onSubError(Throwable e);
 
-    void onSubFalse(T t);
+    void onSubFalse(T response);
 
-    void onSubSuccess(T t);
+    void onSubSuccess(T response);
 
-    void onSubNext(T t);
+    void onSubNext(T response);
 }

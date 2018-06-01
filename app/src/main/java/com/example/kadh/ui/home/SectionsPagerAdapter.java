@@ -1,4 +1,4 @@
-package com.example.kadh.demo;
+package com.example.kadh.ui.home;
 
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;

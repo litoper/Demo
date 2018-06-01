@@ -1,4 +1,4 @@
-package com.example.kadh.ui.login;
+package com.example.kadh.ui.login.activity;
 
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
@@ -9,6 +9,8 @@ import com.example.kadh.R;
 import com.example.kadh.base.BaseActivity;
 import com.example.kadh.base.TabAdapter;
 import com.example.kadh.component.AppComponent;
+import com.example.kadh.ui.login.fragment.LoginNormalFragment;
+import com.example.kadh.ui.login.fragment.LoginVerifyFragment;
 import com.example.kadh.view.RippleBackground;
 
 import java.util.ArrayList;
@@ -87,4 +89,5 @@ public class LoginActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         ButterKnife.bind(this);
     }
+
 }

@@ -38,15 +38,15 @@
         android:theme="@style/AppTheme.NoActionBar"
         tools:replace="android:icon">
 
-        <activity android:name=".ui.WelcomeActivity">
+        <activity android:name=".ui.splash.SplashActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
 
-        <activity android:name=".demo.MianActivity" />
-        <activity android:name=".ui.login.LoginActivity" />
+        <activity android:name=".ui.home.MianActivity" />
+        <activity android:name=".ui.login.activity.LoginActivity" />
 
     </application>
 </manifest>

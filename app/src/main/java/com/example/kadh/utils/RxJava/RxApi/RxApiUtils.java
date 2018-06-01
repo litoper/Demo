@@ -33,7 +33,7 @@ public class RxApiUtils {
 
     private static SharedPrefsCookiePersistor sCookiePersistor;
     private static PersistentCookieJar sCookieJar;
-    private static RxApiManager sRxApiManager;
+    private static RxApi sRxApi;
     private static RxApiUtils sRxApiUtils;
     private static Cache sHttpCache;
 
@@ -42,12 +42,12 @@ public class RxApiUtils {
                 .setLenient()
                 .create();
         Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl(RxUrl.Url.BASE)
+                .baseUrl(RxApiUrl.Url.BASE)
                 .client(initOkHttp())
                 .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
                 .addConverterFactory(GsonConverterFactory.create(gson))
                 .build();
-        sRxApiManager = new RxApiManager(retrofit.create(RxApiService.class), "android_" + BuildConfig.VERSION_NAME);
+        sRxApi = new RxApi(retrofit.create(RxApiService.class), "android_" + BuildConfig.VERSION_NAME);
     }
 
     public static RxApiUtils getRxApiUtils() {
@@ -63,8 +63,8 @@ public class RxApiUtils {
         return sCookiePersistor;
     }
 
-    public RxApiManager getRxApiManager() {
-        return sRxApiManager;
+    public RxApi getRxApi() {
+        return sRxApi;
     }
 
     public static Cache getHttpCache() {

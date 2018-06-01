@@ -1,10 +1,11 @@
-package com.example.kadh.demo;
+package com.example.kadh.ui.home;
 
 import android.annotation.SuppressLint;
 import android.widget.TextView;
 
 import com.example.kadh.R;
-import com.example.kadh.base.BaseFragment;
+import com.example.kadh.base.BaseFragmentView;
+import com.example.kadh.component.AppComponent;
 
 import butterknife.BindView;
 
@@ -16,18 +17,18 @@ import butterknife.BindView;
  * @desc :
  */
 
-public class MainFragment extends BaseFragment {
+public class MainFragmentView extends BaseFragmentView {
 
 
     @BindView(R.id.fragment_mian_tv)
     TextView mFragmentMianTv;
     private String mTitle;
 
-    public MainFragment() {
+    public MainFragmentView() {
     }
 
     @SuppressLint("ValidFragment")
-    public MainFragment(String title) {
+    public MainFragmentView(String title) {
         mTitle = title;
     }
 
@@ -43,6 +44,11 @@ public class MainFragment extends BaseFragment {
 
     @Override
     protected void initDatas() {
+
+    }
+
+    @Override
+    protected void setupActivityComponent(AppComponent appComponent) {
 
     }
 

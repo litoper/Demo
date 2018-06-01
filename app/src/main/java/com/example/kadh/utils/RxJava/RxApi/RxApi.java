@@ -1,7 +1,7 @@
 package com.example.kadh.utils.RxJava.RxApi;
 
 
-import com.example.kadh.ui.login.LoginModel;
+import com.example.kadh.bean.LoginBean;
 import com.example.kadh.utils.RxJava.BaseResponse;
 
 import java.util.List;
@@ -20,11 +20,11 @@ import io.reactivex.schedulers.Schedulers;
  */
 
 
-public class RxApiManager {
+public class RxApi {
     private RxApiService mRxApiService;
     private String mVersion;
 
-    RxApiManager(RxApiService rxApiService, String version) {
+    RxApi(RxApiService rxApiService, String version) {
         mRxApiService = rxApiService;
         mVersion = version;
     }
@@ -35,7 +35,7 @@ public class RxApiManager {
     }
 
 
-    public void login(Observer<BaseResponse<List<LoginModel>>> observer, String username, String password) {
+    public void login(Observer<BaseResponse<List<LoginBean>>> observer, String username, String password) {
         Observable observable = mRxApiService.login(username, password, mVersion);
         toSubscribe(observable, observer);
     }
