@@ -1,21 +1,28 @@
 package com.example.kadh.ui.login.fragment;
 
 import android.annotation.SuppressLint;
+import android.content.Intent;
+import android.text.InputType;
+import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import com.example.kadh.R;
 import com.example.kadh.base.BaseFragmentView;
 import com.example.kadh.component.AppComponent;
 import com.example.kadh.component.DaggerMainComponent;
+import com.example.kadh.ui.home.MainActivity;
 import com.example.kadh.ui.login.contract.LoginFragContract;
 import com.example.kadh.ui.login.presenter.LoginNormalPresenter;
 import com.example.kadh.utils.NullUtils;
 import com.jakewharton.rxbinding2.view.RxView;
+import com.jakewharton.rxbinding2.widget.RxTextView;
 
 import java.util.concurrent.TimeUnit;
 
 import butterknife.BindView;
+import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.functions.Consumer;
 
 /**
@@ -28,21 +35,22 @@ import io.reactivex.functions.Consumer;
 public class LoginNormalFragment extends BaseFragmentView<LoginNormalPresenter> implements LoginFragContract.View {
 
     @BindView(R.id.login_normal_btn_clear)
-    Button mBtnClear;
+    Button   mBtnClear;
     @BindView(R.id.login_normal_et_username)
     EditText mEtUsername;
     @BindView(R.id.login_normal_btn_eye)
-    Button mBtnEye;
+    Button   mBtnEye;
     @BindView(R.id.login_normal_et_password)
     EditText mEtPassword;
     @BindView(R.id.login_normal_btn_login)
-    Button mBtnLogin;
+    Button   mBtnLogin;
     @BindView(R.id.login_normal_btn_fastlogin)
-    Button mBtnFastlogin;
+    Button   mBtnFastlogin;
     @BindView(R.id.login_normal_btn_forget)
-    Button mBtnForget;
+    Button   mBtnForget;
     private String mUsername;
     private String mPasswrod;
+
 
     public static LoginNormalFragment newInstance() {
         return new LoginNormalFragment();
@@ -59,24 +67,82 @@ public class LoginNormalFragment extends BaseFragmentView<LoginNormalPresenter> 
     @SuppressLint("CheckResult")
     @Override
     protected void configViews() {
-        RxView.clicks(mBtnLogin).throttleLast(1, TimeUnit.SECONDS).subscribe(new Consumer<Object>() {
+        RxTextView.textChanges(mEtUsername).skipInitialValue().subscribe(new Consumer<CharSequence>() {
+            @Override
+            public void accept(CharSequence charSequence) throws Exception {
+                mUsername = String.valueOf(charSequence);
+                if (NullUtils.isEmpty(charSequence)) {
+                    mBtnClear.setVisibility(View.INVISIBLE);
+                } else {
+                    mBtnClear.setVisibility(View.VISIBLE);
+                }
+            }
+        });
+
+        RxTextView.textChanges(mEtPassword).skipInitialValue().subscribe(new Consumer<CharSequence>() {
+            @Override
+            public void accept(CharSequence charSequence) throws Exception {
+                mPasswrod = String.valueOf(charSequence);
+            }
+        });
+
+        RxView.clicks(mBtnForget).throttleFirst(1, TimeUnit.SECONDS).observeOn(AndroidSchedulers.mainThread()).subscribe(new Consumer<Object>() {
+            @Override
+            public void accept(Object o) throws Exception {
+                startActivity(new Intent(mContext, MainActivity.class));
+            }
+        });
+
+        RxView.clicks(mBtnFastlogin).throttleFirst(1, TimeUnit.SECONDS).observeOn(AndroidSchedulers.mainThread()).subscribe(new Consumer<Object>() {
+            @Override
+            public void accept(Object o) throws Exception {
+                Toast.makeText(mActivity, "快速登陆", Toast.LENGTH_SHORT).show();
+            }
+        });
+
+        RxView.clicks(mBtnEye).observeOn(AndroidSchedulers.mainThread()).subscribe(new Consumer<Object>() {
+            @Override
+            public void accept(Object o) throws Exception {
+                changePwdType();
+            }
+        });
+
+        RxView.clicks(mBtnClear).throttleFirst(1, TimeUnit.SECONDS).observeOn(AndroidSchedulers.mainThread()).subscribe(new Consumer<Object>() {
+            @Override
+            public void accept(Object o) throws Exception {
+                mEtUsername.setText("");
+            }
+        });
+
+        RxView.clicks(mBtnLogin).throttleLast(1, TimeUnit.SECONDS).observeOn(AndroidSchedulers.mainThread()).subscribe(new Consumer<Object>() {
 
             @Override
             public void accept(Object o) throws Exception {
-
-                mPresenter.login(mEtUsername.getText().toString().trim(), mEtPassword.getText().toString().trim());
+                checkInput(mUsername, mPasswrod);
             }
         });
     }
 
+    private void changePwdType() {
+        if (mEtPassword.getInputType() == (InputType.TYPE_CLASS_TEXT)) {
+            mBtnEye.setBackgroundResource(R.mipmap.pwd_eye_selected);
+            mEtPassword.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD);
+        } else {
+            mBtnEye.setBackgroundResource(R.mipmap.pwd_eye_default);
+            mEtPassword.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_NORMAL);
+        }
+        mEtPassword.setSelection(mEtPassword.getText().toString().length());
+    }
+
     @Override
     protected void initDatas() {
-        mPresenter.getSpData();
+        mPresenter.getLoginData();
+        mPresenter.getFastData();
     }
 
     @Override
     protected void setupActivityComponent(AppComponent appComponent) {
-        DaggerMainComponent.builder().appComponent(appComponent).build().inject(this);
+        DaggerMainComponent.builder().appComponent(appComponent).activityComponent(mActivityComponent).build().inject(this);
     }
 
     @Override
@@ -90,15 +156,36 @@ public class LoginNormalFragment extends BaseFragmentView<LoginNormalPresenter> 
     }
 
     @Override
-    public void setSpData(String username, String passwrod) {
-        mUsername = username;
-        mPasswrod = passwrod;
-
+    public void setLoginData(String username, String passwrod) {
         if (!NullUtils.isEmpty(username)) {
+            mUsername = username;
             mEtUsername.setText(username);
         }
         if (!NullUtils.isEmpty(passwrod)) {
+            mPasswrod = passwrod;
             mEtPassword.setText(passwrod);
+            checkInput(username, passwrod);
         }
     }
+
+    @Override
+    public void checkInput(String username, String passwrod) {
+        if (NullUtils.isEmpty(username) || NullUtils.isEmpty(passwrod)) {
+            Toast.makeText(mContext, "账号或者密码为空", Toast.LENGTH_SHORT).show();
+            return;
+        }
+        mPresenter.login(username, passwrod);
+    }
+
+    @Override
+    public void loginSuccess() {
+        Toast.makeText(mActivity, "登陆成功", Toast.LENGTH_SHORT).show();
+        startActivity(new Intent(mContext, MainActivity.class));
+    }
+
+    @Override
+    public void loginFail() {
+        Toast.makeText(mActivity, "服务器异常,请反馈给研发中心,谢谢!!", Toast.LENGTH_SHORT).show();
+    }
+
 }

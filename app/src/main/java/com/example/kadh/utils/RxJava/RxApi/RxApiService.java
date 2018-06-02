@@ -34,22 +34,22 @@ interface RxApiService {
             @Field("password") String password,
             @Field("version") String version);
 
-//    @GET(RxApiUrl.Url.CHECKVERSION + NICAI)
-//    Observable<BaseResponse<UpDateModel>> checkVersion(@Query("appVersion") String version);
+    //    @GET(RxApiUrl.Url.CHECKVERSION + NICAI)
+    //    Observable<BaseResponse<UpDateModel>> checkVersion(@Query("appVersion") String version);
 
-//    @FormUrlEncoded
-//    @POST(RxApiUrl.Url.UPDATEUPHONE + NICAI)
-//    Observable<BaseResponse<String>> upDateUphone(
-//            @Field("uphone") String uphone,
-//            @Field("ushort_phone") String ushort_phone,
-//            @Field("version") String version);
+    //    @FormUrlEncoded
+    //    @POST(RxApiUrl.Url.UPDATEUPHONE + NICAI)
+    //    Observable<BaseResponse<String>> upDateUphone(
+    //            @Field("uphone") String uphone,
+    //            @Field("ushort_phone") String ushort_phone,
+    //            @Field("version") String version);
 
-//    @Multipart
-//    @POST(RxApiUrl.Url.UPLOADFIELD + NICAI)
-//    Observable<BaseResponse<List<UpFieldModel>>> upLoadField(@Part MultipartBody.Part file, @Query("version") String version, @Query("fileName") String filename);
+    //    @Multipart
+    //    @POST(RxApiUrl.Url.UPLOADFIELD + NICAI)
+    //    Observable<BaseResponse<List<UpFieldModel>>> upLoadField(@Part MultipartBody.Part file, @Query("version") String version, @Query("fileName") String filename);
 
-//    @Streaming
-//    @GET
-//    Observable<ResponseBody> download(@Url String url);
+    //    @Streaming
+    //    @GET
+    //    Observable<ResponseBody> download(@Url String url);
 
 }

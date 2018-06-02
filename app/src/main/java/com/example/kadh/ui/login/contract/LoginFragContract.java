@@ -1,6 +1,7 @@
 package com.example.kadh.ui.login.contract;
 
 import com.example.kadh.base.BaseContract;
+import com.example.kadh.bean.LoginBean;
 
 /**
  * @author: kadh
@@ -12,11 +13,21 @@ import com.example.kadh.base.BaseContract;
 public interface LoginFragContract {
 
     interface View extends BaseContract.BaseView {
-        void setSpData(String username, String passwrod);
+        void setLoginData(String username, String passwrod);
+
+        void checkInput(String username, String passwrod);
+
+        void loginSuccess();
+
+        void loginFail();
     }
 
     interface Presenter<T> extends BaseContract.BasePresenter<T> {
-        void getSpData();
+        void getFastData();
+
+        void getLoginData();
+
+        void saveLoginData(String username, String passwrod, LoginBean data);
 
         void login(String username, String password);
     }

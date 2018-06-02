@@ -5,10 +5,16 @@ import android.support.design.widget.CoordinatorLayout;
 import com.example.kadh.R;
 import com.example.kadh.base.BaseActivity;
 import com.example.kadh.component.AppComponent;
+import com.example.kadh.ui.home.MainActivity;
 import com.example.kadh.ui.login.activity.LoginActivity;
+import com.example.kadh.utils.RxJava.RxApi.RxManager;
+import com.socks.library.KLog;
+
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.OnClick;
+import okhttp3.Cookie;
 
 /**
  * @author: kadh
@@ -24,27 +30,23 @@ public class SplashActivity extends BaseActivity {
 
     @Override
     public void configViews() {
-//        RxView.clicks(mRoot).subscribeOn(AndroidSchedulers.mainThread()).subscribe(new Consumer<Object>() {
-//            @Override
-//            public void accept(Object o) throws Exception {
-//                openActivity(LoginActivity.class);
-//            }
-//        });
 
     }
 
     @Override
     public void initDatas() {
-        openActivity(LoginActivity.class);
+        checkCookie();
     }
 
     public void checkCookie() {
-//        List<Cookie> cookies = RxApi.getRxApi().getCookiePersistor().loadAll();
-//        if (cookies.isEmpty()) {
-//            openActivity(LoginActivity.class);
-//        } else {
-//            openActivity(MianActivity.class);
-//        }
+        List<Cookie> cookies = RxManager.getInstant().getCookie().loadAll();
+        KLog.d(cookies);
+        if (cookies.isEmpty()) {
+            openActivity(LoginActivity.class);
+        } else {
+            openActivity(MainActivity.class);
+        }
+        finish();
     }
 
     @Override

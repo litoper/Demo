@@ -1,26 +1,26 @@
 package com.example.kadh.module;
 
 import com.example.kadh.utils.RxJava.RxApi.RxApi;
-import com.example.kadh.utils.RxJava.RxApi.RxApiUtils;
+import com.example.kadh.utils.RxJava.RxApi.RxManager;
 
 import dagger.Module;
 import dagger.Provides;
 
 @Module
 public class RxApiModule {
-    private RxApiUtils mRxApiUtils;
+    private RxManager mRxManager;
 
     public RxApiModule() {
-        mRxApiUtils = RxApiUtils.getRxApiUtils();
+        mRxManager = RxManager.getInstant();
     }
 
     @Provides
-    public RxApiUtils provideRxApiUtils() {
-        return mRxApiUtils;
+    public RxManager provideRxApiUtils() {
+        return mRxManager;
     }
 
     @Provides
     public RxApi provideRxApi() {
-        return mRxApiUtils.getRxApi();
+        return mRxManager.getRxApi();
     }
 }

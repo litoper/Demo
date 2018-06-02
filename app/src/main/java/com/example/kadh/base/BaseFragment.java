@@ -11,7 +11,10 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.kadh.app.App;
+import com.example.kadh.component.ActivityComponent;
 import com.example.kadh.component.AppComponent;
+import com.example.kadh.component.DaggerActivityComponent;
+import com.example.kadh.module.ActivityModule;
 
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
@@ -26,18 +29,19 @@ import butterknife.Unbinder;
 
 public abstract class BaseFragment extends Fragment {
 
-    protected View parentView;
-    protected Context mContext;
-    protected LayoutInflater inflater;
-    protected FragmentActivity activity;
-    private Unbinder mUnbinder;
+    protected View              parentView;
+    protected Context           mContext;
+    protected LayoutInflater    inflater;
+    protected FragmentActivity  mActivity;
+    private   Unbinder          mUnbinder;
+    protected ActivityComponent mActivityComponent;
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         parentView = inflater.inflate(getLayoutResId(), container, false);
-        activity = getSupportActivity();
-        mContext = activity;
+        mActivity = getSupportActivity();
+        mContext = mActivity;
         this.inflater = inflater;
         return parentView;
     }
@@ -46,6 +50,8 @@ public abstract class BaseFragment extends Fragment {
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         mUnbinder = ButterKnife.bind(this, view);
+        mActivityComponent = DaggerActivityComponent.builder().activityModule(new ActivityModule(getActivity()))
+                .build();
         setupActivityComponent(App.getApp().getAppComponent());
         attachView();
         initDatas();
@@ -80,13 +86,13 @@ public abstract class BaseFragment extends Fragment {
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
-        this.activity = (FragmentActivity) context;
+        this.mActivity = (FragmentActivity) context;
     }
 
     @Override
     public void onDetach() {
         super.onDetach();
-        this.activity = null;
+        this.mActivity = null;
     }
 
     protected void gone(final View... views) {

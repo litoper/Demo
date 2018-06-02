@@ -15,7 +15,10 @@ import android.view.WindowManager;
 
 import com.example.kadh.R;
 import com.example.kadh.app.App;
+import com.example.kadh.component.ActivityComponent;
 import com.example.kadh.component.AppComponent;
+import com.example.kadh.component.DaggerActivityComponent;
+import com.example.kadh.module.ActivityModule;
 import com.example.kadh.utils.StatusBarCompat;
 
 import butterknife.ButterKnife;
@@ -33,8 +36,9 @@ public abstract class BaseActivity extends AppCompatActivity {
     public Toolbar mCommonToolbar;
 
     protected Context mContext;
-    protected int statusBarColor = 0;
-    protected View statusBarView = null;
+    protected int  statusBarColor = 0;
+    protected View statusBarView  = null;
+    protected ActivityComponent mActivityComponent;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -47,8 +51,8 @@ public abstract class BaseActivity extends AppCompatActivity {
             statusBarView = StatusBarCompat.compat(this, statusBarColor);
         }
         transparent19and20();
-
         ButterKnife.bind(this);
+        mActivityComponent = DaggerActivityComponent.builder().activityModule(new ActivityModule(this)).build();
         setupActivityComponent(App.getApp().getAppComponent());
         mCommonToolbar = ButterKnife.findById(this, R.id.common_toolbar);
         if (mCommonToolbar != null) {

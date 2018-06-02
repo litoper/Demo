@@ -6,7 +6,6 @@ import android.util.Log;
 import android.widget.Toast;
 
 import com.example.kadh.BuildConfig;
-import com.example.kadh.app.App;
 import com.example.kadh.utils.NetworkUtils;
 import com.example.kadh.utils.RxJava.BaseResponse;
 import com.google.gson.JsonParseException;
@@ -29,8 +28,8 @@ import retrofit2.HttpException;
 public class SubProgress<T> extends DisposableObserver<T> {
     private static final String TAG = "SubProgress";
     private SubNextImpl<T> mSubListener;
-    private Context mContext;
-    private SubDialog mDialog;
+    private Context        mContext;
+    private SubDialog      mDialog;
 
     public SubProgress(Context context, int tag, @NonNull SubNextImpl<T> subListener) {
         this.mSubListener = subListener;
@@ -65,9 +64,9 @@ public class SubProgress<T> extends DisposableObserver<T> {
             //110为未登录状态
             if ("110".equals(baseResponse.msg)) {
                 Toast.makeText(mContext, "110", Toast.LENGTH_SHORT).show();
-//                Intent intent = new Intent(mContext, LoginActivity.class);
-//                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
-//                mContext.startActivity(intent);
+                //                Intent intent = new Intent(mContext, LoginActivity.class);
+                //                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                //                mContext.startActivity(intent);
             } else {
                 mSubListener.onSubFalse(t);
                 //默认false给予吐司提示,上方case里内容的接口已做处理则不提示
@@ -93,22 +92,22 @@ public class SubProgress<T> extends DisposableObserver<T> {
     private void doErrorHint(Throwable e) {
         if (BuildConfig.DEBUG) {
             if (e instanceof SocketTimeoutException) {
-                Toast.makeText(App.getApp(), "连接超时！", Toast.LENGTH_SHORT).show();
+                Toast.makeText(mContext, "连接超时！", Toast.LENGTH_SHORT).show();
             } else if (e instanceof ConnectException) {
-                Toast.makeText(App.getApp(), "无法连接到服务器！", Toast.LENGTH_SHORT).show();
+                Toast.makeText(mContext, "无法连接到服务器！", Toast.LENGTH_SHORT).show();
             } else if (e instanceof FileNotFoundException) {
-                Toast.makeText(App.getApp(), "服务器搬家了!", Toast.LENGTH_SHORT).show();
+                Toast.makeText(mContext, "服务器搬家了!", Toast.LENGTH_SHORT).show();
             } else if (e instanceof JsonParseException) {
-                Toast.makeText(App.getApp(), "数据解析存在问题!", Toast.LENGTH_SHORT).show();
+                Toast.makeText(mContext, "数据解析存在问题!", Toast.LENGTH_SHORT).show();
             } else if (e instanceof HttpException) {
                 HttpException httpException = (HttpException) e;
-                Toast.makeText(App.getApp(), "错误码:" + httpException.code() + "\r\n错误消息:" + httpException.message(), Toast.LENGTH_SHORT).show();
+                Toast.makeText(mContext, "错误码:" + httpException.code() + "\r\n错误消息:" + httpException.message(), Toast.LENGTH_SHORT).show();
             } else {
-                Toast.makeText(App.getApp(), e.toString(), Toast.LENGTH_SHORT).show();
+                Toast.makeText(mContext, e.toString(), Toast.LENGTH_SHORT).show();
                 e.printStackTrace();
             }
         } else {
-            Toast.makeText(App.getApp(), "系统错误, 请联系研发中心处理!", Toast.LENGTH_SHORT).show();
+            Toast.makeText(mContext, "系统错误, 请联系研发中心处理!", Toast.LENGTH_SHORT).show();
         }
     }
 

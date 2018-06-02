@@ -20,8 +20,8 @@ import com.socks.library.KLog;
  */
 
 public class App extends Application {
-    private static App sApp;
-    private AppComponent mAppComponent;
+    private static App          sApp;
+    private        AppComponent mAppComponent;
 
     @Override
     public void onCreate() {

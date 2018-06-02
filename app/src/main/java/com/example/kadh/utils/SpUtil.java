@@ -34,6 +34,10 @@ public class SpUtil {
     public static final String LOGIN = "login";
     public static final String LOGIN_USERNAME = "username";
     public static final String LOGIN_PASSWORD = "password";
+    public static final String INFO_USERNAME = "info_userName";
+    public static final String INFO_USERICO = "info_userIco";
+    public static final String INFO_USERID= "info_userid";
+    public static final String INFO_PUSHID= "info_pushId";
 
 
     public synchronized static SpUtil getInstance() {

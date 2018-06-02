@@ -2,6 +2,8 @@ package com.example.kadh.module;
 
 import android.content.Context;
 
+import javax.inject.Singleton;
+
 import dagger.Module;
 import dagger.Provides;
 
@@ -13,6 +15,7 @@ import dagger.Provides;
  * @desc :
  */
 
+@Singleton
 @Module
 public class AppModule {
     private Context context;

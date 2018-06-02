@@ -25,6 +25,10 @@ public class NullUtils {
         return true;
     }
 
+    public static boolean isEmpty(CharSequence charSequence) {
+        return isEmpty(String.valueOf(charSequence));
+    }
+
     public static boolean isNull(String str) {
         if (str == null || "".equals(str) || "null".equalsIgnoreCase(str)) {
             return true;
