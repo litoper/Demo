@@ -2,8 +2,8 @@ package com.example.kadh.ui.login.presenter;
 
 import android.app.Activity;
 
-import com.example.kadh.base.BaseFragmentPresenter;
-import com.example.kadh.bean.LoginBean;
+import com.example.kadh.base.BasePresenterImpl;
+import com.example.kadh.ui.login.bean.LoginBean;
 import com.example.kadh.ui.login.contract.LoginFragContract;
 import com.example.kadh.utils.MD5helper;
 import com.example.kadh.utils.NullUtils;
@@ -18,8 +18,6 @@ import java.util.List;
 
 import javax.inject.Inject;
 
-import io.reactivex.Observer;
-
 /**
  * @author: kadh
  * @email : 36870855@qq.com
@@ -27,7 +25,7 @@ import io.reactivex.Observer;
  * @blog : http://www.nicaicaicai.com
  * @desc :
  */
-public class LoginNormalPresenter extends BaseFragmentPresenter<LoginFragContract.View> implements LoginFragContract.Presenter<LoginFragContract.View> {
+public class LoginNormalPresenter extends BasePresenterImpl<LoginFragContract.View> implements LoginFragContract.Presenter<LoginFragContract.View> {
 
     private RxApi    mRxApi;
     private Activity mActivity;
@@ -64,7 +62,7 @@ public class LoginNormalPresenter extends BaseFragmentPresenter<LoginFragContrac
 
     @Override
     public void login(final String username, final String password) {
-        Observer<BaseResponse<List<LoginBean>>> progress = new SubProgress<>(mActivity, SubDialog.LOGINING, new SubNextImpl<BaseResponse<List<LoginBean>>>() {
+        SubProgress<BaseResponse<List<LoginBean>>> progress = new SubProgress<>(mActivity, SubDialog.LOGINING, new SubNextImpl<BaseResponse<List<LoginBean>>>() {
             @Override
             public void onSubSuccess(BaseResponse<List<LoginBean>> response) {
                 if (!NullUtils.isNull(response.data)) {

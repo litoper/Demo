@@ -1,7 +1,7 @@
 package com.example.kadh.ui.login.contract;
 
 import com.example.kadh.base.BaseContract;
-import com.example.kadh.bean.LoginBean;
+import com.example.kadh.ui.login.bean.LoginBean;
 
 /**
  * @author: kadh

@@ -1,13 +1,14 @@
 package com.example.kadh.utils.RxJava.RxApi;
 
 
-import com.example.kadh.bean.LoginBean;
+import com.example.kadh.ui.login.bean.LoginBean;
+import com.example.kadh.ui.main.bean.UserInfoBean;
 import com.example.kadh.utils.RxJava.BaseResponse;
 
 import java.util.List;
 
-import io.reactivex.Observable;
-import io.reactivex.Observer;
+import io.reactivex.Flowable;
+import io.reactivex.FlowableSubscriber;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
 
@@ -22,33 +23,46 @@ import io.reactivex.schedulers.Schedulers;
 
 public class RxApi {
     private RxApiService mRxApiService;
-    private String mVersion;
+    private String       mVersion;
 
     RxApi(RxApiService rxApiService, String version) {
         mRxApiService = rxApiService;
         mVersion = version;
     }
 
-    public void getCode(Observer<BaseResponse<String>> observer) {
-        Observable observable = mRxApiService.checkVersion(mVersion);
-        toSubscribe(observable, observer);
+    /**
+     * login登陆
+     *
+     * @param subscriber
+     * @param username
+     * @param password
+     */
+    public void login(FlowableSubscriber<BaseResponse<List<LoginBean>>> subscriber, String username, String password) {
+        Flowable flowable = mRxApiService.login(username, password, mVersion);
+        toSubscribe(flowable, subscriber);
     }
 
-
-    public void login(Observer<BaseResponse<List<LoginBean>>> observer, String username, String password) {
-        Observable observable = mRxApiService.login(username, password, mVersion);
-        toSubscribe(observable, observer);
+    /**
+     * getUseInfo获取个人信息
+     *
+     * @param subscriber
+     * @param userid
+     */
+    public void getUseInfo(FlowableSubscriber<BaseResponse<List<UserInfoBean>>> subscriber, String userid) {
+        Flowable flowable = mRxApiService.getUseInfo(userid, mVersion);
+        toSubscribe(flowable, subscriber);
     }
 
 
     // subscribeOn(): 指定 subscribe() 发生在 IO 线程
     // observeOn(): 指定 Subscriber 的回调发生在主线程
     //添加线程管理并订阅
-    private void toSubscribe(Observable observable, Observer observer) {
-        observable
+    private void toSubscribe(Flowable flowable, FlowableSubscriber subscriber) {
+        flowable
                 .subscribeOn(Schedulers.io())
                 .unsubscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(observer);
+                .subscribe(subscriber);
     }
+
 }

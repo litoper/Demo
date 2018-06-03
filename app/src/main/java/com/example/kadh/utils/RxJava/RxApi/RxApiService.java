@@ -1,11 +1,13 @@
 package com.example.kadh.utils.RxJava.RxApi;
 
 
-import com.example.kadh.bean.LoginBean;
+import com.example.kadh.ui.login.bean.LoginBean;
+import com.example.kadh.ui.main.bean.UserInfoBean;
 import com.example.kadh.utils.RxJava.BaseResponse;
 
 import java.util.List;
 
+import io.reactivex.Flowable;
 import io.reactivex.Observable;
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
@@ -29,10 +31,16 @@ interface RxApiService {
 
     @FormUrlEncoded
     @POST(RxApiUrl.Url.LOGIN)
-    Observable<BaseResponse<List<LoginBean>>> login(
+    Flowable<BaseResponse<List<LoginBean>>> login(
             @Field("name") String username,
             @Field("password") String password,
             @Field("version") String version);
+
+    @GET(RxApiUrl.Url.GETUSERINFO)
+    Flowable<BaseResponse<List<UserInfoBean>>> getUseInfo(
+            @Query("userid") String userid,
+            @Query("version") String version);
+
 
     //    @GET(RxApiUrl.Url.CHECKVERSION + NICAI)
     //    Observable<BaseResponse<UpDateModel>> checkVersion(@Query("appVersion") String version);

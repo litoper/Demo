@@ -1,4 +1,4 @@
-package com.example.kadh.bean.base;
+package com.example.kadh.base;
 
 import java.io.Serializable;
 

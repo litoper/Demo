@@ -1,6 +1,6 @@
 package com.example.kadh.component;
 
-import com.example.kadh.ui.home.MainActivity;
+import com.example.kadh.ui.main.activity.MainActivity;
 import com.example.kadh.ui.login.fragment.LoginNormalFragment;
 import com.example.kadh.ui.login.fragment.LoginVerifyFragment;
 

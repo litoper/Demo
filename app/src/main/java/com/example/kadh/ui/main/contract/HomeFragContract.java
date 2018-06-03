@@ -1,14 +1,12 @@
-package com.example.kadh.ui.home;
+package com.example.kadh.ui.main.contract;
 
 import com.example.kadh.base.BaseContract;
 
-public interface MainContract {
+public interface HomeFragContract {
 
     interface View extends BaseContract.BaseView {
-        void processVersion();
     }
 
     interface Presenter<T> extends BaseContract.BasePresenter<T> {
-        void checkVersion();
     }
 }

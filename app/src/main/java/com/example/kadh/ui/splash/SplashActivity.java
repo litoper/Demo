@@ -5,7 +5,7 @@ import android.support.design.widget.CoordinatorLayout;
 import com.example.kadh.R;
 import com.example.kadh.base.BaseActivity;
 import com.example.kadh.component.AppComponent;
-import com.example.kadh.ui.home.MainActivity;
+import com.example.kadh.ui.main.activity.MainActivity;
 import com.example.kadh.ui.login.activity.LoginActivity;
 import com.example.kadh.utils.RxJava.RxApi.RxManager;
 import com.socks.library.KLog;

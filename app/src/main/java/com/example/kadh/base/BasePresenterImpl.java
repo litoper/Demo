@@ -7,10 +7,10 @@ package com.example.kadh.base;
  * @blog : http://www.nicaicaicai.com
  * @desc :
  */
-public class BaseFragmentPresenter<T extends BaseContract.BaseView> implements BaseContract.BasePresenter<T> {
+public class BasePresenterImpl<T extends BaseContract.BaseView> implements BaseContract.BasePresenter<T> {
     protected T mView;
 
-    public BaseFragmentPresenter() {
+    public BasePresenterImpl() {
     }
 
     @Override

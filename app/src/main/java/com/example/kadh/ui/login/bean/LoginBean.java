@@ -1,6 +1,6 @@
-package com.example.kadh.bean;
+package com.example.kadh.ui.login.bean;
 
-import com.example.kadh.bean.base.BaseBean;
+import com.example.kadh.base.BaseBean;
 
 /**
  * @author: kadh

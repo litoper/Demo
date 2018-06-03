@@ -1,6 +1,7 @@
 package com.example.kadh.base;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.LayoutRes;
 import android.support.annotation.Nullable;
@@ -118,6 +119,55 @@ public abstract class BaseFragment extends Fragment {
 
     protected boolean isVisible(View view) {
         return view.getVisibility() == View.VISIBLE;
+    }
+
+
+    /**
+     * 当无参数需要传递时，可调用单参的该函数
+     *
+     * @param pClass
+     */
+    protected void openActivity(Class<?> pClass) {
+        openActivity(pClass, null);
+    }
+
+    /**
+     * 当无参数需要传递,但有返回结果，可向Bundle传递null
+     *
+     * @param pClass
+     * @param requestCode
+     */
+    protected void openActivity(Class<?> pClass, int requestCode) {
+        openActivity(pClass, null, requestCode);
+    }
+
+    /**
+     * 传递不带返回值的意图
+     *
+     * @param pClass
+     * @param pBundle
+     */
+    protected void openActivity(Class<?> pClass, Bundle pBundle) {
+        Intent intent = new Intent(getActivity(), pClass);
+        if (pBundle != null) {
+            intent.putExtras(pBundle);
+        }
+        startActivity(intent);
+    }
+
+    /**
+     * 传递带有返回值的activity，简化了意图的代码
+     *
+     * @param pClass
+     * @param pBundle
+     * @param requestCode
+     */
+    protected void openActivity(Class<?> pClass, Bundle pBundle, int requestCode) {
+        Intent intent = new Intent(getActivity(), pClass);
+        if (pBundle != null) {
+            intent.putExtras(pBundle);
+        }
+        startActivityForResult(intent, requestCode);
     }
 
 }

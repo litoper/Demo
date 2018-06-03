@@ -15,7 +15,7 @@ import java.net.ConnectException;
 import java.net.SocketTimeoutException;
 
 import io.reactivex.annotations.NonNull;
-import io.reactivex.observers.DisposableObserver;
+import io.reactivex.subscribers.DisposableSubscriber;
 import retrofit2.HttpException;
 
 /**
@@ -25,7 +25,7 @@ import retrofit2.HttpException;
  * @blog : http://www.nicaicaicai.com
  * @desc :
  */
-public class SubProgress<T> extends DisposableObserver<T> {
+public class SubProgress<T> extends DisposableSubscriber<T> {
     private static final String TAG = "SubProgress";
     private SubNextImpl<T> mSubListener;
     private Context        mContext;
