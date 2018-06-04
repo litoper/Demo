@@ -28,13 +28,13 @@ public class SubDialog {
     private SweetAlertDialog mSweetAlertDialog;
 
     private Context context;
-    private SubProgress mSubProgress;
+    private SubProtect mSubProtect;
     private boolean mCancelable;
     private int mTag;
 
-    public SubDialog(Context context, SubProgress subProgress, boolean cancelable, int tag) {
+    public SubDialog(Context context, SubProtect subProtect, boolean cancelable, int tag) {
         this.context = context;
-        mSubProgress = subProgress;
+        mSubProtect = subProtect;
         mCancelable = cancelable;
         mTag = tag;
     }
@@ -73,8 +73,8 @@ public class SubDialog {
 //                mSweetAlertDialog.setOnDismissListener(new DialogInterface.OnDismissListener() {
 //                    @Override
 //                    public void onDismiss(DialogInterface dialog) {
-//                        if (mSubProgress != null) {
-//                            mSubProgress.dismissSubDialog("触摸");
+//                        if (mSubProtect != null) {
+//                            mSubProtect.dismissSubDialog("触摸");
 //                        }
 //                    }
 //                });

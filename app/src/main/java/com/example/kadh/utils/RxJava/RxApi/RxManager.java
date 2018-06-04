@@ -32,10 +32,10 @@ public class RxManager {
     private static final int READ_TIMEOUT = 60;//连接超时时间,单位  秒
 
     private static SharedPrefsCookiePersistor sCookiePersistor;
-    private static PersistentCookieJar        sCookieJar;
-    private static RxApi                      sRxApi;
-    private static RxManager                  sRxManager;
-    private        Cache                      mHttpCache;
+    private static PersistentCookieJar sCookieJar;
+    private static RxApi sRxApi;
+    private static RxManager sRxManager;
+    private Cache mHttpCache;
 
     private RxManager() {
         Gson gson = new GsonBuilder()

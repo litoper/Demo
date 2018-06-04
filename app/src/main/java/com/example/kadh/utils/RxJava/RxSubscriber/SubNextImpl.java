@@ -52,4 +52,5 @@ interface SubNextListener<T> {
     void onSubSuccess(T response);
 
     void onSubNext(T response);
+
 }

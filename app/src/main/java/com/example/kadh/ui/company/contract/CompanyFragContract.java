@@ -1,8 +1,8 @@
-package com.example.kadh.ui.main.contract;
+package com.example.kadh.ui.company.contract;
 
 import com.example.kadh.base.BaseContract;
 
-public interface HomeFragContract {
+public interface CompanyFragContract {
 
     interface View extends BaseContract.BaseView {
     }

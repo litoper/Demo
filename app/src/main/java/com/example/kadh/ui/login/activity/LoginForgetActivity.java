@@ -1,5 +1,6 @@
 package com.example.kadh.ui.login.activity;
 
+import com.example.kadh.R;
 import com.example.kadh.base.BaseActivity;
 import com.example.kadh.component.AppComponent;
 
@@ -21,7 +22,7 @@ public class LoginForgetActivity extends BaseActivity {
 
     @Override
     public int getLayoutId() {
-        return 0;
+        return R.layout.activity_login_forget;
     }
 
     @Override

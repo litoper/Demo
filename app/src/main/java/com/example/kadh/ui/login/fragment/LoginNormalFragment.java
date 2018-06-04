@@ -12,6 +12,7 @@ import com.example.kadh.R;
 import com.example.kadh.base.BaseFragmentView;
 import com.example.kadh.component.AppComponent;
 import com.example.kadh.component.DaggerMainComponent;
+import com.example.kadh.ui.login.activity.LoginForgetActivity;
 import com.example.kadh.ui.login.presenter.LoginNormalPresenter;
 import com.example.kadh.ui.main.activity.MainActivity;
 import com.example.kadh.ui.login.contract.LoginFragContract;
@@ -35,19 +36,19 @@ import io.reactivex.functions.Consumer;
 public class LoginNormalFragment extends BaseFragmentView<LoginNormalPresenter> implements LoginFragContract.View {
 
     @BindView(R.id.login_normal_btn_clear)
-    Button   mBtnClear;
+    Button mBtnClear;
     @BindView(R.id.login_normal_et_username)
     EditText mEtUsername;
     @BindView(R.id.login_normal_btn_eye)
-    Button   mBtnEye;
+    Button mBtnEye;
     @BindView(R.id.login_normal_et_password)
     EditText mEtPassword;
     @BindView(R.id.login_normal_btn_login)
-    Button   mBtnLogin;
+    Button mBtnLogin;
     @BindView(R.id.login_normal_btn_fastlogin)
-    Button   mBtnFastlogin;
+    Button mBtnFastlogin;
     @BindView(R.id.login_normal_btn_forget)
-    Button   mBtnForget;
+    Button mBtnForget;
     private String mUsername;
     private String mPasswrod;
 
@@ -89,7 +90,7 @@ public class LoginNormalFragment extends BaseFragmentView<LoginNormalPresenter> 
         RxView.clicks(mBtnForget).throttleFirst(1, TimeUnit.SECONDS).observeOn(AndroidSchedulers.mainThread()).subscribe(new Consumer<Object>() {
             @Override
             public void accept(Object o) throws Exception {
-                startActivity(new Intent(mContext, MainActivity.class));
+                openActivity(LoginForgetActivity.class);
             }
         });
 
@@ -97,6 +98,7 @@ public class LoginNormalFragment extends BaseFragmentView<LoginNormalPresenter> 
             @Override
             public void accept(Object o) throws Exception {
                 Toast.makeText(mActivity, "快速登陆", Toast.LENGTH_SHORT).show();
+                openActivity(MainActivity.class);
             }
         });
 
@@ -114,7 +116,7 @@ public class LoginNormalFragment extends BaseFragmentView<LoginNormalPresenter> 
             }
         });
 
-        RxView.clicks(mBtnLogin).throttleLast(1, TimeUnit.SECONDS).observeOn(AndroidSchedulers.mainThread()).subscribe(new Consumer<Object>() {
+        RxView.clicks(mBtnLogin).debounce(500, TimeUnit.MILLISECONDS).observeOn(AndroidSchedulers.mainThread()).subscribe(new Consumer<Object>() {
 
             @Override
             public void accept(Object o) throws Exception {
@@ -142,7 +144,7 @@ public class LoginNormalFragment extends BaseFragmentView<LoginNormalPresenter> 
 
     @Override
     protected void setupActivityComponent(AppComponent appComponent) {
-        DaggerMainComponent.builder().appComponent(appComponent).activityComponent(mActivityComponent).build().inject(this);
+        DaggerMainComponent.builder().appComponent(appComponent).build().inject(this);
     }
 
     @Override

@@ -29,4 +29,15 @@ public class BaseResponse<T> implements Serializable {
 
     @SerializedName("data")
     public T data;
+
+    @Override
+    public String toString() {
+        return "BaseResponse{" +
+                "code=" + code +
+                ", success=" + success +
+                ", msg='" + msg + '\'' +
+                ", total='" + total + '\'' +
+                ", data=" + data +
+                '}';
+    }
 }

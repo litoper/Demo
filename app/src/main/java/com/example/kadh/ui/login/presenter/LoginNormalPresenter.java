@@ -1,7 +1,5 @@
 package com.example.kadh.ui.login.presenter;
 
-import android.app.Activity;
-
 import com.example.kadh.base.BasePresenterImpl;
 import com.example.kadh.ui.login.bean.LoginBean;
 import com.example.kadh.ui.login.contract.LoginFragContract;
@@ -9,9 +7,8 @@ import com.example.kadh.utils.MD5helper;
 import com.example.kadh.utils.NullUtils;
 import com.example.kadh.utils.RxJava.BaseResponse;
 import com.example.kadh.utils.RxJava.RxApi.RxApi;
-import com.example.kadh.utils.RxJava.RxSubscriber.SubDialog;
 import com.example.kadh.utils.RxJava.RxSubscriber.SubNextImpl;
-import com.example.kadh.utils.RxJava.RxSubscriber.SubProgress;
+import com.example.kadh.utils.RxJava.RxSubscriber.SubProtect;
 import com.example.kadh.utils.SpUtil;
 
 import java.util.List;
@@ -27,13 +24,11 @@ import javax.inject.Inject;
  */
 public class LoginNormalPresenter extends BasePresenterImpl<LoginFragContract.View> implements LoginFragContract.Presenter<LoginFragContract.View> {
 
-    private RxApi    mRxApi;
-    private Activity mActivity;
+    private RxApi mRxApi;
 
     @Inject
-    public LoginNormalPresenter(RxApi rxApi, Activity activity) {
+    public LoginNormalPresenter(RxApi rxApi) {
         mRxApi = rxApi;
-        mActivity = activity;
     }
 
     @Override
@@ -54,15 +49,15 @@ public class LoginNormalPresenter extends BasePresenterImpl<LoginFragContract.Vi
         SpUtil.getInstance().putString(SpUtil.LOGIN_USERNAME, username);
         SpUtil.getInstance().putString(SpUtil.LOGIN_PASSWORD, passwrod);
         //保存登陆返回信息
-        SpUtil.getInstance().put(SpUtil.INFO_PUSHID, bean.getPushID());
-        SpUtil.getInstance().put(SpUtil.INFO_USERID, bean.getUserid());
-        SpUtil.getInstance().put(SpUtil.INFO_USERNAME, bean.getUserName());
-        SpUtil.getInstance().put(SpUtil.INFO_USERICO, bean.getUserIco());
+        SpUtil.getInstance().put(SpUtil.LOGIN_INFO_PUSHID, bean.getPushID());
+        SpUtil.getInstance().put(SpUtil.LOGIN_INFO_USERID, bean.getUserid());
+        SpUtil.getInstance().put(SpUtil.LOGIN_INFO_USERNAME, bean.getUserName());
+        SpUtil.getInstance().put(SpUtil.LOGIN_INFO_USERICO, bean.getUserIco());
     }
 
     @Override
     public void login(final String username, final String password) {
-        SubProgress<BaseResponse<List<LoginBean>>> progress = new SubProgress<>(mActivity, SubDialog.LOGINING, new SubNextImpl<BaseResponse<List<LoginBean>>>() {
+        SubProtect<BaseResponse<List<LoginBean>>> progress = new SubProtect<>(new SubNextImpl<BaseResponse<List<LoginBean>>>() {
             @Override
             public void onSubSuccess(BaseResponse<List<LoginBean>> response) {
                 if (!NullUtils.isNull(response.data)) {
