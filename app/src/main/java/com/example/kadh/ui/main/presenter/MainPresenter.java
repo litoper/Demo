@@ -3,6 +3,7 @@ package com.example.kadh.ui.main.presenter;
 import android.support.v4.app.Fragment;
 
 import com.example.kadh.base.BasePresenterImpl;
+import com.example.kadh.ui.company.fragment.CompanyFragment;
 import com.example.kadh.ui.main.bean.IsHasUnReadBean;
 import com.example.kadh.ui.main.bean.UserInfoBean;
 import com.example.kadh.ui.main.bean.WeatherBean;
@@ -34,7 +35,7 @@ public class MainPresenter extends BasePresenterImpl<MainAtyContract.View> imple
     @Override
     public void initViewPager() {
         List<Fragment> fragmentList = new ArrayList<>();
-        MainFragmentView frgCompany = new MainFragmentView("公司");
+        CompanyFragment frgCompany = new CompanyFragment();
         MainFragmentView frgWork = new MainFragmentView("工作");
         MainFragmentView frgTxl = new MainFragmentView("通讯录");
         MainFragmentView frgMy = new MainFragmentView("我的");

@@ -7,6 +7,8 @@
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <!--控件的选中颜色，即checked或selected状态的颜色。-->
         <item name="colorAccent">@color/colorAccent</item>
+        <!--LoadingLayout-->
+        <item name="styleLoadingLayout">@style/LoadingLayoutStyle</item>
     </style>
 
     <style name="AppTheme.NoActionBar">
@@ -56,5 +58,41 @@
         <item name="android:textSize">16sp</item>
     </style>
 
+    <!--LoadingLayout-->
+    <style name="LoadingLayout">
+    </style>
+
+    <style name="LoadingLayout.Style">
+        <item name="llEmptyResId">@layout/_loading_layout_empty</item>
+        <item name="llLoadingResId">@layout/_loading_layout_loading</item>
+        <item name="llErrorResId">@layout/_loading_layout_error</item>
+
+        <item name="llTextColor">#999999</item>
+        <item name="llTextSize">16sp</item>
+
+        <item name="llButtonTextColor">#999999</item>
+        <item name="llButtonTextSize">16sp</item>
+        <item name="llButtonBackground">@drawable/_loading_layout_button</item>
+
+        <item name="llEmptyImage">@null</item>
+        <item name="llEmptyText">暂无数据</item>
+        <item name="llErrorImage">@null</item>
+        <item name="llErrorText">无网络连接，请检查您的网络...</item>
+        <item name="llRetryText">加载失败，点击重试~~</item>
+    </style>
+
+    <style name="LoadingLayoutStyle" parent="LoadingLayout.Style">
+        <item name="llEmptyImage">@mipmap/_loading_layout_empty</item>
+        <item name="llErrorImage">@mipmap/_loading_layout_error</item>
+        ...
+    </style>
+    <!--LoadingLayout-->
+
+    <style name="AppTheme.Toolbar" parent="Widget.AppCompat.ActionBar">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">?attr/actionBarSize</item>
+        <item name="android:background">?attr/colorPrimary</item>
+        <item name="android:theme">@style/ThemeOverlay.AppCompat.Dark.ActionBar</item>
+    </style>
 
 </resources>

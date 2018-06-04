@@ -70,4 +70,7 @@ dependencies {
 
     //log
     implementation 'com.github.zhaokaiqiang.klog:library:1.6.0'
+
+    implementation 'com.scwang.smartrefresh:SmartRefreshLayout:1.1.0-alpha-6'
+    implementation 'com.scwang.smartrefresh:SmartRefreshHeader:1.1.0-alpha-6'//没有使用特殊Header，可以不加这行
 }
