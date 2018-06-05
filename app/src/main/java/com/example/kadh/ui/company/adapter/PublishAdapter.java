@@ -109,6 +109,9 @@ public class PublishAdapter extends BaseMultiItemQuickAdapter<PublishListBean, B
         helper.setText(R.id.notice_tv_title, "标题：" + item.getPtitle());
         helper.setText(R.id.notice_tv_name, NullUtils.filterEmpty(item.getPsponsor()));
         GlideUtils.loadImageViewForHead(mContext, RxApiUrl.Url.BASE + item.getPsponsorImage(), (CircleImageView) helper.getView(R.id.notice_iv_icon));
+
+
+
     }
 //    holder.mCvNewsIcon = (CircleImageView) convertView.findViewById(R.id.news_iv_news_icon);
 //    holder.mIvMenu = (ImageView) convertView.findViewById(R.id.news_iv_menu);

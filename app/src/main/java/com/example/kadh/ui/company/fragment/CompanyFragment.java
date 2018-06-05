@@ -1,5 +1,6 @@
 package com.example.kadh.ui.company.fragment;
 
+import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.AppBarLayout;
 import android.support.v7.app.AppCompatActivity;
@@ -10,11 +11,15 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuInflater;
+import android.view.View;
 
+import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.example.kadh.R;
 import com.example.kadh.base.BaseFragmentView;
 import com.example.kadh.component.AppComponent;
 import com.example.kadh.component.DaggerMainComponent;
+import com.example.kadh.ui.company.activity.NewsDetailActivity;
+import com.example.kadh.ui.company.activity.NoticeDetailActivity;
 import com.example.kadh.ui.company.adapter.PublishAdapter;
 import com.example.kadh.ui.company.bean.PublishListBean;
 import com.example.kadh.ui.company.contract.CompanyFragContract;
@@ -24,7 +29,6 @@ import com.example.kadh.view.LoadingLayout;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.OnRefreshLoadMoreListener;
-import com.socks.library.KLog;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -80,6 +84,31 @@ public class CompanyFragment extends BaseFragmentView<CompanyPresenter> implemen
                 refreshLayout.setEnableLoadMore(false);
             }
         });
+
+        mPublishAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
+                PublishListBean item = (PublishListBean) adapter.getItem(position);
+                switch (adapter.getItemViewType(position)) {
+                    case PublishListBean.NEWS:
+                        Bundle newsB = new Bundle();
+                        newsB.putString("publishId", item.getProPublishId());
+                        openActivity(NewsDetailActivity.class, newsB);
+                        break;
+                    case PublishListBean.NOTICE:
+                        Bundle noticeB = new Bundle();
+                        noticeB.putString("publishId", item.getProPublishId());
+                        openActivity(NoticeDetailActivity.class, noticeB);
+                        break;
+                    case PublishListBean.PROCESS:
+                        break;
+                    case PublishListBean.INFROM:
+                        break;
+                    default:
+                        break;
+                }
+            }
+        });
     }
 
     @Override
@@ -90,6 +119,7 @@ public class CompanyFragment extends BaseFragmentView<CompanyPresenter> implemen
         mRv.setLayoutManager(new LinearLayoutManager(mActivity));
         mRv.addItemDecoration(new DividerItemDecoration(mActivity, DividerItemDecoration.VERTICAL));
         mRv.setAdapter(mPublishAdapter);
+
 
         initToolBar();
     }
@@ -113,7 +143,6 @@ public class CompanyFragment extends BaseFragmentView<CompanyPresenter> implemen
 
     @Override
     public void showPublishList(List<PublishListBean> beanList, String total) {
-        KLog.d("mPage:" + mPage + " total:" + total + "  beanList.size:" + beanList.size());
         if (mPage == 1) {
             mPublishListBeans.clear();
         }

@@ -2,6 +2,7 @@ package com.example.kadh.utils.RxJava.RxApi;
 
 
 import com.example.kadh.ui.company.bean.PublishListBean;
+import com.example.kadh.ui.company.bean.PublishNoticeDetailBean;
 import com.example.kadh.ui.login.bean.LoginBean;
 import com.example.kadh.ui.main.bean.IsHasUnReadBean;
 import com.example.kadh.ui.main.bean.UserInfoBean;
@@ -57,6 +58,12 @@ interface RxApiService {
     Flowable<BaseResponse<List<PublishListBean>>> getPublishList(
             @Query("page") String page,
             @Query("ptype") String ptype,
+            @Query("version") String version);
+
+
+    @GET(RxApiUrl.Url.GETNOTICEDETAILBYPUBLISHID)
+    Flowable<BaseResponse<List<PublishNoticeDetailBean>>> getNoticeDetailByPublishId(
+            @Query("proPublishId") String proPublishId,
             @Query("version") String version);
 
 

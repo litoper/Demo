@@ -2,6 +2,7 @@ package com.example.kadh.utils.RxJava.RxApi;
 
 
 import com.example.kadh.ui.company.bean.PublishListBean;
+import com.example.kadh.ui.company.bean.PublishNoticeDetailBean;
 import com.example.kadh.ui.login.bean.LoginBean;
 import com.example.kadh.ui.main.bean.IsHasUnReadBean;
 import com.example.kadh.ui.main.bean.UserInfoBean;
@@ -90,6 +91,18 @@ public class RxApi {
      */
     public Flowable getPublishList(FlowableSubscriber<BaseResponse<List<PublishListBean>>> subscriber, String page, String ptype) {
         Flowable flowable = mRxApiService.getPublishList(page, ptype, version);
+        toSubscribe(flowable, subscriber);
+        return flowable;
+    }
+
+    /**
+     * getNoticeDetailByPublishId 根据发文表ID获取公告详情
+     *
+     * @param subscriber
+     * @param proPublishId
+     */
+    public Flowable getNoticeDetailByPublishId(FlowableSubscriber<BaseResponse<List<PublishNoticeDetailBean>>> subscriber, String proPublishId) {
+        Flowable flowable = mRxApiService.getNoticeDetailByPublishId(proPublishId, version);
         toSubscribe(flowable, subscriber);
         return flowable;
     }
