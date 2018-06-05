@@ -7,6 +7,7 @@ import com.example.kadh.ui.login.bean.LoginBean;
 import com.example.kadh.ui.main.bean.IsHasUnReadBean;
 import com.example.kadh.ui.main.bean.UserInfoBean;
 import com.example.kadh.ui.main.bean.WeatherBean;
+import com.example.kadh.ui.person.bean.QueryProTotalInfoBean;
 import com.example.kadh.ui.work.bean.ProcessModuleBean;
 import com.example.kadh.ui.work.bean.ProcessStatusBean;
 import com.example.kadh.utils.RxJava.BaseResponse;
@@ -125,6 +126,17 @@ public class RxApi {
      */
     public Flowable getProcessStatus(FlowableSubscriber<BaseResponse<List<ProcessStatusBean>>> subscriber) {
         Flowable flowable = mRxApiService.getProcessStatus(version);
+        toSubscribe(flowable, subscriber);
+        return flowable;
+    }
+
+    /**
+     * queryProcessBaseTotalInfo 时长统计
+     *
+     * @param subscriber
+     */
+    public Flowable queryProcessBaseTotalInfo(FlowableSubscriber<BaseResponse<QueryProTotalInfoBean>> subscriber) {
+        Flowable flowable = mRxApiService.queryProcessBaseTotalInfo(version);
         toSubscribe(flowable, subscriber);
         return flowable;
     }
