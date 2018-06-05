@@ -19,6 +19,14 @@
     <color name="transparent">#00000000</color>
     <color name="blue">#1587ee</color>
 
+    <!---->
+    <color name="black_text">#121010</color>
+    <color name="black_half">#333333</color>
+    <color name="gray_text">#999999</color>
+    <color name="gray_half">#dedede</color>
+    <color name="gray_bg">#EAEEEF</color>
+    <!---->
+
     <color name="light_white">#EEEEEE</color>
     <color name="light_black">#515151</color>
     <color name="light_pink">#fb9090</color>

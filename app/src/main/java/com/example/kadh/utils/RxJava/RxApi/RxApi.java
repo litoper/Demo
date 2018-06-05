@@ -7,6 +7,8 @@ import com.example.kadh.ui.login.bean.LoginBean;
 import com.example.kadh.ui.main.bean.IsHasUnReadBean;
 import com.example.kadh.ui.main.bean.UserInfoBean;
 import com.example.kadh.ui.main.bean.WeatherBean;
+import com.example.kadh.ui.work.bean.ProcessModuleBean;
+import com.example.kadh.ui.work.bean.ProcessStatusBean;
 import com.example.kadh.utils.RxJava.BaseResponse;
 
 import java.util.List;
@@ -103,6 +105,26 @@ public class RxApi {
      */
     public Flowable getNoticeDetailByPublishId(FlowableSubscriber<BaseResponse<List<PublishNoticeDetailBean>>> subscriber, String proPublishId) {
         Flowable flowable = mRxApiService.getNoticeDetailByPublishId(proPublishId, version);
+        toSubscribe(flowable, subscriber);
+        return flowable;
+    }
+
+    /**
+     * getProcessModuletList 获取流程模块列表
+     */
+    public Flowable getProcessModuletList(FlowableSubscriber<BaseResponse<List<ProcessModuleBean>>> subscriber) {
+        Flowable flowable = mRxApiService.getProcessModuleList(version);
+        toSubscribe(flowable, subscriber);
+        return flowable;
+    }
+
+    /**
+     * getProcessStatus 获取工作当前流程状态
+     *
+     * @param subscriber
+     */
+    public Flowable getProcessStatus(FlowableSubscriber<BaseResponse<List<ProcessStatusBean>>> subscriber) {
+        Flowable flowable = mRxApiService.getProcessStatus(version);
         toSubscribe(flowable, subscriber);
         return flowable;
     }

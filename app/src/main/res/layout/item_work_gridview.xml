@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/white">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_centerInParent="true"
+        android:background="@drawable/selector_item_gv_bg"
+        android:padding="12.0dip">
+
+        <ImageView
+            android:id="@+id/work_iv_pro_icon"
+            android:layout_width="35dp"
+            android:layout_height="35dp"
+            android:layout_centerHorizontal="true" />
+
+        <TextView
+            android:id="@+id/work_tv_pro_type"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/work_iv_pro_icon"
+            android:layout_centerHorizontal="true"
+            android:layout_margin="10dip"
+            android:maxLines="1"
+            android:textColor="@color/gray"
+            android:textSize="14.0sp" />
+    </RelativeLayout>
+
+</RelativeLayout>

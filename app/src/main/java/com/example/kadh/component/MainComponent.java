@@ -4,6 +4,7 @@ import com.example.kadh.ui.company.fragment.CompanyFragment;
 import com.example.kadh.ui.login.fragment.LoginNormalFragment;
 import com.example.kadh.ui.login.fragment.LoginVerifyFragment;
 import com.example.kadh.ui.main.activity.MainActivity;
+import com.example.kadh.ui.work.fragment.WorkFragment;
 
 import dagger.Component;
 
@@ -19,4 +20,6 @@ public interface MainComponent {
     void inject(LoginVerifyFragment fragment);
 
     void inject(CompanyFragment fragment);
+
+    void inject(WorkFragment fragment);
 }

@@ -119,8 +119,6 @@ public class CompanyFragment extends BaseFragmentView<CompanyPresenter> implemen
         mRv.setLayoutManager(new LinearLayoutManager(mActivity));
         mRv.addItemDecoration(new DividerItemDecoration(mActivity, DividerItemDecoration.VERTICAL));
         mRv.setAdapter(mPublishAdapter);
-
-
         initToolBar();
     }
 

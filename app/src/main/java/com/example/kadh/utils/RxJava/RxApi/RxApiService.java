@@ -7,6 +7,8 @@ import com.example.kadh.ui.login.bean.LoginBean;
 import com.example.kadh.ui.main.bean.IsHasUnReadBean;
 import com.example.kadh.ui.main.bean.UserInfoBean;
 import com.example.kadh.ui.main.bean.WeatherBean;
+import com.example.kadh.ui.work.bean.ProcessModuleBean;
+import com.example.kadh.ui.work.bean.ProcessStatusBean;
 import com.example.kadh.utils.RxJava.BaseResponse;
 
 import java.util.List;
@@ -65,6 +67,12 @@ interface RxApiService {
     Flowable<BaseResponse<List<PublishNoticeDetailBean>>> getNoticeDetailByPublishId(
             @Query("proPublishId") String proPublishId,
             @Query("version") String version);
+
+    @GET(RxApiUrl.Url.GETPROCESSMODULELIST)
+    Flowable<BaseResponse<List<ProcessModuleBean>>> getProcessModuleList(@Query("version") String version);
+
+    @GET(RxApiUrl.Url.GETPROCESSSTATUS)
+    Flowable<BaseResponse<List<ProcessStatusBean>>> getProcessStatus(@Query("version") String version);
 
 
     //    @GET(RxApiUrl.Url.CHECKVERSION + NICAI)

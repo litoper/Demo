@@ -9,6 +9,7 @@ import com.example.kadh.ui.main.bean.UserInfoBean;
 import com.example.kadh.ui.main.bean.WeatherBean;
 import com.example.kadh.ui.main.contract.MainAtyContract;
 import com.example.kadh.ui.main.fragment.MainFragmentView;
+import com.example.kadh.ui.work.fragment.WorkFragment;
 import com.example.kadh.utils.NullUtils;
 import com.example.kadh.utils.RxJava.BaseResponse;
 import com.example.kadh.utils.RxJava.RxApi.RxApi;
@@ -36,7 +37,7 @@ public class MainPresenter extends BasePresenterImpl<MainAtyContract.View> imple
     public void initViewPager() {
         List<Fragment> fragmentList = new ArrayList<>();
         CompanyFragment frgCompany = new CompanyFragment();
-        MainFragmentView frgWork = new MainFragmentView("工作");
+        WorkFragment frgWork = new WorkFragment();
         MainFragmentView frgTxl = new MainFragmentView("通讯录");
         MainFragmentView frgMy = new MainFragmentView("我的");
 
