@@ -4,19 +4,15 @@
     xmlns:tools="http://schemas.android.com/tools"
     tools:activity=".MainActivity">
     <item
-        android:id="@+id/action_search"
-        android:orderInCategory="80"
-        android:title="搜索"
+        android:id="@+id/action_scan"
+        android:icon="@mipmap/ic_scan"
+        android:title="扫描"
         app:showAsAction="always" />
 
     <item
-        android:id="@+id/action_login"
-        android:title="登陆"
-        app:showAsAction="always" />
-
-    <item
-        android:id="@+id/action_my_message"
+        android:id="@+id/action_message"
+        android:icon="@mipmap/ic_message"
         android:title="消息"
-        app:showAsAction="never" />
+        app:showAsAction="always" />
 
 </menu>

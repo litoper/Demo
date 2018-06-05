@@ -3,6 +3,7 @@ package com.example.kadh.ui.main.adapter;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
+import android.view.ViewGroup;
 
 import java.util.List;
 
@@ -14,10 +15,10 @@ import java.util.List;
  * @desc :
  */
 
-public class SectionsPagerAdapter extends FragmentPagerAdapter {
+public class MainPagerAdapter extends FragmentPagerAdapter {
     List<Fragment> fragments;
 
-    public SectionsPagerAdapter(FragmentManager fm, List<Fragment> fragments) {
+    public MainPagerAdapter(FragmentManager fm, List<Fragment> fragments) {
         super(fm);
         this.fragments = fragments;
     }
@@ -32,4 +33,8 @@ public class SectionsPagerAdapter extends FragmentPagerAdapter {
         return fragments.size();
     }
 
+    @Override
+    public void destroyItem(ViewGroup container, int position, Object object) {
+//        super.destroyItem(container, position, object);
+    }
 }

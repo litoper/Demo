@@ -3,7 +3,7 @@
     android:id="@+id/activity_welcomt_root"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@mipmap/launchimage"
+    android:background="@mipmap/bag_launchimage"
     android:fitsSystemWindows="true">
 
 </android.support.design.widget.CoordinatorLayout>

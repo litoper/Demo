@@ -27,20 +27,31 @@ import butterknife.Unbinder;
 
 public abstract class BaseFragment extends Fragment {
 
-    protected View parentView;
+    protected View mParentView;
     protected Context mContext;
-    protected LayoutInflater inflater;
+    protected LayoutInflater mInflater;
     protected FragmentActivity mActivity;
     private Unbinder mUnbinder;
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        parentView = inflater.inflate(getLayoutResId(), container, false);
-        mActivity = getSupportActivity();
-        mContext = mActivity;
-        this.inflater = inflater;
-        return parentView;
+        if (mParentView == null) {
+            mParentView = inflater.inflate(getLayoutResId(), container, false);
+            mActivity = getSupportActivity();
+            mContext = mActivity;
+            mInflater = inflater;
+        }
+        /**
+         * 缓存的rootView需要判断是否已经被加过parent，如果有parent需要从parent删除，
+         * 要不然会发生这个rootview已经有parent的错误。
+         */
+//        ViewGroup parent = (ViewGroup) mParentView.getParent();
+//        if (parent != null) {
+//            parent.removeView(mParentView);
+//        }
+
+        return mParentView;
     }
 
     @Override
@@ -75,7 +86,7 @@ public abstract class BaseFragment extends Fragment {
     }
 
     protected View getParentView() {
-        return parentView;
+        return mParentView;
     }
 
     @Override

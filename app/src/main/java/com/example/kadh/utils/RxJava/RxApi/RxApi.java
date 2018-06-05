@@ -1,6 +1,7 @@
 package com.example.kadh.utils.RxJava.RxApi;
 
 
+import com.example.kadh.ui.company.bean.PublishListBean;
 import com.example.kadh.ui.login.bean.LoginBean;
 import com.example.kadh.ui.main.bean.IsHasUnReadBean;
 import com.example.kadh.ui.main.bean.UserInfoBean;
@@ -26,11 +27,11 @@ import io.reactivex.schedulers.Schedulers;
 
 public class RxApi {
     private RxApiService mRxApiService;
-    private String mVersion;
+    private String version;
 
     RxApi(RxApiService rxApiService, String version) {
         mRxApiService = rxApiService;
-        mVersion = version;
+        this.version = version;
     }
 
     /**
@@ -41,7 +42,7 @@ public class RxApi {
      * @param password
      */
     public void login(FlowableSubscriber<BaseResponse<List<LoginBean>>> subscriber, String username, String password) {
-        Flowable flowable = mRxApiService.login(username, password, mVersion);
+        Flowable flowable = mRxApiService.login(username, password, version);
         toSubscribe(flowable, subscriber);
     }
 
@@ -52,7 +53,7 @@ public class RxApi {
      * @param userid
      */
     public Flowable getUseInfo(FlowableSubscriber<BaseResponse<List<UserInfoBean>>> subscriber, String userid) {
-        Flowable flowable = mRxApiService.getUseInfo(userid, mVersion);
+        Flowable flowable = mRxApiService.getUseInfo(userid, version);
         toSubscribe(flowable, subscriber);
         return flowable;
     }
@@ -63,7 +64,7 @@ public class RxApi {
      * @param subscriber
      */
     public Flowable isHasUnRead(FlowableSubscriber<BaseResponse<IsHasUnReadBean>> subscriber) {
-        Flowable flowable = mRxApiService.isHasUnRead(mVersion);
+        Flowable flowable = mRxApiService.isHasUnRead(version);
         toSubscribe(flowable, subscriber);
         return flowable;
     }
@@ -75,7 +76,20 @@ public class RxApi {
      * @param place
      */
     public Flowable getWeather(FlowableSubscriber<BaseResponse<List<WeatherBean>>> subscriber, String place) {
-        Flowable flowable = mRxApiService.getWeather(place, mVersion);
+        Flowable flowable = mRxApiService.getWeather(place, version);
+        toSubscribe(flowable, subscriber);
+        return flowable;
+    }
+
+    /**
+     * getPublishList 获取发文列表
+     *
+     * @param subscriber
+     * @param page
+     * @param ptype
+     */
+    public Flowable getPublishList(FlowableSubscriber<BaseResponse<List<PublishListBean>>> subscriber, String page, String ptype) {
+        Flowable flowable = mRxApiService.getPublishList(page, ptype, version);
         toSubscribe(flowable, subscriber);
         return flowable;
     }

@@ -36,7 +36,7 @@
                 android:layout_gravity="left|center_vertical"
                 android:layout_marginStart="20dp"
                 android:layout_marginTop="10dp"
-                android:background="@mipmap/login_ic_phone"
+                android:background="@mipmap/ic_login_phone"
                 android:visibility="visible" />
         </FrameLayout>
 
@@ -65,7 +65,7 @@
                 android:layout_height="40dp"
                 android:layout_gravity="left|center_vertical"
                 android:layout_marginStart="20dp"
-                android:background="@mipmap/login_ic_vercode"
+                android:background="@mipmap/ic_login_vercode"
                 android:visibility="visible" />
         </FrameLayout>
 

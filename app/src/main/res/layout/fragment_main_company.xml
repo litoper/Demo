@@ -1,6 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<android.support.design.widget.CoordinatorLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -9,33 +8,19 @@
     android:orientation="vertical">
 
     <android.support.design.widget.AppBarLayout
-        android:id="@+id/app_bar"
+        android:id="@+id/barlayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:fitsSystemWindows="true">
 
-        <android.support.design.widget.CollapsingToolbarLayout
+        <android.support.v7.widget.Toolbar
+            android:id="@+id/toolbar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:fitsSystemWindows="true"
-            app:contentScrim="?attr/colorPrimary"
-            app:layout_scrollFlags="scroll|exitUntilCollapsed|snap"
-            app:statusBarScrim="@android:color/transparent"
-            app:titleEnabled="false">
+            android:theme="@style/Theme.ToolBar.Menu"
+            app:titleTextColor="@color/white">
 
-            <!-- 背景布局 -->
-
-            <android.support.v7.widget.Toolbar
-                android:id="@+id/toolbar"
-                android:layout_width="match_parent"
-                android:layout_height="36dp"
-                android:minHeight="36dp"
-                app:layout_collapseMode="pin">
-                <!-- 搜索框布局 -->
-
-            </android.support.v7.widget.Toolbar>
-
-        </android.support.design.widget.CollapsingToolbarLayout>
+        </android.support.v7.widget.Toolbar>
 
     </android.support.design.widget.AppBarLayout>
 
@@ -45,6 +30,8 @@
         android:layout_height="match_parent"
         android:background="@android:color/white"
         app:srlAccentColor="@color/blue"
+        app:srlDisableContentWhenLoading="true"
+        app:srlDisableContentWhenRefresh="true"
         app:srlEnableLoadMore="false"
         app:srlHeaderMaxDragRate="2.5"
         app:srlPrimaryColor="@color/blue">
@@ -52,7 +39,7 @@
         <com.scwang.smartrefresh.header.MaterialHeader
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="30dp"/>
+            android:layout_marginTop="30dp" />
 
         <com.example.kadh.view.LoadingLayout
             android:id="@+id/fragment_mian_company_loading"
@@ -64,7 +51,11 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:overScrollMode="never"
-                tools:listitem="@android:layout/simple_list_item_2"/>
+                tools:listitem="@android:layout/simple_list_item_2" />
         </com.example.kadh.view.LoadingLayout>
+
+        <com.scwang.smartrefresh.layout.footer.ClassicsFooter
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
     </com.scwang.smartrefresh.layout.SmartRefreshLayout>
-</android.support.design.widget.CoordinatorLayout>
+</LinearLayout>

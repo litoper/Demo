@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <com.example.kadh.view.CircleImageView.CircleImageView
+            android:id="@+id/meeting_iv_news_icon"
+            android:layout_width="41dp"
+            android:layout_height="41dp"
+            android:layout_margin="10dp" />
+
+        <TextView
+            android:id="@+id/meeting_tv_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignTop="@id/meeting_iv_news_icon"
+            android:layout_toRightOf="@id/meeting_iv_news_icon"
+            android:paddingTop="5dp"
+            android:textColor="@color/black" />
+
+        <TextView
+            android:id="@+id/meeting_tv_creat_time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignLeft="@id/meeting_tv_name"
+            android:layout_below="@id/meeting_tv_name"
+            android:paddingTop="5dp" />
+
+        <ImageView
+            android:id="@+id/meeting_notice_iv_pop"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_alignTop="@id/meeting_tv_creat_time"
+            android:layout_centerInParent="true"
+            android:paddingBottom="20dp"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp"
+            android:src="@mipmap/ic_jiantou_down" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_below="@id/meeting_tv_creat_time"
+            android:layout_marginTop="10dp"
+            android:background="#F1F1F1" />
+
+        <TextView
+            android:id="@+id/meeting_tv_meeting_notice"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignLeft="@id/meeting_tv_creat_time"
+            android:layout_below="@id/meeting_tv_creat_time"
+            android:layout_marginTop="20dp"
+            android:text="会议通知"
+            android:textColor="@color/black"
+            android:textSize="20sp" />
+
+        <TextView
+            android:id="@+id/meeting_tv_meeting_time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignLeft="@id/meeting_tv_meeting_notice"
+            android:layout_below="@id/meeting_tv_meeting_notice"
+            android:layout_marginTop="5dp" />
+
+        <TextView
+            android:id="@+id/meeting_tv_meeting_place"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignLeft="@id/meeting_tv_meeting_time"
+            android:layout_below="@id/meeting_tv_meeting_time"
+            android:layout_marginTop="5dp" />
+
+        <TextView
+            android:id="@+id/meeting_tv_theme"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignLeft="@id/meeting_tv_meeting_place"
+            android:layout_below="@id/meeting_tv_meeting_place"
+            android:layout_marginBottom="20dp"
+            android:layout_marginTop="5dp" />
+    </RelativeLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="#F1F1F1" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <Button
+            android:id="@+id/meeting_btn_turn_down"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="@null"
+            android:text="拒绝参加"
+            android:textColor="@color/gray"
+            android:textSize="15dp" />
+
+        <View
+            android:layout_width="1dp"
+            android:layout_height="match_parent"
+            android:background="#F1F1F1" />
+
+        <Button
+            android:id="@+id/meeting_btn_sure"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="@null"
+            android:text="确认参加"
+            android:textColor="@color/blue"
+            android:textSize="15dp" />
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="#F1F1F1" />
+</LinearLayout>

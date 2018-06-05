@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <com.example.kadh.view.CircleImageView.CircleImageView
+            android:id="@+id/process_iv_icon"
+            android:layout_width="41dp"
+            android:layout_height="41dp"
+            android:layout_margin="10dp" />
+
+        <TextView
+            android:id="@+id/process_tv_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignTop="@id/process_iv_icon"
+            android:layout_toRightOf="@id/process_iv_icon"
+            android:paddingTop="5dp"
+            android:textColor="@color/black" />
+
+        <TextView
+            android:id="@+id/process_tv_creat_time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignLeft="@id/process_tv_name"
+            android:layout_below="@id/process_tv_name"
+            android:paddingTop="5dp" />
+
+        <ImageView
+            android:id="@+id/process_iv_menu"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_marginTop="20dp"
+            android:padding="10dp"
+            android:src="@mipmap/ic_jiantou_down" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_below="@id/process_tv_creat_time"
+            android:layout_marginTop="10dp"
+            android:background="#F1F1F1" />
+
+        <RelativeLayout
+            android:id="@+id/process_rl"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignLeft="@id/process_tv_creat_time"
+            android:layout_below="@id/process_tv_creat_time">
+
+            <TextView
+                android:id="@+id/process_tv_eaa"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:text="流程审批"
+                android:textColor="@color/black"
+                android:textSize="20sp" />
+
+            <TextView
+                android:id="@+id/process_tv_time_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignLeft="@id/process_tv_eaa"
+                android:layout_below="@id/process_tv_eaa"
+                android:layout_marginTop="5dp"
+                android:text="时间 : " />
+
+            <TextView
+                android:id="@+id/process_tv_time"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignBaseline="@id/process_tv_time_title"
+                android:layout_toRightOf="@id/process_tv_time_title" />
+
+            <TextView
+                android:id="@+id/process_tv_type_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignLeft="@id/process_tv_time_title"
+                android:layout_below="@id/process_tv_time_title"
+                android:layout_marginBottom="20dp"
+                android:layout_marginTop="5dp"
+                android:text="流程名称 : " />
+
+            <TextView
+                android:id="@+id/process_tv_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignBaseline="@id/process_tv_type_title"
+                android:layout_toRightOf="@id/process_tv_type_title" />
+        </RelativeLayout>
+    </RelativeLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0.5dp"
+        android:background="#F1F1F1" />
+</LinearLayout>

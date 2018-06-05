@@ -1,62 +1,54 @@
 package com.example.kadh.ui.company.fragment;
 
-import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.support.design.widget.AppBarLayout;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.AdapterView;
+import android.support.v7.widget.Toolbar;
+import android.view.Menu;
+import android.view.MenuInflater;
 
 import com.example.kadh.R;
 import com.example.kadh.base.BaseFragmentView;
 import com.example.kadh.component.AppComponent;
 import com.example.kadh.component.DaggerMainComponent;
-import com.example.kadh.ui.company.adapter.BaseRecyclerAdapter;
-import com.example.kadh.ui.company.adapter.SmartViewHolder;
+import com.example.kadh.ui.company.adapter.PublishAdapter;
+import com.example.kadh.ui.company.bean.PublishListBean;
 import com.example.kadh.ui.company.contract.CompanyFragContract;
 import com.example.kadh.ui.company.presenter.CompanyPresenter;
+import com.example.kadh.utils.NullUtils;
 import com.example.kadh.view.LoadingLayout;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
+import com.scwang.smartrefresh.layout.api.RefreshLayout;
+import com.scwang.smartrefresh.layout.listener.OnRefreshLoadMoreListener;
+import com.socks.library.KLog;
 
-import java.util.Arrays;
+import java.util.ArrayList;
+import java.util.List;
 
 import butterknife.BindView;
-import butterknife.ButterKnife;
-import butterknife.Unbinder;
 
-import static android.R.layout.simple_list_item_2;
-
-public class CompanyFragment extends BaseFragmentView<CompanyPresenter> implements CompanyFragContract.View, AdapterView.OnItemClickListener {
-
-    @Override
-    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-
-    }
-
-    public enum Item {
-        ThirdParty("集成第三方控件", CompanyFragment.class),
-        NestedInner("内部嵌套", CompanyFragment.class),
-        NestedOuter("外部嵌套", CompanyFragment.class),;
-        public String   name;
-        public Class<?> clazz;
-
-        Item(String name, Class<?> clazz) {
-            this.name = name;
-            this.clazz = clazz;
-        }
-    }
+public class CompanyFragment extends BaseFragmentView<CompanyPresenter> implements CompanyFragContract.View {
 
 
     @BindView(R.id.fragment_mian_company_rv)
-    RecyclerView       mRv;
+    RecyclerView mRv;
     @BindView(R.id.fragment_mian_company_loading)
-    LoadingLayout      mLoading;
+    LoadingLayout mLoading;
     @BindView(R.id.fragment_mian_company_srl)
     SmartRefreshLayout mSrl;
-    Unbinder unbinder;
+    @BindView(R.id.toolbar)
+    Toolbar mToolbar;
+    @BindView(R.id.barlayout)
+    AppBarLayout mBarlayout;
+
+    private int mPage = 1;
+    private PublishAdapter mPublishAdapter;
+    private List<PublishListBean> mPublishListBeans = new ArrayList<>();
+
 
     @Override
     public void showError() {
@@ -75,23 +67,43 @@ public class CompanyFragment extends BaseFragmentView<CompanyPresenter> implemen
 
     @Override
     protected void configViews() {
-        mRv.setItemAnimator(new DefaultItemAnimator());
-        mRv.setLayoutManager(new LinearLayoutManager(getContext()));
-        mRv.addItemDecoration(new DividerItemDecoration(getContext(), DividerItemDecoration.VERTICAL));
-        mRv.setAdapter(new BaseRecyclerAdapter<Item>(Arrays.asList(Item.values()), simple_list_item_2, CompanyFragment.this) {
+        mSrl.setOnRefreshLoadMoreListener(new OnRefreshLoadMoreListener() {
             @Override
-            protected void onBindViewHolder(SmartViewHolder holder, Item model, int position) {
-                holder.text(android.R.id.text1, model.name());
-                holder.text(android.R.id.text2, model.name);
-                holder.textColorId(android.R.id.text2, R.color.blue);
+            public void onLoadMore(@NonNull RefreshLayout refreshLayout) {
+                mPresenter.getPublishList(++mPage);
+                refreshLayout.setEnableRefresh(false);
+            }
+
+            @Override
+            public void onRefresh(@NonNull RefreshLayout refreshLayout) {
+                mPresenter.getPublishList(mPage = 1);
+                refreshLayout.setEnableLoadMore(false);
             }
         });
-
     }
 
     @Override
     protected void initDatas() {
+        mPresenter.getPublishList(mPage);
+        mPublishAdapter = new PublishAdapter(mPublishListBeans);
+        mRv.setItemAnimator(new DefaultItemAnimator());
+        mRv.setLayoutManager(new LinearLayoutManager(mActivity));
+        mRv.addItemDecoration(new DividerItemDecoration(mActivity, DividerItemDecoration.VERTICAL));
+        mRv.setAdapter(mPublishAdapter);
 
+        initToolBar();
+    }
+
+    public void initToolBar() {
+        mToolbar.setTitle("东经科技");
+        setHasOptionsMenu(true);
+        ((AppCompatActivity) mActivity).setSupportActionBar(mToolbar);
+    }
+
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        inflater.inflate(R.menu.menu_main_company, menu);
+        super.onCreateOptionsMenu(menu, inflater);
     }
 
     @Override
@@ -100,16 +112,30 @@ public class CompanyFragment extends BaseFragmentView<CompanyPresenter> implemen
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        // TODO: inflate a fragment view
-        View rootView = super.onCreateView(inflater, container, savedInstanceState);
-        unbinder = ButterKnife.bind(this, rootView);
-        return rootView;
+    public void showPublishList(List<PublishListBean> beanList, String total) {
+        KLog.d("mPage:" + mPage + " total:" + total + "  beanList.size:" + beanList.size());
+        if (mPage == 1) {
+            mPublishListBeans.clear();
+        }
+        mPublishListBeans.addAll(beanList);
+        mPublishAdapter.setNewData(mPublishListBeans);
+
+        mSrl.finishRefresh();
+        mSrl.finishLoadMore();
+
+        if (mPublishListBeans.size() >= Integer.parseInt(total)) {
+            mSrl.setEnableLoadMore(false);
+        } else {
+            mSrl.setEnableLoadMore(true);
+        }
+        mSrl.setEnableRefresh(true);
+
+        if (NullUtils.isNull(mPublishListBeans)) {
+            mLoading.showEmpty();
+        } else {
+            mLoading.showContent();
+        }
     }
 
-    @Override
-    public void onDestroyView() {
-        super.onDestroyView();
-        unbinder.unbind();
-    }
+
 }

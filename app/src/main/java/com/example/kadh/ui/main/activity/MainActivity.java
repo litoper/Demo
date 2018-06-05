@@ -7,7 +7,6 @@ import android.os.PersistableBundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
 import android.view.KeyEvent;
-import android.view.Menu;
 
 import com.ashokvarma.bottomnavigation.BottomNavigationBar;
 import com.ashokvarma.bottomnavigation.BottomNavigationItem;
@@ -16,7 +15,7 @@ import com.example.kadh.R;
 import com.example.kadh.base.BaseActivity;
 import com.example.kadh.component.AppComponent;
 import com.example.kadh.component.DaggerMainComponent;
-import com.example.kadh.ui.main.adapter.SectionsPagerAdapter;
+import com.example.kadh.ui.main.adapter.MainPagerAdapter;
 import com.example.kadh.ui.main.bean.IsHasUnReadBean;
 import com.example.kadh.ui.main.bean.WeatherBean;
 import com.example.kadh.ui.main.contract.MainAtyContract;
@@ -81,11 +80,11 @@ public class MainActivity extends BaseActivity implements MainAtyContract.View {
     }
 
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.menu_main, menu);
-        return true;
-    }
+//    @Override
+//    public boolean onCreateOptionsMenu(Menu menu) {
+//        getMenuInflater().inflate(R.menu.menu_main_company, menu);
+//        return true;
+//    }
 
     @Override
     public void showError() {
@@ -100,9 +99,9 @@ public class MainActivity extends BaseActivity implements MainAtyContract.View {
 
     @Override
     public void showViewPager(List<Fragment> fragmentList) {
-        mVp.setAdapter(new SectionsPagerAdapter(getSupportFragmentManager(), fragmentList));
+        mVp.setAdapter(new MainPagerAdapter(getSupportFragmentManager(), fragmentList));
+        mVp.setOffscreenPageLimit(4);
         mVp.setCurrentItem(0);
-
         mVp.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
             public void onPageScrolled(int i, float v, int i1) {

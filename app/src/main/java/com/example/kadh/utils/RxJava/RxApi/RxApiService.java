@@ -1,6 +1,7 @@
 package com.example.kadh.utils.RxJava.RxApi;
 
 
+import com.example.kadh.ui.company.bean.PublishListBean;
 import com.example.kadh.ui.login.bean.LoginBean;
 import com.example.kadh.ui.main.bean.IsHasUnReadBean;
 import com.example.kadh.ui.main.bean.UserInfoBean;
@@ -50,6 +51,12 @@ interface RxApiService {
     @GET(RxApiUrl.Url.GETWEATHER)
     Flowable<BaseResponse<List<WeatherBean>>> getWeather(
             @Query("place") String place,
+            @Query("version") String version);
+
+    @GET(RxApiUrl.Url.GETPUBLISHLIST)
+    Flowable<BaseResponse<List<PublishListBean>>> getPublishList(
+            @Query("page") String page,
+            @Query("ptype") String ptype,
             @Query("version") String version);
 
 
