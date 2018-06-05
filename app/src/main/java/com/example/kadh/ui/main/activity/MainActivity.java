@@ -4,9 +4,11 @@ import android.Manifest;
 import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.os.PersistableBundle;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
 import android.view.KeyEvent;
+import android.widget.Toast;
 
 import com.ashokvarma.bottomnavigation.BottomNavigationBar;
 import com.ashokvarma.bottomnavigation.BottomNavigationItem;
@@ -28,6 +30,8 @@ import java.util.List;
 import javax.inject.Inject;
 
 import butterknife.BindView;
+import butterknife.ButterKnife;
+import butterknife.OnClick;
 import io.reactivex.functions.Consumer;
 
 /**
@@ -43,9 +47,12 @@ public class MainActivity extends BaseActivity implements MainAtyContract.View {
     ViewPager mVp;
     @BindView(R.id.activity_main_bnb)
     BottomNavigationBar mBottomNavigationBar;
+    @BindView(R.id.activity_main_fab)
+    FloatingActionButton mFab;
 
     @Inject
     MainPresenter mPresenter;
+
     private long mExittime;
     private ShapeBadgeItem mBadgeItem;
 
@@ -225,5 +232,17 @@ public class MainActivity extends BaseActivity implements MainAtyContract.View {
             return true;
         }
         return super.onKeyDown(keyCode, event);
+    }
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        // TODO: add setContentView(...) invocation
+        ButterKnife.bind(this);
+    }
+
+    @OnClick(R.id.activity_main_fab)
+    public void onViewClicked() {
+        Toast.makeText(mContext, "11111", Toast.LENGTH_SHORT).show();
     }
 }
