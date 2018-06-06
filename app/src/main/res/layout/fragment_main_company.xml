@@ -7,12 +7,12 @@
     android:orientation="vertical">
 
     <android.support.design.widget.AppBarLayout
-        android:id="@+id/barlayout"
+        android:id="@+id/fragment_main_company_barlayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
         <android.support.v7.widget.Toolbar
-            android:id="@+id/toolbar"
+            android:id="@+id/fragment_main_company_toolbar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:theme="@style/Theme.ToolBar.Menu"

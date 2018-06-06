@@ -1,8 +1,12 @@
 package com.example.kadh.utils.RxJava.RxApi;
 
 
+import com.example.kadh.ui.company.bean.CommentListBean;
 import com.example.kadh.ui.company.bean.PublishListBean;
+import com.example.kadh.ui.company.bean.PublishNewDetailBean;
 import com.example.kadh.ui.company.bean.PublishNoticeDetailBean;
+import com.example.kadh.ui.company.bean.UpManListBean;
+import com.example.kadh.ui.company.bean.UpNumberBean;
 import com.example.kadh.ui.login.bean.LoginBean;
 import com.example.kadh.ui.main.bean.IsHasUnReadBean;
 import com.example.kadh.ui.main.bean.UserInfoBean;
@@ -70,13 +74,55 @@ interface RxApiService {
             @Query("version") String version);
 
     @GET(RxApiUrl.Url.GETPROCESSMODULELIST)
-    Flowable<BaseResponse<List<ProcessModuleBean>>> getProcessModuleList(@Query("version") String version);
+    Flowable<BaseResponse<List<ProcessModuleBean>>> getProcessModuleList(
+            @Query("version") String version);
 
     @GET(RxApiUrl.Url.GETPROCESSSTATUS)
-    Flowable<BaseResponse<List<ProcessStatusBean>>> getProcessStatus(@Query("version") String version);
+    Flowable<BaseResponse<List<ProcessStatusBean>>> getProcessStatus(
+            @Query("version") String version);
 
     @GET(RxApiUrl.Url.QUERYPROCESSBASETOTALINFO)
-    Flowable<BaseResponse<QueryProTotalInfoBean>> queryProcessBaseTotalInfo(@Query("version") String version);
+    Flowable<BaseResponse<QueryProTotalInfoBean>> queryProcessBaseTotalInfo(
+            @Query("version") String version);
+
+    @GET(RxApiUrl.Url.GETNEWSDETAILBYPUBLISHID)
+    Flowable<BaseResponse<List<PublishNewDetailBean>>> getNewsDetailByPublishId(
+            @Query("proPublishId") String proPublishId,
+            @Query("version") String version);
+
+    @GET(RxApiUrl.Url.GETCOMMENTLIST)
+    Flowable<BaseResponse<List<CommentListBean>>> getCommentList(
+            @Query("page") String page,
+            @Query("id") String id,
+            @Query("ptype") String ptype,
+            @Query("version") String version);
+
+    @GET(RxApiUrl.Url.GETUPMANLIST)
+    Flowable<BaseResponse<List<UpManListBean>>> getUpManList(
+            @Query("page") String page,
+            @Query("id") String id,
+            @Query("ptype") String ptype,
+            @Query("version") String version);
+
+    @FormUrlEncoded
+    @POST(RxApiUrl.Url.ADDCOMMENT)
+    Flowable<BaseResponse<List<PublishNewDetailBean>>> addComment(
+            @Field("ptype") String ptype,
+            @Field("id") String id,
+            @Field("remark_comment") String remark_comment,
+            @Query("version") String version);
+
+    @GET(RxApiUrl.Url.DELCOMMENT)
+    Flowable<BaseResponse<String>> delComment(
+            @Query("ptype") String ptype,
+            @Query("remarkId") String remarkId,
+            @Query("version") String version);
+
+    @GET(RxApiUrl.Url.UPNUMBER)
+    Flowable<BaseResponse<List<UpNumberBean>>> upNumber(
+            @Query("ptype") String ptype,
+            @Query("proPublishId") String proPublishId,
+            @Query("uped") String uped, @Query("version") String version);
 
 
     //    @GET(RxApiUrl.Url.CHECKVERSION + NICAI)

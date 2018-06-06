@@ -1,8 +1,12 @@
 package com.example.kadh.utils.RxJava.RxApi;
 
 
+import com.example.kadh.ui.company.bean.CommentListBean;
 import com.example.kadh.ui.company.bean.PublishListBean;
+import com.example.kadh.ui.company.bean.PublishNewDetailBean;
 import com.example.kadh.ui.company.bean.PublishNoticeDetailBean;
+import com.example.kadh.ui.company.bean.UpManListBean;
+import com.example.kadh.ui.company.bean.UpNumberBean;
 import com.example.kadh.ui.login.bean.LoginBean;
 import com.example.kadh.ui.main.bean.IsHasUnReadBean;
 import com.example.kadh.ui.main.bean.UserInfoBean;
@@ -137,6 +141,84 @@ public class RxApi {
      */
     public Flowable queryProcessBaseTotalInfo(FlowableSubscriber<BaseResponse<QueryProTotalInfoBean>> subscriber) {
         Flowable flowable = mRxApiService.queryProcessBaseTotalInfo(version);
+        toSubscribe(flowable, subscriber);
+        return flowable;
+    }
+
+    /**
+     * getNoticeDetailByPublishId 根据首页新闻ID获取新闻详情
+     *
+     * @param subscriber
+     * @param proPublishId
+     */
+    public Flowable getNewsDetailByPublishId(FlowableSubscriber<BaseResponse<List<PublishNewDetailBean>>> subscriber, String proPublishId) {
+        Flowable flowable = mRxApiService.getNewsDetailByPublishId(proPublishId, version);
+        toSubscribe(flowable, subscriber);
+        return flowable;
+    }
+
+    /**
+     * getCommentList 获取评论列表
+     *
+     * @param subscriber
+     * @param page
+     * @param id
+     * @param ptype
+     */
+    public Flowable getCommentList(FlowableSubscriber<BaseResponse<List<CommentListBean>>> subscriber, String page, String id, String ptype) {
+        Flowable flowable = mRxApiService.getCommentList(page, id, ptype, version);
+        toSubscribe(flowable, subscriber);
+        return flowable;
+    }
+
+    /**
+     * getUpManList 获取点赞列表
+     *
+     * @param subscriber
+     * @param page
+     * @param id
+     * @param ptype
+     */
+    public Flowable getUpManList(FlowableSubscriber<BaseResponse<List<UpManListBean>>> subscriber, String page, String id, String ptype) {
+        Flowable flowable = mRxApiService.getUpManList(page, id, ptype, version);
+        toSubscribe(flowable, subscriber);
+        return flowable;
+    }
+
+    /**
+     * addComment 添加评论
+     *
+     * @param subscriber
+     * @param ptype
+     * @param id
+     * @param remark_comment
+     */
+    public Flowable addComment(FlowableSubscriber<BaseResponse<List<PublishNewDetailBean>>> subscriber, String ptype, String id, String remark_comment) {
+        Flowable flowable = mRxApiService.addComment(ptype, id, remark_comment, version);
+        toSubscribe(flowable, subscriber);
+        return flowable;
+    }
+
+    /**
+     * delComment 删除评论
+     *
+     * @param subscriber
+     * @param remarkId
+     */
+    public Flowable delComment(FlowableSubscriber<BaseResponse<String>> subscriber, String ptype, String remarkId) {
+        Flowable flowable = mRxApiService.delComment(ptype, remarkId, version);
+        toSubscribe(flowable, subscriber);
+        return flowable;
+    }
+
+    /**
+     * upNumber 点赞功能
+     *
+     * @param subscriber
+     * @param proPublishId
+     */
+    public Flowable upNumber(FlowableSubscriber<BaseResponse<List<UpNumberBean>>> subscriber, String ptype, String proPublishId, String uped) {
+        Flowable flowable = mRxApiService.upNumber(ptype, proPublishId, uped, version);
         toSubscribe(flowable, subscriber);
         return flowable;
     }

@@ -1,5 +1,6 @@
 package com.example.kadh.component;
 
+import com.example.kadh.ui.company.activity.NewsDetailActivity;
 import com.example.kadh.ui.company.fragment.CompanyFragment;
 import com.example.kadh.ui.login.fragment.LoginNormalFragment;
 import com.example.kadh.ui.login.fragment.LoginVerifyFragment;
@@ -20,6 +21,9 @@ public interface MainComponent {
     void inject(LoginVerifyFragment fragment);
 
     void inject(CompanyFragment fragment);
+    void inject(NewsDetailActivity activity);
+
 
     void inject(WorkFragment fragment);
+
 }

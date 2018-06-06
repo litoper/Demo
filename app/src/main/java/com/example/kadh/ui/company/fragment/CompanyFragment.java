@@ -44,9 +44,9 @@ public class CompanyFragment extends BaseFragmentView<CompanyPresenter> implemen
     LoadingLayout mLoading;
     @BindView(R.id.fragment_mian_company_srl)
     SmartRefreshLayout mSrl;
-    @BindView(R.id.toolbar)
+    @BindView(R.id.fragment_main_company_toolbar)
     Toolbar mToolbar;
-    @BindView(R.id.barlayout)
+    @BindView(R.id.fragment_main_company_barlayout)
     AppBarLayout mBarlayout;
 
     private int mPage = 1;
