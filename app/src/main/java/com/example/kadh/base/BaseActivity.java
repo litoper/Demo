@@ -54,14 +54,11 @@ public abstract class BaseActivity extends AppCompatActivity {
             initToolBar();
             setSupportActionBar(mCommonToolbar);
         }
+        attachView();
         initDatas();
         configViews();
     }
 
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-    }
 
     protected void transparent19and20() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT
@@ -71,10 +68,14 @@ public abstract class BaseActivity extends AppCompatActivity {
         }
     }
 
+
+    protected void attachView() {
+
+    }
+
     /**
      * 对各种控件进行设置、适配、填充数据
      */
-
     public abstract void configViews();
 
     public abstract void initDatas();

@@ -5,16 +5,17 @@ import javax.inject.Inject;
 /**
  * @author: kadh
  * @email : 36870855@qq.com
- * @date : 2018/6/1
+ * @date : 2018/6/6
  * @blog : http://www.nicaicaicai.com
  * @desc :
  */
-public abstract class BaseFragmentView<T extends BaseContract.BasePresenter> extends BaseFragment {
+public abstract class BaseActivityView<T extends BaseContract.BasePresenter> extends BaseActivity {
+
 
     @Inject
     protected T mPresenter;
 
-    public BaseFragmentView() {
+    public BaseActivityView() {
     }
 
     /**
@@ -28,8 +29,8 @@ public abstract class BaseFragmentView<T extends BaseContract.BasePresenter> ext
     }
 
     @Override
-    public void onDestroyView() {
-        super.onDestroyView();
+    protected void onDestroy() {
+        super.onDestroy();
         if (mPresenter != null) {
             mPresenter.detachView();
         }

@@ -12,6 +12,7 @@ import com.example.kadh.R;
 import com.example.kadh.base.BaseFragment;
 import com.example.kadh.component.AppComponent;
 import com.example.kadh.ui.person.bean.QueryProTotalInfoBean;
+import com.example.kadh.ui.setting.SettingActivity;
 import com.example.kadh.utils.RxJava.BaseResponse;
 import com.example.kadh.utils.RxJava.RxApi.RxManager;
 import com.example.kadh.utils.RxJava.RxSubscriber.SubNextImpl;
@@ -117,7 +118,7 @@ public class PersonFragment extends BaseFragment {
 //                openActivity(HelpActivity.class);
                 break;
             case R.id.person_ll_setting://进入设置页面
-//                openActivity(SettingActivity.class);
+                openActivity(SettingActivity.class);
                 break;
             default:
                 break;

@@ -14,7 +14,7 @@ import com.ashokvarma.bottomnavigation.BottomNavigationBar;
 import com.ashokvarma.bottomnavigation.BottomNavigationItem;
 import com.ashokvarma.bottomnavigation.ShapeBadgeItem;
 import com.example.kadh.R;
-import com.example.kadh.base.BaseActivity;
+import com.example.kadh.base.BaseActivityView;
 import com.example.kadh.component.AppComponent;
 import com.example.kadh.component.DaggerMainComponent;
 import com.example.kadh.ui.main.adapter.MainPagerAdapter;
@@ -27,10 +27,7 @@ import com.tbruyelle.rxpermissions2.RxPermissions;
 
 import java.util.List;
 
-import javax.inject.Inject;
-
 import butterknife.BindView;
-import butterknife.ButterKnife;
 import butterknife.OnClick;
 import io.reactivex.functions.Consumer;
 
@@ -42,16 +39,13 @@ import io.reactivex.functions.Consumer;
  * @desc :
  */
 
-public class MainActivity extends BaseActivity implements MainAtyContract.View {
+public class MainActivity extends BaseActivityView<MainPresenter> implements MainAtyContract.View {
     @BindView(R.id.activity_main_vp)
     ViewPager mVp;
     @BindView(R.id.activity_main_bnb)
     BottomNavigationBar mBottomNavigationBar;
     @BindView(R.id.activity_main_fab)
     FloatingActionButton mFab;
-
-    @Inject
-    MainPresenter mPresenter;
 
     private long mExittime;
     private ShapeBadgeItem mBadgeItem;
@@ -63,7 +57,6 @@ public class MainActivity extends BaseActivity implements MainAtyContract.View {
 
     @Override
     public void initDatas() {
-        mPresenter.atachView(this);
         mPresenter.initViewPager();
         mPresenter.initBottomNavigationBar();
         mPresenter.initSubListener();
@@ -85,7 +78,6 @@ public class MainActivity extends BaseActivity implements MainAtyContract.View {
         mCommonToolbar.setTitle("标题栏");
         mCommonToolbar.setNavigationIcon(R.drawable.common_back);
     }
-
 
 //    @Override
 //    public boolean onCreateOptionsMenu(Menu menu) {
@@ -232,13 +224,6 @@ public class MainActivity extends BaseActivity implements MainAtyContract.View {
             return true;
         }
         return super.onKeyDown(keyCode, event);
-    }
-
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        // TODO: add setContentView(...) invocation
-        ButterKnife.bind(this);
     }
 
     @OnClick(R.id.activity_main_fab)
