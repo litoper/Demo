@@ -38,6 +38,8 @@ public class SpUtil {
     public static final String LOGIN_INFO_USERICO = "login_info_userIco";
     public static final String LOGIN_INFO_USERID = "login_info_userid";
     public static final String LOGIN_INFO_PUSHID = "login_info_pushId";
+    public static final String PUSH_INFO_HUA_WEI_TOKEN = "hua_wei_token";
+    public static final String INFO_PHONE_BRAND = "phone_brand";
 
 
     public synchronized static SpUtil getInstance() {

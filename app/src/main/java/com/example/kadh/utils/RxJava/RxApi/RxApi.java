@@ -1,6 +1,7 @@
 package com.example.kadh.utils.RxJava.RxApi;
 
 
+import com.example.kadh.bean.isValiDateProcessPermitBean;
 import com.example.kadh.ui.company.bean.CommentListBean;
 import com.example.kadh.ui.company.bean.PublishListBean;
 import com.example.kadh.ui.company.bean.PublishNewDetailBean;
@@ -219,6 +220,45 @@ public class RxApi {
      */
     public Flowable upNumber(FlowableSubscriber<BaseResponse<List<UpNumberBean>>> subscriber, String ptype, String proPublishId, String uped) {
         Flowable flowable = mRxApiService.upNumber(ptype, proPublishId, uped, version);
+        toSubscribe(flowable, subscriber);
+        return flowable;
+    }
+
+
+    /**
+     * 判断当前用户是否已经审核过了待办列表中的流程
+     *
+     * @param subscriber
+     * @param allowId
+     */
+    public Flowable isVaLiDateProcessPermit(FlowableSubscriber<BaseResponse<isValiDateProcessPermitBean>> subscriber, String allowId) {
+        Flowable flowable = mRxApiService.isVaLiDateProcessPermit(allowId, version);
+        toSubscribe(flowable, subscriber);
+        return flowable;
+    }
+
+    /**
+     * mqRegister 消息队列注册
+     *
+     * @param subscriber
+     * @param devicetoken
+     * @param fOS
+     */
+    public Flowable mqRegister(FlowableSubscriber<BaseResponse<String>> subscriber, String devicetoken, String fOS) {
+        Flowable flowable = mRxApiService.mqRegister(devicetoken, fOS, version);
+        toSubscribe(flowable, subscriber);
+        return flowable;
+    }
+
+    /**
+     * mqRegister 消息队列注销
+     *
+     * @param subscriber
+     * @param devicetoken
+     * @param fOS
+     */
+    public Flowable mqLogOut(FlowableSubscriber<BaseResponse<String>> subscriber, String devicetoken, String fOS) {
+        Flowable flowable = mRxApiService.mqLogOut(devicetoken, fOS, version);
         toSubscribe(flowable, subscriber);
         return flowable;
     }

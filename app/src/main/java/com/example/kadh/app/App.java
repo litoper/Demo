@@ -7,6 +7,7 @@ import com.example.kadh.component.AppComponent;
 import com.example.kadh.component.DaggerAppComponent;
 import com.example.kadh.module.AppModule;
 import com.example.kadh.module.RxApiModule;
+import com.example.kadh.service.pushreceiver.PushReceiverManager;
 import com.example.kadh.utils.AppUtils;
 import com.example.kadh.utils.SpUtil;
 import com.socks.library.KLog;
@@ -20,8 +21,8 @@ import com.socks.library.KLog;
  */
 
 public class App extends Application {
-    private static App          sApp;
-    private        AppComponent mAppComponent;
+    private static App sApp;
+    private AppComponent mAppComponent;
 
     @Override
     public void onCreate() {
@@ -29,6 +30,7 @@ public class App extends Application {
         sApp = this;
         initCompoent();
         initUtils();
+        PushReceiverManager.getInstance().initPushSdk();
     }
 
     private void initCompoent() {

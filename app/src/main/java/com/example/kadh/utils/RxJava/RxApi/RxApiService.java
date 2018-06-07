@@ -1,6 +1,7 @@
 package com.example.kadh.utils.RxJava.RxApi;
 
 
+import com.example.kadh.bean.isValiDateProcessPermitBean;
 import com.example.kadh.ui.company.bean.CommentListBean;
 import com.example.kadh.ui.company.bean.PublishListBean;
 import com.example.kadh.ui.company.bean.PublishNewDetailBean;
@@ -123,6 +124,23 @@ interface RxApiService {
             @Query("ptype") String ptype,
             @Query("proPublishId") String proPublishId,
             @Query("uped") String uped, @Query("version") String version);
+
+    @GET(RxApiUrl.Url.ISVALIDATE)
+    Flowable<BaseResponse<isValiDateProcessPermitBean>> isVaLiDateProcessPermit(
+            @Query("allowId") String allowId,
+            @Query("version") String version);
+
+    @GET(RxApiUrl.Url.MQREGISTER)
+    Flowable<BaseResponse<String>> mqRegister(
+            @Query("devicetoken") String devicetoken,
+            @Query("fOS") String fOS,
+            @Query("version") String version);
+
+    @GET(RxApiUrl.Url.MQLOGOUT)
+    Flowable<BaseResponse<String>> mqLogOut(
+            @Query("devicetoken") String devicetoken,
+            @Query("fOS") String fOS,
+            @Query("version") String version);
 
 
     //    @GET(RxApiUrl.Url.CHECKVERSION + NICAI)

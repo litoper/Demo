@@ -17,6 +17,7 @@ import com.example.kadh.R;
 import com.example.kadh.base.BaseActivityView;
 import com.example.kadh.component.AppComponent;
 import com.example.kadh.component.DaggerMainComponent;
+import com.example.kadh.service.pushreceiver.PushReceiverManager;
 import com.example.kadh.ui.main.adapter.MainPagerAdapter;
 import com.example.kadh.ui.main.bean.IsHasUnReadBean;
 import com.example.kadh.ui.main.bean.WeatherBean;
@@ -61,6 +62,7 @@ public class MainActivity extends BaseActivityView<MainPresenter> implements Mai
         mPresenter.initBottomNavigationBar();
         mPresenter.initSubListener();
         this.checkPermission();
+        PushReceiverManager.getInstance().setAlias();
     }
 
     @Override

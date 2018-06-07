@@ -14,6 +14,20 @@ android {
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
     buildTypes {
+
+        debug {
+            minifyEnabled false
+            debuggable true
+            buildConfigField("String", "XIAO_MI_PUSH_ID", "\"2882303761517632811\"")
+            buildConfigField("String", "XIAO_MI_PUSH_KEY", "\"5281763252811\"")
+            manifestPlaceholders = [
+                    app_name            : "OA开发版",
+                    UMENG_APPKEY        : "5ac1e09eb27b0a065d00014e",
+                    UMENG_MESSAGE_SECRET: "ad0631ae4fdc2c949f198357f6677514",
+                    HUAWEI_PUSH_APPKEY  : "100243443",
+            ]
+        }
+
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
@@ -23,6 +37,10 @@ android {
 
 dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'libs')
+    implementation files('libs/com.umeng.message_3.1.1.jar')
+    implementation files('libs/HwPush_SDK_V2705.jar')
+    implementation files('libs/MiPush_SDK_Client_3_4_5.jar')
+    implementation files('libs/utdid4all-1.1.5.3_proguard.jar')
     androidTestImplementation('com.android.support.test.espresso:espresso-core:3.0.2', {
         exclude group: 'com.android.support', module: 'support-annotations'
     })
@@ -33,17 +51,16 @@ dependencies {
     implementation 'com.android.support:support-v4:27.1.1'
     implementation 'com.android.support:design:27.1.1'
     implementation 'com.ashokvarma.android:bottom-navigation-bar:2.0.4'
-
     // Annotation
     implementation 'com.jakewharton:butterknife:8.8.1'
     annotationProcessor 'com.jakewharton:butterknife-compiler:8.8.1'
     // Net
     implementation 'com.squareup.retrofit2:retrofit:2.4.0'
-//    implementation 'com.squareup.retrofit2:adapter-rxjava:2.1.0'
+    //    implementation 'com.squareup.retrofit2:adapter-rxjava:2.1.0'
     implementation 'com.squareup.retrofit2:adapter-rxjava2:2.4.0'
     implementation 'com.squareup.retrofit2:converter-gson:2.1.0'
     implementation 'com.squareup.retrofit2:converter-scalars:2.1.0'
-//    implementation 'com.squareup.okhttp3:okhttp:3.10.0'
+    //    implementation 'com.squareup.okhttp3:okhttp:3.10.0'
     implementation 'com.squareup.okhttp3:logging-interceptor:3.4.1'
     implementation 'com.github.franmontiel:PersistentCookieJar:v1.0.1'
     // Rx
@@ -54,28 +71,25 @@ dependencies {
     implementation 'com.jakewharton.rxbinding2:rxbinding-appcompat-v7:2.1.1'
     implementation 'com.jakewharton.rxbinding2:rxbinding-design:2.1.1'
     implementation 'com.jakewharton.rxbinding2:rxbinding-recyclerview-v7:2.1.1'
-//    implementation 'com.jakewharton.rxbinding2:rxbinding-leanback-v17:2.1.1'
-
+    //    implementation 'com.jakewharton.rxbinding2:rxbinding-leanback-v17:2.1.1'
     //pic
     implementation 'com.github.bumptech.glide:glide:4.7.1'
     annotationProcessor 'com.github.bumptech.glide:compiler:4.7.1'
-
     //permissions
     implementation 'com.tbruyelle.rxpermissions2:rxpermissions:0.9.5@aar'
-
     // Annotation
     implementation 'com.google.dagger:dagger:2.0.2'
     annotationProcessor 'com.google.dagger:dagger-compiler:2.0.2'
     compileOnly 'org.glassfish:javax.annotation:10.0-b28'
-
     //log
     implementation 'com.github.zhaokaiqiang.klog:library:1.6.0'
-
     //ui
     implementation 'com.scwang.smartrefresh:SmartRefreshLayout:1.1.0-alpha-6'
-    implementation 'com.scwang.smartrefresh:SmartRefreshHeader:1.1.0-alpha-6'//没有使用特殊Header，可以不加这行
+    implementation 'com.scwang.smartrefresh:SmartRefreshHeader:1.1.0-alpha-6'
+    //没有使用特殊Header，可以不加这行
     implementation 'com.github.CymChad:BaseRecyclerViewAdapterHelper:2.9.30'
     implementation 'com.github.f0ris.sweetalert:library:1.5.1'
-
     implementation 'org.jsoup:jsoup:1.10.3'
+
+
 }
