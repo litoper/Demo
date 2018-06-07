@@ -12,6 +12,7 @@ import com.example.kadh.ui.login.bean.LoginBean;
 import com.example.kadh.ui.main.bean.IsHasUnReadBean;
 import com.example.kadh.ui.main.bean.UserInfoBean;
 import com.example.kadh.ui.main.bean.WeatherBean;
+import com.example.kadh.ui.message.MessageBean;
 import com.example.kadh.ui.person.bean.QueryProTotalInfoBean;
 import com.example.kadh.ui.work.bean.ProcessModuleBean;
 import com.example.kadh.ui.work.bean.ProcessStatusBean;
@@ -259,6 +260,21 @@ public class RxApi {
      */
     public Flowable mqLogOut(FlowableSubscriber<BaseResponse<String>> subscriber, String devicetoken, String fOS) {
         Flowable flowable = mRxApiService.mqLogOut(devicetoken, fOS, version);
+        toSubscribe(flowable, subscriber);
+        return flowable;
+    }
+
+
+    /**
+     * mqPushMsgList 获取消息队列列表
+     *
+     * @param subscriber
+     * @param pagesize
+     * @param currentPage
+     * @param state
+     */
+    public Flowable mqPushMsgList(FlowableSubscriber<BaseResponse<List<MessageBean>>> subscriber, String pagesize, String currentPage, String state) {
+        Flowable flowable = mRxApiService.mqPushMsgList(pagesize, currentPage, state, version);
         toSubscribe(flowable, subscriber);
         return flowable;
     }

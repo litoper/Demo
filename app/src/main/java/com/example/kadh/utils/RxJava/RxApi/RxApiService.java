@@ -12,6 +12,7 @@ import com.example.kadh.ui.login.bean.LoginBean;
 import com.example.kadh.ui.main.bean.IsHasUnReadBean;
 import com.example.kadh.ui.main.bean.UserInfoBean;
 import com.example.kadh.ui.main.bean.WeatherBean;
+import com.example.kadh.ui.message.MessageBean;
 import com.example.kadh.ui.person.bean.QueryProTotalInfoBean;
 import com.example.kadh.ui.work.bean.ProcessModuleBean;
 import com.example.kadh.ui.work.bean.ProcessStatusBean;
@@ -140,6 +141,13 @@ interface RxApiService {
     Flowable<BaseResponse<String>> mqLogOut(
             @Query("devicetoken") String devicetoken,
             @Query("fOS") String fOS,
+            @Query("version") String version);
+
+    @GET(RxApiUrl.Url.MQPUSHMSGLIST)
+    Flowable<BaseResponse<List<MessageBean>>> mqPushMsgList(
+            @Query("pagesize") String pagesize,
+            @Query("currentPage") String currentPage,
+            @Query("state") String state,
             @Query("version") String version);
 
 

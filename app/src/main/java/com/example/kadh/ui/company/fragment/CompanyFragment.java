@@ -11,6 +11,7 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
@@ -24,6 +25,7 @@ import com.example.kadh.ui.company.adapter.PublishAdapter;
 import com.example.kadh.ui.company.bean.PublishListBean;
 import com.example.kadh.ui.company.contract.CompanyFragContract;
 import com.example.kadh.ui.company.presenter.CompanyPresenter;
+import com.example.kadh.ui.message.MessageActivity;
 import com.example.kadh.utils.NullUtils;
 import com.example.kadh.view.LoadingLayout;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
@@ -132,6 +134,18 @@ public class CompanyFragment extends BaseFragmentView<CompanyPresenter> implemen
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         inflater.inflate(R.menu.menu_main_company, menu);
         super.onCreateOptionsMenu(menu, inflater);
+    }
+
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.action_message:
+                openActivity(MessageActivity.class);
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
     }
 
     @Override

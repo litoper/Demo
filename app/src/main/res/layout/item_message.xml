@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="90dp"
+    android:orientation="vertical"
+    android:padding="15dp">
+
+    <ImageView
+        android:id="@+id/msg_iv_blue_dot"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:layout_marginTop="5dp"
+        android:src="@mipmap/blue_dot"
+        android:visibility="invisible" />
+
+    <ImageView
+        android:id="@+id/msg_iv_icon"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_centerVertical="true"
+        android:layout_marginStart="5dp"
+        android:layout_toEndOf="@id/msg_iv_blue_dot"
+        android:src="@mipmap/message_icon_liu2x" />
+
+    <TextView
+        android:id="@+id/msg_tv_type"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@id/msg_iv_icon"
+        android:layout_marginStart="20dp"
+        android:layout_toEndOf="@id/msg_iv_icon"
+        android:text="8888888"
+        android:textColor="@color/black"
+        android:textSize="17sp" />
+
+    <TextView
+        android:id="@+id/msg_tv_time"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@id/msg_tv_type"
+        android:layout_marginStart="5dp"
+        android:layout_toEndOf="@id/msg_tv_type"
+        android:text="88888" />
+
+    <TextView
+        android:id="@+id/msg_tv_value"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignStart="@id/msg_tv_type"
+        android:layout_below="@id/msg_tv_type"
+        android:layout_marginTop="10dp"
+        android:paddingEnd="10dp"
+        android:paddingStart="10dp"
+        android:text="888888"
+        android:textSize="15sp" />
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_centerVertical="true"
+        android:src="@mipmap/common_arrow_right" />
+</RelativeLayout>
