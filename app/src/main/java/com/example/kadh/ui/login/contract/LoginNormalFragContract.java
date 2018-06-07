@@ -10,7 +10,7 @@ import com.example.kadh.ui.login.bean.LoginBean;
  * @blog : http://www.nicaicaicai.com
  * @desc :
  */
-public interface LoginFragContract {
+public interface LoginNormalFragContract {
 
     interface View extends BaseContract.BaseView {
         void setLoginData(String username, String passwrod);

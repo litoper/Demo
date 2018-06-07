@@ -94,8 +94,7 @@ public class HuaWeiPushReceiver extends PushEventReceiver {
     @Override
     public void onPushState(Context context, boolean b) {
         try {
-            String content = "---------The current push status： " + (b ? "Connected" :
-                    "Disconnected");
+            String content = "---------The current push status： " + (b ? "Connected" : "Disconnected");
             Log.d(TAG, content);
         } catch (Exception e) {
             e.printStackTrace();

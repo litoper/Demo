@@ -2,7 +2,7 @@ package com.example.kadh.ui.login.presenter;
 
 import com.example.kadh.base.BasePresenterImpl;
 import com.example.kadh.ui.login.bean.LoginBean;
-import com.example.kadh.ui.login.contract.LoginFragContract;
+import com.example.kadh.ui.login.contract.LoginNormalFragContract;
 import com.example.kadh.utils.MD5helper;
 import com.example.kadh.utils.NullUtils;
 import com.example.kadh.utils.RxJava.BaseResponse;
@@ -22,7 +22,7 @@ import javax.inject.Inject;
  * @blog : http://www.nicaicaicai.com
  * @desc :
  */
-public class LoginNormalPresenter extends BasePresenterImpl<LoginFragContract.View> implements LoginFragContract.Presenter<LoginFragContract.View> {
+public class LoginNormalPresenter extends BasePresenterImpl<LoginNormalFragContract.View> implements LoginNormalFragContract.Presenter<LoginNormalFragContract.View> {
 
     private RxApi mRxApi;
 

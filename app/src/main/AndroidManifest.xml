@@ -63,6 +63,10 @@
         <activity android:name=".ui.company.activity.NoticeDetailActivity" />
         <activity android:name=".ui.company.activity.NewsDetailActivity" />
 
+        <!--setting on-->
+        <activity android:name=".ui.setting.SettingActivity" />
+        <!--setting off-->
+
         <!--login on-->
         <activity android:name=".ui.login.activity.LoginActivity" />
         <activity android:name=".ui.login.activity.LoginForgetActivity" />

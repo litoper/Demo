@@ -160,7 +160,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:paddingEnd="20dp"
-                            android:src="@mipmap/work_arrow_right" />
+                            android:src="@mipmap/common_arrow_right" />
                     </LinearLayout>
 
 
@@ -191,7 +191,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:paddingEnd="20dp"
-                            android:src="@mipmap/work_arrow_right" />
+                            android:src="@mipmap/common_arrow_right" />
                     </LinearLayout>
 
                     <include layout="@layout/include_divide_height_no_line_10dp" />
@@ -223,7 +223,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:paddingEnd="20dp"
-                            android:src="@mipmap/work_arrow_right" />
+                            android:src="@mipmap/common_arrow_right" />
                     </LinearLayout>
 
                     <LinearLayout
@@ -253,7 +253,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:paddingEnd="20dp"
-                            android:src="@mipmap/work_arrow_right" />
+                            android:src="@mipmap/common_arrow_right" />
                     </LinearLayout>
                 </LinearLayout>
             </ScrollView>

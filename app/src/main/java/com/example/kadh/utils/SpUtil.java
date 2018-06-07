@@ -30,15 +30,20 @@ public class SpUtil {
     public Context context;
     public SharedPreferences prefs;
     public SharedPreferences.Editor editor;
+    //保存的xml名称
     public static final String PREFS = "_preference";
     public static final String LOGIN = "login";
+    //登录时保存的用户名及密码
     public static final String LOGIN_USERNAME = "username";
     public static final String LOGIN_PASSWORD = "password";
+    //登录成功后服务器返回的相关信息
     public static final String LOGIN_INFO_USERNAME = "login_info_userName";
     public static final String LOGIN_INFO_USERICO = "login_info_userIco";
     public static final String LOGIN_INFO_USERID = "login_info_userid";
     public static final String LOGIN_INFO_PUSHID = "login_info_pushId";
+    //华为推送返回的token，友盟小米则使用LOGIN_INFO_PUSHID这个值
     public static final String PUSH_INFO_HUA_WEI_TOKEN = "hua_wei_token";
+    //手机品牌
     public static final String INFO_PHONE_BRAND = "phone_brand";
 
 
