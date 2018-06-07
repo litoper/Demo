@@ -23,7 +23,7 @@ public interface RxApiUrl {
          * 测试服务器地址
          */
 
-        static final String NICAICAI = "2";
+        public static final String NICAICAI = "";
         public static final String BASE = "http://192.168.2.24/DJOA/";//蒋凡毅
         //        static final String BASE = "http://192.168.2.21/DJOA/"; //朱诚
         //        static final String BASE = "http://192.168.23.43/DJOA/"; //开发库
