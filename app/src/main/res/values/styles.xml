@@ -59,8 +59,7 @@
     </style>
 
     <!--LoadingLayout-->
-    <style name="LoadingLayout">
-    </style>
+    <style name="LoadingLayout"></style>
 
     <style name="LoadingLayout.Style">
         <item name="llEmptyResId">@layout/_loading_layout_empty</item>
@@ -96,5 +95,13 @@
     </style>
 
 
+    <style name="CallPhoneStyle">
+        <item name="android:windowFrame">@null</item>
+        <item name="android:windowIsFloating">true</item>
+        <item name="android:windowIsTranslucent">false</item>
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:windowBackground">@color/transparent</item>
+        <item name="android:backgroundDimEnabled">true</item>
+    </style>
 
 </resources>

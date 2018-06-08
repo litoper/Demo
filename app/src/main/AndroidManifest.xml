@@ -63,6 +63,8 @@
         <activity android:name=".ui.company.activity.NoticeDetailActivity" />
         <activity android:name=".ui.company.activity.NewsDetailActivity" />
         <activity android:name=".ui.message.MessageActivity" />
+        <activity android:name=".ui.person.activity.PersonInfoActivity" />
+
 
         <!--setting on-->
         <activity android:name=".ui.setting.SettingActivity" />

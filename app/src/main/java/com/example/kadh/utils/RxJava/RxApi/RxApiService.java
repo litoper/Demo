@@ -14,6 +14,7 @@ import com.example.kadh.ui.main.bean.UserInfoBean;
 import com.example.kadh.ui.main.bean.WeatherBean;
 import com.example.kadh.ui.message.MessageBean;
 import com.example.kadh.ui.person.bean.QueryProTotalInfoBean;
+import com.example.kadh.ui.person.bean.RoleManageBean;
 import com.example.kadh.ui.work.bean.ProcessModuleBean;
 import com.example.kadh.ui.work.bean.ProcessStatusBean;
 import com.example.kadh.utils.RxJava.BaseResponse;
@@ -53,6 +54,12 @@ interface RxApiService {
     Flowable<BaseResponse<List<UserInfoBean>>> getUseInfo(
             @Query("userid") String userid,
             @Query("version") String version);
+
+    @GET(RxApiUrl.Url.GETROLEMANAGESINGLE)
+    Flowable<BaseResponse<List<RoleManageBean>>> getRoleManageSingle(
+            @Query("userid") String userid,
+            @Query("version") String version);
+
 
     @GET(RxApiUrl.Url.ISHASUNREAD)
     Flowable<BaseResponse<IsHasUnReadBean>> isHasUnRead(

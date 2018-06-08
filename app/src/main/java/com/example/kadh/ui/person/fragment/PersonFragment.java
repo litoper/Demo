@@ -11,12 +11,16 @@ import android.widget.TextView;
 import com.example.kadh.R;
 import com.example.kadh.base.BaseFragment;
 import com.example.kadh.component.AppComponent;
+import com.example.kadh.ui.person.activity.PersonInfoActivity;
 import com.example.kadh.ui.person.bean.QueryProTotalInfoBean;
 import com.example.kadh.ui.setting.SettingActivity;
+import com.example.kadh.utils.GlideUtils;
 import com.example.kadh.utils.RxJava.BaseResponse;
+import com.example.kadh.utils.RxJava.RxApi.RxApiUrl;
 import com.example.kadh.utils.RxJava.RxApi.RxManager;
 import com.example.kadh.utils.RxJava.RxSubscriber.SubNextImpl;
 import com.example.kadh.utils.RxJava.RxSubscriber.SubProtect;
+import com.example.kadh.utils.SpUtil;
 import com.example.kadh.view.CircleImageView.CircleImageView;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
@@ -63,7 +67,15 @@ public class PersonFragment extends BaseFragment {
 
     @Override
     protected void initDatas() {
+        setUserInfo();
         getTimeInfo();
+    }
+
+    private void setUserInfo() {
+        String userIcon = SpUtil.getInstance().getString(SpUtil.LOGIN_INFO_USERICO);
+        String userName = SpUtil.getInstance().getString(SpUtil.LOGIN_INFO_USERNAME);
+        mTvName.setText(userName);
+        GlideUtils.loadImageView(mContext, RxApiUrl.Url.BASE + userIcon, mCivPersonal);
     }
 
     private void getTimeInfo() {
@@ -106,7 +118,7 @@ public class PersonFragment extends BaseFragment {
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.person_civ_personal://进入个人中心
-//                openActivity(PersonalActivityNew.class);
+                openActivity(PersonInfoActivity.class);
                 break;
             case R.id.person_ll_attence://考勤记录
 //                openActivity(AttenceActivity.class);

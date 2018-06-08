@@ -31,6 +31,7 @@ public class App extends Application {
         initCompoent();
         initUtils();
         PushReceiverManager.getInstance().initPushSdk();
+
     }
 
     private void initCompoent() {

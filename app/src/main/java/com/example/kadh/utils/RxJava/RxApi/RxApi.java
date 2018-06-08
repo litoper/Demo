@@ -14,6 +14,7 @@ import com.example.kadh.ui.main.bean.UserInfoBean;
 import com.example.kadh.ui.main.bean.WeatherBean;
 import com.example.kadh.ui.message.MessageBean;
 import com.example.kadh.ui.person.bean.QueryProTotalInfoBean;
+import com.example.kadh.ui.person.bean.RoleManageBean;
 import com.example.kadh.ui.work.bean.ProcessModuleBean;
 import com.example.kadh.ui.work.bean.ProcessStatusBean;
 import com.example.kadh.utils.RxJava.BaseResponse;
@@ -64,6 +65,17 @@ public class RxApi {
      */
     public Flowable getUseInfo(FlowableSubscriber<BaseResponse<List<UserInfoBean>>> subscriber, String userid) {
         Flowable flowable = mRxApiService.getUseInfo(userid, version);
+        toSubscribe(flowable, subscriber);
+        return flowable;
+    }
+
+    /**
+     * getRoleManageSingle 获取个人默认角色
+     *
+     * @param subscriber
+     */
+    public Flowable getRoleManageSingle(FlowableSubscriber<BaseResponse<List<RoleManageBean>>> subscriber, @NonNull String userid) {
+        Flowable flowable = mRxApiService.getRoleManageSingle(userid, version);
         toSubscribe(flowable, subscriber);
         return flowable;
     }

@@ -469,4 +469,16 @@ public class NewsDetailActivity extends BaseActivityView<NewsDetailPresenter> im
             }
         }
     }
+
+    @Override
+    protected void onRestart() {
+        super.onRestart();
+        mBanner.startAutoPlay();
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        mBanner.stopAutoPlay();
+    }
 }
