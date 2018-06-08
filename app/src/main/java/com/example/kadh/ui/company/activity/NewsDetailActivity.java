@@ -1,7 +1,9 @@
 package com.example.kadh.ui.company.activity;
 
 import android.annotation.SuppressLint;
+import android.content.Context;
 import android.graphics.drawable.Drawable;
+import android.support.annotation.NonNull;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -31,11 +33,17 @@ import com.example.kadh.ui.company.bean.UpManListBean;
 import com.example.kadh.ui.company.bean.UpNumberBean;
 import com.example.kadh.ui.company.contract.NewsDetailAtyContract;
 import com.example.kadh.ui.company.presenter.NewsDetailPresenter;
+import com.example.kadh.utils.GlideUtils;
 import com.example.kadh.utils.IMEUtils;
 import com.example.kadh.utils.NullUtils;
+import com.example.kadh.utils.RxJava.RxApi.RxApiUrl;
 import com.example.kadh.utils.ScreenUtils;
 import com.example.kadh.view.HoverScrollViewNew;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
+import com.scwang.smartrefresh.layout.api.RefreshLayout;
+import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
+import com.youth.banner.Banner;
+import com.youth.banner.loader.ImageLoader;
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -43,6 +51,7 @@ import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import butterknife.BindView;
@@ -98,6 +107,11 @@ public class NewsDetailActivity extends BaseActivityView<NewsDetailPresenter> im
     TextView mTvSend;
     @BindView(R.id.activity_news_details_rl_bottom)
     RelativeLayout mRlBottom;
+    @BindView(R.id.activity_news_details_banner)
+    Banner mBanner;
+    @BindView(R.id.activity_news_details_root_srl)
+    SmartRefreshLayout mRootSrl;
+
     private WebSettings wSet;
     private String mPublishId;
     private String mNe_news__id;
@@ -156,6 +170,12 @@ public class NewsDetailActivity extends BaseActivityView<NewsDetailPresenter> im
             }
         });
 
+        mRootSrl.setOnRefreshListener(new OnRefreshListener() {
+            @Override
+            public void onRefresh(@NonNull RefreshLayout refreshLayout) {
+                mPresenter.getNewsDetailByPublishId(mPublishId);
+            }
+        });
     }
 
     @Override
@@ -167,12 +187,9 @@ public class NewsDetailActivity extends BaseActivityView<NewsDetailPresenter> im
         mRv.setHasFixedSize(true);
         mRv.setAdapter(mCommonListAdapter);
         mPublishId = getIntent().getStringExtra("publishId");
-        mPresenter.getNewsDetailByPublishId(mPublishId);
-
-
         mLinearParams = mEtComment.getLayoutParams();
         mEtCommentDefaultHeight = mEtComment.getLayoutParams().height;
-
+        mRootSrl.autoRefresh();
     }
 
     @SuppressLint("SetJavaScriptEnabled")
@@ -222,6 +239,10 @@ public class NewsDetailActivity extends BaseActivityView<NewsDetailPresenter> im
         setNewsDetail(detailBean);
         setNewsOther(detailBean);
         mPresenter.getCommentList(mPageComment, mNe_news__id, mPtype);
+        if (mRootSrl.isEnableRefresh()) {
+            mRootSrl.setEnableRefresh(false);
+            mRootSrl.finishRefresh(300);
+        }
     }
 
     @Override
@@ -351,6 +372,7 @@ public class NewsDetailActivity extends BaseActivityView<NewsDetailPresenter> im
         }
     }
 
+    @SuppressLint("ClickableViewAccessibility")
     private void setNewsDetail(PublishNewDetailBean newsDetail) {
         Document doc = Jsoup.parse(newsDetail.getNnews_content());
         Elements elements = doc.getElementsByTag("img");
@@ -380,18 +402,12 @@ public class NewsDetailActivity extends BaseActivityView<NewsDetailPresenter> im
             }
         });
 
-//        String image = mDetailModel.getNpicture();
-//        String[] images = image.split(",");
-//        for (String image1 : images) {
-//            mImageUrls.add(Constant.Url.BASE + image1);
-//        }
-//        mFlashView.setOnImageLoaderLisiener(new FlashView.IImageLoaderLisiener() {
-//            @Override
-//            public void imageLoad(String mResName, ImageView imageView) {
-//                GlideUtils.loadImageView(NewsDetailsActivityNew.this, mResName, imageView);
-//            }
-//        });
-//        mFlashView.setImageUris(mImageUrls);//设置轮播图
+        mBanner.setImageLoader(new ImageLoader() {
+            @Override
+            public void displayImage(Context context, Object path, ImageView imageView) {
+                GlideUtils.loadImageView(context, RxApiUrl.Url.BASE + String.valueOf(path), imageView);
+            }
+        }).setImages(Arrays.asList(newsDetail.getNpicture().split(","))).start();
     }
 
     @OnClick({R.id.activity_news_details_tv_comment_num, R.id.activity_news_details_tv_fab_num, R.id.activity_news_details_tv_send, R.id.activity_news_details_iv_fab})

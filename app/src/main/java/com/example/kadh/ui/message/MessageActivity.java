@@ -11,7 +11,6 @@ import com.example.kadh.utils.RxJava.BaseResponse;
 import com.example.kadh.utils.RxJava.RxApi.RxManager;
 import com.example.kadh.utils.RxJava.RxSubscriber.SubNextImpl;
 import com.example.kadh.utils.RxJava.RxSubscriber.SubProtect;
-import com.example.kadh.view.LoadingLayout;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.OnRefreshLoadMoreListener;
@@ -34,8 +33,8 @@ public class MessageActivity extends BaseActivity {
     RecyclerView mRv;
     @BindView(R.id.activity_message_srl)
     SmartRefreshLayout mSrl;
-    @BindView(R.id.activity_message_loading)
-    LoadingLayout mLoading;
+    //    @BindView(R.id.activity_message_loading)
+//    LoadingLayout mLoading;
     private List<MessageBean> mMessageBeans = new ArrayList<>();
     private MessageAdapter mMessageAdapter;
     private LinearLayoutManager mLinearLayoutManager;
@@ -46,12 +45,12 @@ public class MessageActivity extends BaseActivity {
         mSrl.setOnRefreshLoadMoreListener(new OnRefreshLoadMoreListener() {
             @Override
             public void onLoadMore(@NonNull RefreshLayout refreshLayout) {
-
+                getMessageList(++mCurrentPage);
             }
 
             @Override
             public void onRefresh(@NonNull RefreshLayout refreshLayout) {
-                getMessageList();
+                getMessageList(mCurrentPage = 1);
             }
         });
     }
@@ -63,11 +62,10 @@ public class MessageActivity extends BaseActivity {
         mLinearLayoutManager = new LinearLayoutManager(mContext, LinearLayoutManager.VERTICAL, false);
         mRv.setLayoutManager(mLinearLayoutManager);
         mRv.setAdapter(mMessageAdapter);
-        getMessageList();
-
+        mSrl.autoRefresh();
     }
 
-    private void getMessageList() {
+    private void getMessageList(int currentPage) {
         RxManager.getInstant().getRxApi().mqPushMsgList(new SubProtect<BaseResponse<List<MessageBean>>>(new SubNextImpl<BaseResponse<List<MessageBean>>>() {
             @Override
             public void onSubSuccess(BaseResponse<List<MessageBean>> response) {
@@ -77,13 +75,15 @@ public class MessageActivity extends BaseActivity {
                 mMessageBeans.addAll(response.data);
                 mMessageAdapter.setNewData(mMessageBeans);
                 mSrl.finishRefresh(500);
-                mLoading.showContent();
-                if (!mSrl.isEnableRefresh()) {
-                    mSrl.setEnableRefresh(true);
+                mSrl.finishLoadMore(500);
+//                mLoading.showContent();
+                if (mMessageBeans.size() >= Integer.parseInt(response.total)) {
+                    mSrl.setEnableLoadMore(false);
+                } else {
+                    mSrl.setEnableLoadMore(true);
                 }
-
             }
-        }), "10", String.valueOf(mCurrentPage), "");
+        }), "10", String.valueOf(currentPage), "");
     }
 
     @Override

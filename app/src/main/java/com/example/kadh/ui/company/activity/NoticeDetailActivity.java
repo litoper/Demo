@@ -2,6 +2,7 @@ package com.example.kadh.ui.company.activity;
 
 import android.annotation.SuppressLint;
 import android.graphics.Color;
+import android.support.annotation.NonNull;
 import android.view.MotionEvent;
 import android.view.View;
 import android.webkit.WebResourceRequest;
@@ -19,6 +20,9 @@ import com.example.kadh.utils.RxJava.BaseResponse;
 import com.example.kadh.utils.RxJava.RxApi.RxManager;
 import com.example.kadh.utils.RxJava.RxSubscriber.SubNextImpl;
 import com.example.kadh.utils.RxJava.RxSubscriber.SubProtect;
+import com.scwang.smartrefresh.layout.SmartRefreshLayout;
+import com.scwang.smartrefresh.layout.api.RefreshLayout;
+import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -45,19 +49,32 @@ public class NoticeDetailActivity extends BaseActivity {
     TextView mTvName;
     @BindView(R.id.activity_notice_details_wv_value)
     WebView mWvValue;
+    @BindView(R.id.activity_notice_details_srl)
+    SmartRefreshLayout mRefreshLayout;
+
     private String mPublishId;
     private WebSettings wSet;
     private List<PublishNoticeDetailBean.FileListModel> mFileList;
 
     @Override
     public void configViews() {
-
-
+        mRefreshLayout.setOnRefreshListener(new OnRefreshListener() {
+            @Override
+            public void onRefresh(@NonNull RefreshLayout refreshLayout) {
+                getNoticeDetailByPublishId();
+            }
+        });
     }
 
     @SuppressLint("SetJavaScriptEnabled")
     @Override
     public void initDatas() {
+        mPublishId = getIntent().getStringExtra("publishId");
+        initWebView();
+        mRefreshLayout.autoRefresh();
+    }
+
+    private void initWebView() {
         wSet = mWvValue.getSettings();
         wSet.setJavaScriptEnabled(true);
         wSet.setNeedInitialFocus(false);
@@ -79,10 +96,9 @@ public class NoticeDetailActivity extends BaseActivity {
                 return true;
             }
         });
+    }
 
-
-        mPublishId = getIntent().getStringExtra("publishId");
-
+    private void getNoticeDetailByPublishId() {
         SubProtect<BaseResponse<List<PublishNoticeDetailBean>>> subProtect = new SubProtect<>(new SubNextImpl<BaseResponse<List<PublishNoticeDetailBean>>>() {
             @Override
             public void onSubSuccess(BaseResponse<List<PublishNoticeDetailBean>> response) {
@@ -90,14 +106,13 @@ public class NoticeDetailActivity extends BaseActivity {
                 mTvTitle.setText(detailBean.getNtitle());
                 mTvTime.setText(detailBean.getCreate_time().substring(0, 10));
                 mTvName.setText(detailBean.getPsponsor());
-
                 mFileList = detailBean.getFileList();
+                setWebView(detailBean);
+                mRefreshLayout.finishRefresh(200);
+
                 if (!NullUtils.isNull(mFileList)) {
                     // TODO: 2018/6/5 附件下载
                 }
-
-                setWebView(detailBean);
-
             }
         });
         RxManager.getInstant().getRxApi().getNoticeDetailByPublishId(subProtect, mPublishId);
