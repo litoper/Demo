@@ -25,6 +25,6 @@
 #-renamesourcefileattribute SourceFile
 
 #SweetAlertDialog
--keep class cn.pedant.SweetAlert.Rotate3dAnimation {
-  public <init>(...);
-}
+#-keep class cn.pedant.SweetAlert.Rotate3dAnimation {
+#  public <init>(...);
+#}

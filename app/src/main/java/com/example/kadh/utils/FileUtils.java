@@ -3,6 +3,8 @@ package com.example.kadh.utils;
 import android.content.Context;
 import android.os.Environment;
 
+import com.example.kadh.app.App;
+
 import java.io.File;
 import java.io.InputStream;
 import java.text.DecimalFormat;
@@ -16,6 +18,8 @@ import java.text.DecimalFormat;
  */
 
 public class FileUtils {
+    public static String PATH_USER = FileUtils.createRootPath(App.getApp()) + "/User/";
+
 
     /**
      * 转换文件大小
@@ -158,7 +162,7 @@ public class FileUtils {
      */
     public static String createRootPath(Context context) {
         String cacheRootPath = "";
-        if (isSdCardAvailable()) {
+        if (isSDExist()) {
             // /sdcard/Android/data/<application package>/cache
             cacheRootPath = context.getExternalCacheDir().getPath();
         } else {
@@ -168,8 +172,16 @@ public class FileUtils {
         return cacheRootPath;
     }
 
-    public static boolean isSdCardAvailable() {
+    public static boolean isSDExist() {
         return Environment.MEDIA_MOUNTED.equals(Environment.getExternalStorageState());
+    }
+
+    public static boolean isFileExist(String filePath) {
+        File file = new File(filePath);
+        if (file.exists()) {
+            return true;
+        }
+        return false;
     }
 
 }

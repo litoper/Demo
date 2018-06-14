@@ -2,7 +2,11 @@ package com.example.kadh.ui.company.activity;
 
 import android.annotation.SuppressLint;
 import android.graphics.Color;
+import android.os.Bundle;
+import android.os.Parcelable;
 import android.support.annotation.NonNull;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
 import android.webkit.WebResourceRequest;
@@ -29,6 +33,7 @@ import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
@@ -54,7 +59,8 @@ public class NoticeDetailActivity extends BaseActivity {
 
     private String mPublishId;
     private WebSettings wSet;
-    private List<PublishNoticeDetailBean.FileListModel> mFileList;
+    private List<PublishNoticeDetailBean.FileListBean> mFileList;
+    private MenuItem mMenuItem;
 
     @Override
     public void configViews() {
@@ -111,11 +117,33 @@ public class NoticeDetailActivity extends BaseActivity {
                 mRefreshLayout.finishRefresh(200);
 
                 if (!NullUtils.isNull(mFileList)) {
-                    // TODO: 2018/6/5 附件下载
+                    mMenuItem.setVisible(true);
                 }
             }
         });
         RxManager.getInstant().getRxApi().getNoticeDetailByPublishId(subProtect, mPublishId);
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_folder, menu);
+        mMenuItem = menu.findItem(R.id.action_folder);
+        mMenuItem.setVisible(false);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.action_folder:
+                Bundle bundle = new Bundle();
+                bundle.putParcelableArrayList("fileList", (ArrayList<? extends Parcelable>) mFileList);
+                openActivity(AttachmentActivity.class, bundle);
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+
+        }
     }
 
     @SuppressLint("ClickableViewAccessibility")

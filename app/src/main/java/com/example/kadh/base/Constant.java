@@ -14,4 +14,5 @@ import com.example.kadh.utils.FileUtils;
 public class Constant {
     public static String BASE_PATH = AppUtils.getAppContext().getCacheDir().getPath();
     public static String PATH_DATA = FileUtils.createRootPath(AppUtils.getAppContext()) + "/cache";
+
 }

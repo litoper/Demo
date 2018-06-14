@@ -46,7 +46,6 @@ public class App extends Application {
         AppUtils.init(this);
         SpUtil.init(this, getPackageName() + SpUtil.PREFS, Context.MODE_MULTI_PROCESS);
         KLog.init(true, "88888888");
-
     }
 
     public static synchronized App getApp() {

@@ -51,7 +51,7 @@ public class PublishNoticeDetailBean implements Parcelable {
     private String ptype;
     private String uped;
     private String yourUserId;
-    private List<FileListModel> fileList;
+    private List<FileListBean> fileList;
 
     public String getCreate_time() {
         return create_time;
@@ -181,15 +181,15 @@ public class PublishNoticeDetailBean implements Parcelable {
         this.yourUserId = yourUserId;
     }
 
-    public List<FileListModel> getFileList() {
+    public List<FileListBean> getFileList() {
         return fileList;
     }
 
-    public void setFileList(List<FileListModel> fileList) {
+    public void setFileList(List<FileListBean> fileList) {
         this.fileList = fileList;
     }
 
-    public static class FileListModel implements Parcelable {
+    public static class FileListBean implements Parcelable {
         /**
          * create_time : 2017-11-29 15:32:20
          * file_name : IT技术中心价值观提报与审核规范-2017.11.23.xlsx
@@ -201,6 +201,9 @@ public class PublishNoticeDetailBean implements Parcelable {
         private String file_name;
         private String file_size;
         private String file_uuid;
+
+        //本地赋值,用于判断是否已下载此文件
+        private String file_path;
 
         public String getCreate_time() {
             return create_time;
@@ -234,6 +237,17 @@ public class PublishNoticeDetailBean implements Parcelable {
             this.file_uuid = file_uuid;
         }
 
+        public String getFile_path() {
+            return file_path;
+        }
+
+        public void setFile_path(String file_path) {
+            this.file_path = file_path;
+        }
+
+        public FileListBean() {
+        }
+
         @Override
         public int describeContents() {
             return 0;
@@ -245,30 +259,30 @@ public class PublishNoticeDetailBean implements Parcelable {
             dest.writeString(this.file_name);
             dest.writeString(this.file_size);
             dest.writeString(this.file_uuid);
+            dest.writeString(this.file_path);
         }
 
-        public FileListModel() {
-        }
-
-        protected FileListModel(Parcel in) {
+        protected FileListBean(Parcel in) {
             this.create_time = in.readString();
             this.file_name = in.readString();
             this.file_size = in.readString();
             this.file_uuid = in.readString();
+            this.file_path = in.readString();
         }
 
-        public static final Parcelable.Creator<FileListModel> CREATOR = new Parcelable.Creator<FileListModel>() {
+        public static final Parcelable.Creator<FileListBean> CREATOR = new Parcelable.Creator<FileListBean>() {
             @Override
-            public FileListModel createFromParcel(Parcel source) {
-                return new FileListModel(source);
+            public FileListBean createFromParcel(Parcel source) {
+                return new FileListBean(source);
             }
 
             @Override
-            public FileListModel[] newArray(int size) {
-                return new FileListModel[size];
+            public FileListBean[] newArray(int size) {
+                return new FileListBean[size];
             }
         };
     }
+
 
     @Override
     public int describeContents() {
@@ -316,7 +330,7 @@ public class PublishNoticeDetailBean implements Parcelable {
         this.ptype = in.readString();
         this.uped = in.readString();
         this.yourUserId = in.readString();
-        this.fileList = in.createTypedArrayList(FileListModel.CREATOR);
+        this.fileList = in.createTypedArrayList(FileListBean.CREATOR);
     }
 
     public static final Parcelable.Creator<PublishNoticeDetailBean> CREATOR = new Parcelable.Creator<PublishNoticeDetailBean>() {

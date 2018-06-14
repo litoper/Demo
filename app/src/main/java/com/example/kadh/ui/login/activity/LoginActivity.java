@@ -1,6 +1,5 @@
 package com.example.kadh.ui.login.activity;
 
-import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
@@ -16,7 +15,6 @@ import com.example.kadh.view.RippleBackground;
 import java.util.ArrayList;
 
 import butterknife.BindView;
-import butterknife.ButterKnife;
 
 /**
  * @author: kadh
@@ -78,12 +76,4 @@ public class LoginActivity extends BaseActivity {
     protected void setupActivityComponent(AppComponent appComponent) {
 
     }
-
-
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        ButterKnife.bind(this);
-    }
-
 }

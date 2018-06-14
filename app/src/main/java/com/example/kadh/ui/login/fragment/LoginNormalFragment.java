@@ -183,6 +183,7 @@ public class LoginNormalFragment extends BaseFragmentView<LoginNormalPresenter> 
     public void loginSuccess() {
         Toast.makeText(mActivity, "登陆成功", Toast.LENGTH_SHORT).show();
         startActivity(new Intent(mContext, MainActivity.class));
+        getActivity().finish();
     }
 
     @Override
