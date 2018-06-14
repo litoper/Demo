@@ -5,6 +5,7 @@ import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
+import android.widget.Toast;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.example.kadh.R;
@@ -36,21 +37,22 @@ public class AttachmentActivity extends BaseActivity {
         mFileListAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
+                // TODO: 2018/6/14 holder的tag获取
                 if (FileUtils.isFileExist(mFileList.get(position).getFile_path())) {
-                    downLoadFile();
-                } else {
                     openFile();
+                } else {
+                    downLoadFile();
                 }
             }
         });
     }
 
     private void openFile() {
-
+        Toast.makeText(mContext, "打开文件", Toast.LENGTH_SHORT).show();
     }
 
     private void downLoadFile() {
-
+        Toast.makeText(mContext, "下载文件", Toast.LENGTH_SHORT).show();
     }
 
     @Override

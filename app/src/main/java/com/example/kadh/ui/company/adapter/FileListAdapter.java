@@ -28,11 +28,15 @@ public class FileListAdapter extends BaseQuickAdapter<PublishNoticeDetailBean.Fi
         helper.setText(R.id.item_att_tv_filename, item.getFile_name());
         helper.setText(R.id.item_att_tv_filesize, item.getFile_size());
         helper.setText(R.id.item_att_tv_time, item.getCreate_time());
+
         if (checkFileExist(item)) {
             helper.setText(R.id.item_att_tv_fileexist, "(点击查看)");
         } else {
             helper.setText(R.id.item_att_tv_fileexist, "(点击下载)");
         }
+
+        helper.setTag(R.id.item_att_tv_fileexist, helper.getAdapterPosition());
+        helper.setTag(R.id.item_att_pb, helper.getAdapterPosition());
     }
 
     private boolean checkFileExist(PublishNoticeDetailBean.FileListBean item) {
