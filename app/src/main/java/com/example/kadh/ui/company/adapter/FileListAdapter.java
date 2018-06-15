@@ -5,6 +5,7 @@ import android.support.annotation.Nullable;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.example.kadh.R;
+import com.example.kadh.base.Constant;
 import com.example.kadh.ui.company.bean.PublishNoticeDetailBean;
 import com.example.kadh.utils.FileUtils;
 
@@ -34,13 +35,11 @@ public class FileListAdapter extends BaseQuickAdapter<PublishNoticeDetailBean.Fi
         } else {
             helper.setText(R.id.item_att_tv_fileexist, "(点击下载)");
         }
-
-        helper.setTag(R.id.item_att_tv_fileexist, helper.getAdapterPosition());
-        helper.setTag(R.id.item_att_pb, helper.getAdapterPosition());
     }
 
     private boolean checkFileExist(PublishNoticeDetailBean.FileListBean item) {
-        String filePath = FileUtils.PATH_USER + matchFileName(item.getFile_name(), item.getCreate_time(), item.getFile_name().lastIndexOf("."));
+//        String filePath = FileUtils.PATH_USER + matchFileName(item.getFile_name(), item.getCreate_time(), item.getFile_name().lastIndexOf("."));
+        String filePath = Constant.PATH_USER + item.getFile_name();
         item.setFile_path(filePath);
         return FileUtils.isFileExist(filePath);
     }

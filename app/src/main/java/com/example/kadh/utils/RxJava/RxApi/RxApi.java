@@ -18,14 +18,18 @@ import com.example.kadh.ui.person.bean.RoleManageBean;
 import com.example.kadh.ui.work.bean.ProcessModuleBean;
 import com.example.kadh.ui.work.bean.ProcessStatusBean;
 import com.example.kadh.utils.RxJava.BaseResponse;
+import com.example.kadh.utils.RxJava.RxSubscriber.SubDownload;
 
+import java.io.File;
 import java.util.List;
 
 import io.reactivex.Flowable;
 import io.reactivex.FlowableSubscriber;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.annotations.NonNull;
+import io.reactivex.functions.Function;
 import io.reactivex.schedulers.Schedulers;
+import okhttp3.ResponseBody;
 
 /**
  * @author: kadh
@@ -37,11 +41,11 @@ import io.reactivex.schedulers.Schedulers;
 
 
 public class RxApi {
-    private RxApiService mRxApiService;
+    private RxService mRxService;
     private String version;
 
-    RxApi(RxApiService rxApiService, String version) {
-        mRxApiService = rxApiService;
+    RxApi(RxService rxService, String version) {
+        mRxService = rxService;
         this.version = version;
     }
 
@@ -53,7 +57,7 @@ public class RxApi {
      * @param password
      */
     public void login(FlowableSubscriber<BaseResponse<List<LoginBean>>> subscriber, String username, String password) {
-        Flowable flowable = mRxApiService.login(username, password, version);
+        Flowable flowable = mRxService.login(username, password, version);
         toSubscribe(flowable, subscriber);
     }
 
@@ -64,7 +68,7 @@ public class RxApi {
      * @param userid
      */
     public Flowable getUseInfo(FlowableSubscriber<BaseResponse<List<UserInfoBean>>> subscriber, String userid) {
-        Flowable flowable = mRxApiService.getUseInfo(userid, version);
+        Flowable flowable = mRxService.getUseInfo(userid, version);
         toSubscribe(flowable, subscriber);
         return flowable;
     }
@@ -75,7 +79,7 @@ public class RxApi {
      * @param subscriber
      */
     public Flowable getRoleManageSingle(FlowableSubscriber<BaseResponse<List<RoleManageBean>>> subscriber, @NonNull String userid) {
-        Flowable flowable = mRxApiService.getRoleManageSingle(userid, version);
+        Flowable flowable = mRxService.getRoleManageSingle(userid, version);
         toSubscribe(flowable, subscriber);
         return flowable;
     }
@@ -86,7 +90,7 @@ public class RxApi {
      * @param subscriber
      */
     public Flowable isHasUnRead(FlowableSubscriber<BaseResponse<IsHasUnReadBean>> subscriber) {
-        Flowable flowable = mRxApiService.isHasUnRead(version);
+        Flowable flowable = mRxService.isHasUnRead(version);
         toSubscribe(flowable, subscriber);
         return flowable;
     }
@@ -98,7 +102,7 @@ public class RxApi {
      * @param place
      */
     public Flowable getWeather(FlowableSubscriber<BaseResponse<List<WeatherBean>>> subscriber, String place) {
-        Flowable flowable = mRxApiService.getWeather(place, version);
+        Flowable flowable = mRxService.getWeather(place, version);
         toSubscribe(flowable, subscriber);
         return flowable;
     }
@@ -111,7 +115,7 @@ public class RxApi {
      * @param ptype
      */
     public Flowable getPublishList(FlowableSubscriber<BaseResponse<List<PublishListBean>>> subscriber, String page, String ptype) {
-        Flowable flowable = mRxApiService.getPublishList(page, ptype, version);
+        Flowable flowable = mRxService.getPublishList(page, ptype, version);
         toSubscribe(flowable, subscriber);
         return flowable;
     }
@@ -123,7 +127,7 @@ public class RxApi {
      * @param proPublishId
      */
     public Flowable getNoticeDetailByPublishId(FlowableSubscriber<BaseResponse<List<PublishNoticeDetailBean>>> subscriber, String proPublishId) {
-        Flowable flowable = mRxApiService.getNoticeDetailByPublishId(proPublishId, version);
+        Flowable flowable = mRxService.getNoticeDetailByPublishId(proPublishId, version);
         toSubscribe(flowable, subscriber);
         return flowable;
     }
@@ -132,7 +136,7 @@ public class RxApi {
      * getProcessModuletList 获取流程模块列表
      */
     public Flowable getProcessModuletList(FlowableSubscriber<BaseResponse<List<ProcessModuleBean>>> subscriber) {
-        Flowable flowable = mRxApiService.getProcessModuleList(version);
+        Flowable flowable = mRxService.getProcessModuleList(version);
         toSubscribe(flowable, subscriber);
         return flowable;
     }
@@ -143,7 +147,7 @@ public class RxApi {
      * @param subscriber
      */
     public Flowable getProcessStatus(FlowableSubscriber<BaseResponse<List<ProcessStatusBean>>> subscriber) {
-        Flowable flowable = mRxApiService.getProcessStatus(version);
+        Flowable flowable = mRxService.getProcessStatus(version);
         toSubscribe(flowable, subscriber);
         return flowable;
     }
@@ -154,7 +158,7 @@ public class RxApi {
      * @param subscriber
      */
     public Flowable queryProcessBaseTotalInfo(FlowableSubscriber<BaseResponse<QueryProTotalInfoBean>> subscriber) {
-        Flowable flowable = mRxApiService.queryProcessBaseTotalInfo(version);
+        Flowable flowable = mRxService.queryProcessBaseTotalInfo(version);
         toSubscribe(flowable, subscriber);
         return flowable;
     }
@@ -166,7 +170,7 @@ public class RxApi {
      * @param proPublishId
      */
     public Flowable getNewsDetailByPublishId(FlowableSubscriber<BaseResponse<List<PublishNewDetailBean>>> subscriber, String proPublishId) {
-        Flowable flowable = mRxApiService.getNewsDetailByPublishId(proPublishId, version);
+        Flowable flowable = mRxService.getNewsDetailByPublishId(proPublishId, version);
         toSubscribe(flowable, subscriber);
         return flowable;
     }
@@ -180,7 +184,7 @@ public class RxApi {
      * @param ptype
      */
     public Flowable getCommentList(FlowableSubscriber<BaseResponse<List<CommentListBean>>> subscriber, String page, String id, String ptype) {
-        Flowable flowable = mRxApiService.getCommentList(page, id, ptype, version);
+        Flowable flowable = mRxService.getCommentList(page, id, ptype, version);
         toSubscribe(flowable, subscriber);
         return flowable;
     }
@@ -194,7 +198,7 @@ public class RxApi {
      * @param ptype
      */
     public Flowable getUpManList(FlowableSubscriber<BaseResponse<List<UpManListBean>>> subscriber, String page, String id, String ptype) {
-        Flowable flowable = mRxApiService.getUpManList(page, id, ptype, version);
+        Flowable flowable = mRxService.getUpManList(page, id, ptype, version);
         toSubscribe(flowable, subscriber);
         return flowable;
     }
@@ -208,7 +212,7 @@ public class RxApi {
      * @param remark_comment
      */
     public Flowable addComment(FlowableSubscriber<BaseResponse<List<PublishNewDetailBean>>> subscriber, String ptype, String id, String remark_comment) {
-        Flowable flowable = mRxApiService.addComment(ptype, id, remark_comment, version);
+        Flowable flowable = mRxService.addComment(ptype, id, remark_comment, version);
         toSubscribe(flowable, subscriber);
         return flowable;
     }
@@ -220,7 +224,7 @@ public class RxApi {
      * @param remarkId
      */
     public Flowable delComment(FlowableSubscriber<BaseResponse<String>> subscriber, String ptype, String remarkId) {
-        Flowable flowable = mRxApiService.delComment(ptype, remarkId, version);
+        Flowable flowable = mRxService.delComment(ptype, remarkId, version);
         toSubscribe(flowable, subscriber);
         return flowable;
     }
@@ -232,7 +236,7 @@ public class RxApi {
      * @param proPublishId
      */
     public Flowable upNumber(FlowableSubscriber<BaseResponse<List<UpNumberBean>>> subscriber, String ptype, String proPublishId, String uped) {
-        Flowable flowable = mRxApiService.upNumber(ptype, proPublishId, uped, version);
+        Flowable flowable = mRxService.upNumber(ptype, proPublishId, uped, version);
         toSubscribe(flowable, subscriber);
         return flowable;
     }
@@ -245,7 +249,7 @@ public class RxApi {
      * @param allowId
      */
     public Flowable isVaLiDateProcessPermit(FlowableSubscriber<BaseResponse<isValiDateProcessPermitBean>> subscriber, String allowId) {
-        Flowable flowable = mRxApiService.isVaLiDateProcessPermit(allowId, version);
+        Flowable flowable = mRxService.isVaLiDateProcessPermit(allowId, version);
         toSubscribe(flowable, subscriber);
         return flowable;
     }
@@ -258,7 +262,7 @@ public class RxApi {
      * @param fOS
      */
     public Flowable mqRegister(FlowableSubscriber<BaseResponse<String>> subscriber, String devicetoken, String fOS) {
-        Flowable flowable = mRxApiService.mqRegister(devicetoken, fOS, version);
+        Flowable flowable = mRxService.mqRegister(devicetoken, fOS, version);
         toSubscribe(flowable, subscriber);
         return flowable;
     }
@@ -271,7 +275,7 @@ public class RxApi {
      * @param fOS
      */
     public Flowable mqLogOut(FlowableSubscriber<BaseResponse<String>> subscriber, String devicetoken, String fOS) {
-        Flowable flowable = mRxApiService.mqLogOut(devicetoken, fOS, version);
+        Flowable flowable = mRxService.mqLogOut(devicetoken, fOS, version);
         toSubscribe(flowable, subscriber);
         return flowable;
     }
@@ -286,9 +290,23 @@ public class RxApi {
      * @param state
      */
     public Flowable mqPushMsgList(FlowableSubscriber<BaseResponse<List<MessageBean>>> subscriber, String pagesize, String currentPage, String state) {
-        Flowable flowable = mRxApiService.mqPushMsgList(pagesize, currentPage, state, version);
+        Flowable flowable = mRxService.mqPushMsgList(pagesize, currentPage, state, version);
         toSubscribe(flowable, subscriber);
         return flowable;
+    }
+
+    /**
+     * downloadFil 文件下载
+     *
+     * @param url         下载路径
+     * @param savePath    保存路径
+     * @param fileName    文件名称
+     * @param subDownload 进度监听
+     */
+
+    public void downloadFile(String url, String savePath, String fileName, SubDownload<File> subDownload) {
+        Flowable<ResponseBody> flowable = mRxService.download(url);
+        toSubScribe(savePath, fileName, subDownload, flowable);
     }
 
 
@@ -303,6 +321,22 @@ public class RxApi {
                     .subscribe(subscriber);
         }
     }
+
+    private void toSubScribe(final String savePath, final String fileName, final SubDownload<File> subDownload, Flowable<ResponseBody> flowable) {
+        flowable
+                .subscribeOn(Schedulers.io())
+                .unsubscribeOn(Schedulers.io())
+                .observeOn(Schedulers.io())
+                .map(new Function<ResponseBody, File>() {
+                    @Override
+                    public File apply(ResponseBody responseBody) throws Exception {
+                        return subDownload.saveFile(responseBody, savePath, fileName);
+                    }
+                })
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(subDownload);
+    }
+
 
     public void toConcatSub(FlowableSubscriber subscriber, @NonNull Flowable... flowables) {
         Flowable flowable = Flowable.concatArray(flowables);

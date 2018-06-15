@@ -56,7 +56,7 @@ public class ACache {
     }
 
     public static ACache get(Context ctx, String cacheName) {
-        File f = new File(Constant.PATH_DATA, cacheName);
+        File f = new File(Constant.PATH_CACHE, cacheName);
         return get(f, MAX_SIZE, MAX_COUNT);
     }
 
@@ -65,7 +65,7 @@ public class ACache {
     }
 
     public static ACache get(Context ctx, long max_zise, int max_count) {
-        File f = new File(Constant.PATH_DATA, "data");
+        File f = new File(Constant.PATH_CACHE, "data");
         return get(f, max_zise, max_count);
     }
 

@@ -9,7 +9,7 @@ import com.example.kadh.R;
 import com.example.kadh.ui.work.bean.ProcessModuleBean;
 import com.example.kadh.utils.GlideUtils;
 import com.example.kadh.utils.NullUtils;
-import com.example.kadh.utils.RxJava.RxApi.RxApiUrl;
+import com.example.kadh.utils.RxJava.RxApi.RxUrl;
 
 import java.util.List;
 
@@ -29,6 +29,6 @@ public class WorkGridAdapter extends BaseQuickAdapter<ProcessModuleBean, BaseVie
     protected void convert(BaseViewHolder helper, ProcessModuleBean item) {
         helper.setText(R.id.work_tv_pro_type, NullUtils.filterEmpty(item.getPname()));
         ImageView iv = helper.getView(R.id.work_iv_pro_icon);
-        GlideUtils.loadImageView(mContext, RxApiUrl.Url.BASE + item.getPico(), iv);
+        GlideUtils.loadImageView(mContext, RxUrl.Url.BASE + item.getPico(), iv);
     }
 }

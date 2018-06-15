@@ -2,7 +2,7 @@ package com.example.kadh.utils.RxJava.RxInterceptor;
 
 import android.util.Log;
 
-import com.example.kadh.utils.RxJava.RxApi.RxApiUrl;
+import com.example.kadh.utils.RxJava.RxApi.RxUrl;
 
 import java.io.IOException;
 
@@ -86,10 +86,10 @@ public class ParamsInterceptor implements Interceptor {
         MultipartBody.Builder builder = new MultipartBody.Builder();
         builder.setType(MultipartBody.FORM);
 
-        builder.addFormDataPart("version", RxApiUrl.Url.Ver);
+        builder.addFormDataPart("version", RxUrl.Url.Ver);
 
 
-        paramsBuilder.append("version=" + RxApiUrl.Url.Ver);
+        paramsBuilder.append("version=" + RxUrl.Url.Ver);
 
 
         //添加原请求体
@@ -109,9 +109,9 @@ public class ParamsInterceptor implements Interceptor {
     private FormBody addParamsToFormBody(FormBody body, StringBuilder paramsBuilder) {
         FormBody.Builder builder = new FormBody.Builder();
 
-        builder.add("version", RxApiUrl.Url.Ver);
+        builder.add("version", RxUrl.Url.Ver);
 
-        paramsBuilder.append("version=" + RxApiUrl.Url.Ver);
+        paramsBuilder.append("version=" + RxUrl.Url.Ver);
 
 
         //添加原请求体

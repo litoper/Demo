@@ -10,7 +10,7 @@ import com.example.kadh.R;
 import com.example.kadh.ui.company.bean.PublishListBean;
 import com.example.kadh.utils.GlideUtils;
 import com.example.kadh.utils.NullUtils;
-import com.example.kadh.utils.RxJava.RxApi.RxApiUrl;
+import com.example.kadh.utils.RxJava.RxApi.RxUrl;
 import com.example.kadh.utils.ScreenUtils;
 import com.example.kadh.view.CircleImageView.CircleImageView;
 
@@ -76,7 +76,7 @@ public class PublishAdapter extends BaseMultiItemQuickAdapter<PublishListBean, B
         helper.setText(R.id.meeting_tv_meeting_time, "时间 : " + pthing.get("pstartTime"));
         helper.setText(R.id.meeting_tv_meeting_place, "地点 : " + pthing.get("pplace"));
         helper.setText(R.id.meeting_tv_theme, "主题 : " + pthing.get("ptitle"));
-        GlideUtils.loadImageViewForHead(mContext, RxApiUrl.Url.BASE + item.getPsponsorImage(), (CircleImageView) helper.getView(R.id.meeting_iv_news_icon));
+        GlideUtils.loadImageViewForHead(mContext, RxUrl.Url.BASE + item.getPsponsorImage(), (CircleImageView) helper.getView(R.id.meeting_iv_news_icon));
     }
 
 
@@ -93,7 +93,7 @@ public class PublishAdapter extends BaseMultiItemQuickAdapter<PublishListBean, B
         helper.setText(R.id.process_tv_creat_time, NullUtils.filterEmpty(item.getCreate_time()) + "发布");
         helper.setText(R.id.process_tv_time, NullUtils.filterEmpty(String.valueOf(item.getPthing())));
         helper.setText(R.id.process_tv_title, NullUtils.filterEmpty(item.getPtitle()));
-        GlideUtils.loadImageViewForHead(mContext, RxApiUrl.Url.BASE + item.getPsponsorImage(), (CircleImageView) helper.getView(R.id.process_iv_icon));
+        GlideUtils.loadImageViewForHead(mContext, RxUrl.Url.BASE + item.getPsponsorImage(), (CircleImageView) helper.getView(R.id.process_iv_icon));
     }
 //
 //    holderForNotice.mCvNoticeIcon = (CircleImageView) convertView.findViewById(R.id.notice_iv_icon);
@@ -108,7 +108,7 @@ public class PublishAdapter extends BaseMultiItemQuickAdapter<PublishListBean, B
         helper.setText(R.id.notice_tv_type, "类型：" + item.getPthing());
         helper.setText(R.id.notice_tv_title, "标题：" + item.getPtitle());
         helper.setText(R.id.notice_tv_name, NullUtils.filterEmpty(item.getPsponsor()));
-        GlideUtils.loadImageViewForHead(mContext, RxApiUrl.Url.BASE + item.getPsponsorImage(), (CircleImageView) helper.getView(R.id.notice_iv_icon));
+        GlideUtils.loadImageViewForHead(mContext, RxUrl.Url.BASE + item.getPsponsorImage(), (CircleImageView) helper.getView(R.id.notice_iv_icon));
 
 
 
@@ -132,7 +132,7 @@ public class PublishAdapter extends BaseMultiItemQuickAdapter<PublishListBean, B
         helper.setText(R.id.news_tv_thing, Html.fromHtml(item.getPthing().toString()));
         helper.setText(R.id.news_tv_num, NullUtils.filterEmpty(item.getSpareA()));
         helper.setText(R.id.news_tv_comment_num, NullUtils.filterEmpty(item.getSpareB()));
-        GlideUtils.loadImageViewForHead(mContext, RxApiUrl.Url.BASE + item.getPsponsorImage(), (CircleImageView) helper.getView(R.id.news_iv_news_icon));
+        GlideUtils.loadImageViewForHead(mContext, RxUrl.Url.BASE + item.getPsponsorImage(), (CircleImageView) helper.getView(R.id.news_iv_news_icon));
         if (!NullUtils.isNull(item.getPicture())) {
 
             ImageView imageView = helper.getView(R.id.news_iv_news_iv);
@@ -144,7 +144,7 @@ public class PublishAdapter extends BaseMultiItemQuickAdapter<PublishListBean, B
             imageView.setLayoutParams(params);
 
             String[] split = item.getPicture().split(",");
-            GlideUtils.loadImageView(mContext, RxApiUrl.Url.BASE + split[0], imageView);
+            GlideUtils.loadImageView(mContext, RxUrl.Url.BASE + split[0], imageView);
         }
     }
 }

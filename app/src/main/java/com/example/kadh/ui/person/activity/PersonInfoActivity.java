@@ -20,7 +20,7 @@ import com.example.kadh.ui.person.contract.PersonInfoAtyContract;
 import com.example.kadh.ui.person.presenter.PersonInfoPresenter;
 import com.example.kadh.utils.GlideUtils;
 import com.example.kadh.utils.NullUtils;
-import com.example.kadh.utils.RxJava.RxApi.RxApiUrl;
+import com.example.kadh.utils.RxJava.RxApi.RxUrl;
 import com.example.kadh.view.CircleImageView.CircleImageView;
 import com.jakewharton.rxbinding2.view.RxView;
 
@@ -119,7 +119,7 @@ public class PersonInfoActivity extends BaseActivityView<PersonInfoPresenter> im
 
     @Override
     public void showUserInfo(UserInfoBean infoBean) {
-        GlideUtils.loadImageViewForHead(mContext, RxApiUrl.Url.BASE + infoBean.getUimage(), mCivIcon);
+        GlideUtils.loadImageViewForHead(mContext, RxUrl.Url.BASE + infoBean.getUimage(), mCivIcon);
         mTvName.setText(NullUtils.filterEmpty(infoBean.getUname()));
         mTvPositionHeader.setText(NullUtils.filterEmpty(infoBean.getUposition_name()));
         mTvUids.setText(NullUtils.filterEmpty(infoBean.getUids()));

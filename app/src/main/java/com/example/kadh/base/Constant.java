@@ -1,6 +1,6 @@
 package com.example.kadh.base;
 
-import com.example.kadh.utils.AppUtils;
+import com.example.kadh.app.App;
 import com.example.kadh.utils.FileUtils;
 
 /**
@@ -12,7 +12,7 @@ import com.example.kadh.utils.FileUtils;
  */
 
 public class Constant {
-    public static String BASE_PATH = AppUtils.getAppContext().getCacheDir().getPath();
-    public static String PATH_DATA = FileUtils.createRootPath(AppUtils.getAppContext()) + "/cache";
-
+    public static String PATH_ROOT = FileUtils.createRootPath(App.getApp());
+    public static String PATH_CACHE = FileUtils.createRootPath(App.getApp()) + "/cache";
+    public static String PATH_USER = FileUtils.createRootPath(App.getApp()) + "/user/";
 }

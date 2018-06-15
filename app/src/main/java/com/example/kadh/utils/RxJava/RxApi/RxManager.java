@@ -42,12 +42,12 @@ public class RxManager {
                 .setLenient()
                 .create();
         Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl(RxApiUrl.Url.BASE)
+                .baseUrl(RxUrl.Url.BASE)
                 .client(initOkHttp())
                 .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
                 .addConverterFactory(GsonConverterFactory.create(gson))
                 .build();
-        sRxApi = new RxApi(retrofit.create(RxApiService.class), "android_" + BuildConfig.VERSION_NAME);
+        sRxApi = new RxApi(retrofit.create(RxService.class), "android_" + BuildConfig.VERSION_NAME);
     }
 
     public static RxManager getInstant() {

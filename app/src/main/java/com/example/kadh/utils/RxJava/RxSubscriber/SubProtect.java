@@ -95,8 +95,8 @@ public class SubProtect<T> extends DisposableSubscriber<T> {
                 Toast.makeText(App.getApp(), "错误码:" + httpException.code() + "\r\n错误消息:" + httpException.message(), Toast.LENGTH_SHORT).show();
             } else {
                 Toast.makeText(App.getApp(), e.toString(), Toast.LENGTH_SHORT).show();
-                e.printStackTrace();
             }
+            e.printStackTrace();
         } else {
             Toast.makeText(App.getApp(), "系统错误, 请联系研发中心处理!", Toast.LENGTH_SHORT).show();
         }

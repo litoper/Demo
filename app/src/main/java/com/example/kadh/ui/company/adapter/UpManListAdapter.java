@@ -8,7 +8,7 @@ import com.example.kadh.R;
 import com.example.kadh.ui.company.bean.UpManListBean;
 import com.example.kadh.utils.GlideUtils;
 import com.example.kadh.utils.NullUtils;
-import com.example.kadh.utils.RxJava.RxApi.RxApiUrl;
+import com.example.kadh.utils.RxJava.RxApi.RxUrl;
 import com.example.kadh.view.CircleImageView.CircleImageView;
 
 import java.util.List;
@@ -30,6 +30,6 @@ public class UpManListAdapter extends BaseQuickAdapter<UpManListBean, BaseViewHo
     protected void convert(BaseViewHolder helper, UpManListBean item) {
         helper.setText(R.id.item_fab_tv_name, NullUtils.filterNull(item.getRemarkman_name()));
         CircleImageView cvHead = helper.getView(R.id.item_fab_cv_head);
-        GlideUtils.loadImageViewForHead(mContext, RxApiUrl.Url.BASE + item.getRemarkman_image(), cvHead);
+        GlideUtils.loadImageViewForHead(mContext, RxUrl.Url.BASE + item.getRemarkman_image(), cvHead);
     }
 }

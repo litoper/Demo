@@ -1,13 +1,20 @@
 package com.example.kadh.utils;
 
 import android.content.Context;
+import android.content.Intent;
+import android.net.Uri;
+import android.os.Build;
 import android.os.Environment;
+import android.support.v4.content.FileProvider;
+import android.webkit.MimeTypeMap;
+import android.widget.Toast;
 
-import com.example.kadh.app.App;
+import com.example.kadh.BuildConfig;
 
 import java.io.File;
 import java.io.InputStream;
 import java.text.DecimalFormat;
+import java.util.Locale;
 
 /**
  * @author: kadh
@@ -18,28 +25,27 @@ import java.text.DecimalFormat;
  */
 
 public class FileUtils {
-    public static String PATH_USER = FileUtils.createRootPath(App.getApp()) + "/User/";
 
 
     /**
-     * 转换文件大小
+     * 转换文件size单位
      *
-     * @param fileLen 单位B
+     * @param fileSize 单位B
      * @return
      */
-    public static String formatFileSizeToString(long fileLen) {
+    public static String formatFileSize(long fileSize) {
         DecimalFormat df = new DecimalFormat("0.00");
-        String fileSizeString = "";
-        if (fileLen < 1024) {
-            fileSizeString = df.format((double) fileLen) + "B";
-        } else if (fileLen < 1048576) {
-            fileSizeString = df.format((double) fileLen / 1024) + "K";
-        } else if (fileLen < 1073741824) {
-            fileSizeString = df.format((double) fileLen / 1048576) + "M";
+        String size = "";
+        if (fileSize < 1024) {
+            size = df.format((double) fileSize) + "B";
+        } else if (fileSize < 1024 * 1024) {
+            size = df.format((double) fileSize / 1024) + "KB";
+        } else if (fileSize < 1024 * 1024 * 1024) {
+            size = df.format((double) fileSize / 1048576) + "MB";
         } else {
-            fileSizeString = df.format((double) fileLen / 1073741824) + "G";
+            size = df.format((double) fileSize / 1073741824) + "GB";
         }
-        return fileSizeString;
+        return size;
     }
 
     /**
@@ -48,7 +54,7 @@ public class FileUtils {
      * @return
      * @throws Exception
      */
-    public static long getFolderSize(String dir) throws Exception {
+    public static long getFolderSize(String dir) {
         File file = new File(dir);
         long size = 0;
         try {
@@ -183,5 +189,28 @@ public class FileUtils {
         }
         return false;
     }
+
+    public static void openFile(Context context, String filePath) {
+        String ext = filePath.substring(filePath.lastIndexOf('.')).toLowerCase(Locale.US);
+        try {
+            MimeTypeMap mimeTypeMap = MimeTypeMap.getSingleton();
+            String temp = ext.substring(1);
+            String mime = mimeTypeMap.getMimeTypeFromExtension(temp);
+            Intent intent = new Intent();
+            intent.setAction(android.content.Intent.ACTION_VIEW);
+            File file = new File(filePath);
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+                intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+                intent.setDataAndType(FileProvider.getUriForFile(context, BuildConfig.APPLICATION_ID + ".fileprovider", file), mime);
+            } else {
+                intent.setDataAndType(Uri.fromFile(file), mime);
+            }
+            context.startActivity(intent);
+        } catch (Exception e) {
+            e.printStackTrace();
+            Toast.makeText(context, "无法打开后缀名为" + ext + "的文件！", Toast.LENGTH_LONG).show();
+        }
+    }
+
 
 }

@@ -16,7 +16,7 @@ import com.example.kadh.ui.person.bean.QueryProTotalInfoBean;
 import com.example.kadh.ui.setting.SettingActivity;
 import com.example.kadh.utils.GlideUtils;
 import com.example.kadh.utils.RxJava.BaseResponse;
-import com.example.kadh.utils.RxJava.RxApi.RxApiUrl;
+import com.example.kadh.utils.RxJava.RxApi.RxUrl;
 import com.example.kadh.utils.RxJava.RxApi.RxManager;
 import com.example.kadh.utils.RxJava.RxSubscriber.SubNextImpl;
 import com.example.kadh.utils.RxJava.RxSubscriber.SubProtect;
@@ -75,7 +75,7 @@ public class PersonFragment extends BaseFragment {
         String userIcon = SpUtil.getInstance().getString(SpUtil.LOGIN_INFO_USERICO);
         String userName = SpUtil.getInstance().getString(SpUtil.LOGIN_INFO_USERNAME);
         mTvName.setText(userName);
-        GlideUtils.loadImageView(mContext, RxApiUrl.Url.BASE + userIcon, mCivPersonal);
+        GlideUtils.loadImageView(mContext, RxUrl.Url.BASE + userIcon, mCivPersonal);
     }
 
     private void getTimeInfo() {

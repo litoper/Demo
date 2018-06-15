@@ -9,7 +9,7 @@ import com.example.kadh.R;
 import com.example.kadh.ui.company.bean.CommentListBean;
 import com.example.kadh.utils.GlideUtils;
 import com.example.kadh.utils.NullUtils;
-import com.example.kadh.utils.RxJava.RxApi.RxApiUrl;
+import com.example.kadh.utils.RxJava.RxApi.RxUrl;
 
 import java.util.List;
 
@@ -31,7 +31,7 @@ public class CommonListAdapter extends BaseQuickAdapter<CommentListBean, BaseVie
     @Override
     protected void convert(BaseViewHolder helper, CommentListBean item) {
         ImageView mCvHead = helper.getView(R.id.item_comment_cv_head);
-        GlideUtils.loadImageViewForHead(mContext, RxApiUrl.Url.BASE + item.getRemarkman_image(), mCvHead);
+        GlideUtils.loadImageViewForHead(mContext, RxUrl.Url.BASE + item.getRemarkman_image(), mCvHead);
 
         helper.setText(R.id.item_comment_tv_name, NullUtils.filterNull(item.getRemarkman_name()));
         helper.setText(R.id.item_comment_tv_time, NullUtils.filterNull(item.getUpdate_time()));

@@ -10,11 +10,16 @@ import android.widget.Toast;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.example.kadh.R;
 import com.example.kadh.base.BaseActivity;
+import com.example.kadh.base.Constant;
 import com.example.kadh.component.AppComponent;
 import com.example.kadh.ui.company.adapter.FileListAdapter;
 import com.example.kadh.ui.company.bean.PublishNoticeDetailBean;
 import com.example.kadh.utils.FileUtils;
+import com.example.kadh.utils.RxJava.RxApi.RxManager;
+import com.example.kadh.utils.RxJava.RxApi.RxUrl;
+import com.example.kadh.utils.RxJava.RxSubscriber.SubDownload;
 
+import java.io.File;
 import java.util.List;
 
 import butterknife.BindView;
@@ -37,22 +42,35 @@ public class AttachmentActivity extends BaseActivity {
         mFileListAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
-                // TODO: 2018/6/14 holder的tag获取
                 if (FileUtils.isFileExist(mFileList.get(position).getFile_path())) {
-                    openFile();
+                    FileUtils.openFile(mContext, mFileList.get(position).getFile_path());
                 } else {
-                    downLoadFile();
+                    downLoadFile(position);
                 }
             }
         });
     }
 
-    private void openFile() {
-        Toast.makeText(mContext, "打开文件", Toast.LENGTH_SHORT).show();
-    }
+    private void downLoadFile(final int position) {
+        RxManager.getInstant().getRxApi().downloadFile(
+                RxUrl.Url.BASE + mFileList.get(position).getFile_uuid()
+                , Constant.PATH_USER
+                , mFileList.get(position).getFile_name()
+                , new SubDownload<File>() {
+                    @Override
+                    public void onSuccess(File file) {
+                        Toast.makeText(mContext, "下载成功", Toast.LENGTH_SHORT).show();
+                        mFileListAdapter.notifyItemChanged(position);
+                    }
 
-    private void downLoadFile() {
-        Toast.makeText(mContext, "下载文件", Toast.LENGTH_SHORT).show();
+                    @Override
+                    public void onFail(Throwable throwable) {
+                    }
+
+                    @Override
+                    public void onProgress(int progress, long total) {
+                    }
+                });
     }
 
     @Override

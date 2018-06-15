@@ -36,7 +36,7 @@ import com.example.kadh.ui.company.presenter.NewsDetailPresenter;
 import com.example.kadh.utils.GlideUtils;
 import com.example.kadh.utils.IMEUtils;
 import com.example.kadh.utils.NullUtils;
-import com.example.kadh.utils.RxJava.RxApi.RxApiUrl;
+import com.example.kadh.utils.RxJava.RxApi.RxUrl;
 import com.example.kadh.utils.ScreenUtils;
 import com.example.kadh.view.HoverScrollViewNew;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
@@ -405,7 +405,7 @@ public class NewsDetailActivity extends BaseActivityView<NewsDetailPresenter> im
         mBanner.setImageLoader(new ImageLoader() {
             @Override
             public void displayImage(Context context, Object path, ImageView imageView) {
-                GlideUtils.loadImageView(context, RxApiUrl.Url.BASE + String.valueOf(path), imageView);
+                GlideUtils.loadImageView(context, RxUrl.Url.BASE + String.valueOf(path), imageView);
             }
         }).setImages(Arrays.asList(newsDetail.getNpicture().split(","))).start();
     }
