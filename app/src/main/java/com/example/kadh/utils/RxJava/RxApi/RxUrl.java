@@ -24,7 +24,7 @@ public interface RxUrl {
          */
 
         public static final String NICAICAI = "";
-        public static final String BASE = "http://192.168.2.24/DJOA/";//蒋凡毅
+        //        public static final String BASE = "http://192.168.2.24/DJOA/";//蒋凡毅
         //        static final String BASE = "http://192.168.2.21/DJOA/"; //朱诚
         //        static final String BASE = "http://192.168.23.43/DJOA/"; //开发库
 
@@ -33,7 +33,7 @@ public interface RxUrl {
          */
 
         //        static final String BASE = "http://101.37.29.29/DJOA/";
-//        public static final String BASE = "https://oa.djcps.com/DJOA/";
+        public static final String BASE = "https://oa.djcps.com/DJOA/";
 
         /**
          * 内网测试地址
