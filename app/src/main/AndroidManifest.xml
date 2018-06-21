@@ -71,6 +71,11 @@
         <activity android:name=".ui.person.activity.PersonInfoActivity" />
 
 
+        <!--tension on-->
+        <activity android:name=".ui.tension.activity.TensionActivity" />
+        <activity android:name=".ui.tension.activity.TensionSubmitActivity" />
+        <!--tension off-->
+
         <!--setting on-->
         <activity android:name=".ui.setting.SettingActivity" />
         <!--setting off-->
@@ -79,6 +84,16 @@
         <activity android:name=".ui.login.activity.LoginActivity" />
         <activity android:name=".ui.login.activity.LoginForgetActivity" />
         <!--login off-->
+
+
+        <!--photopicker on-->
+        <activity
+            android:name="me.iwf.photopicker.PhotoPickerActivity"
+            android:theme="@style/Theme.AppCompat.NoActionBar" />
+        <activity
+            android:name="me.iwf.photopicker.PhotoPagerActivity"
+            android:theme="@style/Theme.AppCompat.NoActionBar" />
+        <!--photopicker off-->
 
 
         <!--友盟推送-->

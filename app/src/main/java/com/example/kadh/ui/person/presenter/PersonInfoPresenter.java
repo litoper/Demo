@@ -71,6 +71,7 @@ public class PersonInfoPresenter extends BasePresenterImpl<PersonInfoAtyContract
             public void accept(Permission permission) throws Exception {
                 if (permission.granted) {
 
+
                 } else if (permission.shouldShowRequestPermissionRationale) {
 
                 } else {

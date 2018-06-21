@@ -8,7 +8,6 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
 import android.view.KeyEvent;
-import android.widget.Toast;
 
 import com.ashokvarma.bottomnavigation.BottomNavigationBar;
 import com.ashokvarma.bottomnavigation.BottomNavigationItem;
@@ -23,6 +22,7 @@ import com.example.kadh.ui.main.bean.IsHasUnReadBean;
 import com.example.kadh.ui.main.bean.WeatherBean;
 import com.example.kadh.ui.main.contract.MainAtyContract;
 import com.example.kadh.ui.main.presenter.MainPresenter;
+import com.example.kadh.ui.tension.activity.TensionActivity;
 import com.tbruyelle.rxpermissions2.Permission;
 import com.tbruyelle.rxpermissions2.RxPermissions;
 
@@ -230,6 +230,6 @@ public class MainActivity extends BaseActivityView<MainPresenter> implements Mai
 
     @OnClick(R.id.activity_main_fab)
     public void onViewClicked() {
-        Toast.makeText(mContext, "11111", Toast.LENGTH_SHORT).show();
+        openActivity(TensionActivity.class);
     }
 }
