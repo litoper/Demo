@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Environment;
 import android.support.v7.app.AlertDialog;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 import android.view.WindowManager;
@@ -19,17 +20,23 @@ import com.example.kadh.component.AppComponent;
 import com.example.kadh.component.DaggerMainComponent;
 import com.example.kadh.ui.main.bean.UserInfoBean;
 import com.example.kadh.ui.person.bean.RoleManageBean;
+import com.example.kadh.ui.person.bean.UpFieldBean;
 import com.example.kadh.ui.person.contract.PersonInfoAtyContract;
 import com.example.kadh.ui.person.presenter.PersonInfoPresenter;
 import com.example.kadh.utils.GlideUtils;
 import com.example.kadh.utils.NullUtils;
+import com.example.kadh.utils.RxJava.BaseResponse;
+import com.example.kadh.utils.RxJava.RxApi.RxManager;
 import com.example.kadh.utils.RxJava.RxApi.RxUrl;
+import com.example.kadh.utils.RxJava.RxSubscriber.SubNextImpl;
+import com.example.kadh.utils.RxJava.RxSubscriber.SubProtect;
 import com.example.kadh.view.CircleImageView.CircleImageView;
 import com.jakewharton.rxbinding2.view.RxView;
 import com.tbruyelle.rxpermissions2.RxPermissions;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 import butterknife.BindView;
@@ -38,6 +45,9 @@ import cn.bingoogolapple.photopicker.util.BGAPhotoHelper;
 import cn.bingoogolapple.photopicker.util.BGAPhotoPickerUtil;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.functions.Consumer;
+import okhttp3.MediaType;
+import okhttp3.MultipartBody;
+import okhttp3.RequestBody;
 
 /**
  * @author: kadh
@@ -51,44 +61,44 @@ public class PersonInfoActivity extends BaseActivityView<PersonInfoPresenter> im
     @BindView(R.id.activity_personal_civ_icon)
     CircleImageView mCivIcon;
     @BindView(R.id.activity_personal_tv_name)
-    TextView        mTvName;
+    TextView mTvName;
     @BindView(R.id.activity_personal_iv_sex)
-    ImageView       mIvSex;
+    ImageView mIvSex;
     @BindView(R.id.activity_personal_tv_position_header)
-    TextView        mTvPositionHeader;
+    TextView mTvPositionHeader;
     @BindView(R.id.activity_personal_tv_uids)
-    TextView        mTvUids;
+    TextView mTvUids;
     @BindView(R.id.activity_personal_tv_induction)
-    TextView        mTvInduction;
+    TextView mTvInduction;
     @BindView(R.id.activity_personal_iv_call)
-    ImageView       mIvCall;
+    ImageView mIvCall;
     @BindView(R.id.activity_personal_tv_group)
-    TextView        mTvGroup;
+    TextView mTvGroup;
     @BindView(R.id.activity_personal_ll_group)
-    LinearLayout    mLlGroup;
+    LinearLayout mLlGroup;
     @BindView(R.id.activity_personal_tv_dep)
-    TextView        mTvDep;
+    TextView mTvDep;
     @BindView(R.id.activity_personal_ll_dep)
-    LinearLayout    mLlDep;
+    LinearLayout mLlDep;
     @BindView(R.id.activity_personal_tv_position)
-    TextView        mTvPosition;
+    TextView mTvPosition;
     @BindView(R.id.activity_personal_iv_position)
-    ImageView       mIvPosition;
+    ImageView mIvPosition;
     @BindView(R.id.activity_personal_ll_position)
-    LinearLayout    mLlPosition;
+    LinearLayout mLlPosition;
     @BindView(R.id.activity_personal_tv_phone)
-    TextView        mTvPhone;
+    TextView mTvPhone;
     @BindView(R.id.activity_personal_ll_phone)
-    LinearLayout    mLlPhone;
+    LinearLayout mLlPhone;
     @BindView(R.id.activity_personal_tv_short)
-    TextView        mTvShort;
+    TextView mTvShort;
     @BindView(R.id.activity_personal_ll_short)
-    LinearLayout    mLlShort;
+    LinearLayout mLlShort;
     @BindView(R.id.activity_personal_tv_email)
-    TextView        mTvEmail;
+    TextView mTvEmail;
     @BindView(R.id.activity_personal_ll_email)
-    LinearLayout    mLlEmail;
-    private AlertDialog    mDialog;
+    LinearLayout mLlEmail;
+    private AlertDialog mDialog;
     private BGAPhotoHelper mPhotoHelper;
 
     @Override
@@ -101,7 +111,7 @@ public class PersonInfoActivity extends BaseActivityView<PersonInfoPresenter> im
         mPresenter.getUseInfo();
 
         // 拍照后照片的存放目录，改成你自己拍照后要存放照片的目录。如果不传递该参数的话就没有拍照功能
-        File takePhotoDir = new File(Environment.getExternalStorageDirectory(), "BGAPhotoPickerTakePhoto");
+        File takePhotoDir = new File(Environment.getExternalStorageDirectory(), "picture");
         mPhotoHelper = new BGAPhotoHelper(takePhotoDir);
     }
 
@@ -274,6 +284,16 @@ public class PersonInfoActivity extends BaseActivityView<PersonInfoPresenter> im
                     }
                     break;
                 case 168:
+                    String cropFilePath = mPhotoHelper.getCropFilePath();
+                    File file = new File(cropFilePath);
+                    RequestBody body = RequestBody.create(MediaType.parse("form-data"), file);
+                    MultipartBody.Part part = MultipartBody.Part.createFormData("file", file.getName(), body);
+                    RxManager.getInstant().getRxApi().upField(new SubProtect<BaseResponse<List<UpFieldBean>>>(new SubNextImpl<BaseResponse<List<UpFieldBean>>>() {
+                        @Override
+                        public void onSubSuccess(BaseResponse<List<UpFieldBean>> response) {
+                            Log.d("PersonInfoActivity", "response:" + response);
+                        }
+                    }), part, "");
                     GlideUtils.loadImageViewForHead(mContext, mPhotoHelper.getCropFilePath(), mCivIcon);
                     break;
                 default:

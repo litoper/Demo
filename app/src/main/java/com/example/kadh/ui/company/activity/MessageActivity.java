@@ -1,4 +1,4 @@
-package com.example.kadh.ui.message;
+package com.example.kadh.ui.company.activity;
 
 import android.support.annotation.NonNull;
 import android.support.v7.widget.LinearLayoutManager;
@@ -7,6 +7,8 @@ import android.support.v7.widget.RecyclerView;
 import com.example.kadh.R;
 import com.example.kadh.base.BaseActivity;
 import com.example.kadh.component.AppComponent;
+import com.example.kadh.ui.company.adapter.MessageAdapter;
+import com.example.kadh.ui.company.bean.MessageBean;
 import com.example.kadh.utils.RxJava.BaseResponse;
 import com.example.kadh.utils.RxJava.RxApi.RxManager;
 import com.example.kadh.utils.RxJava.RxSubscriber.SubNextImpl;

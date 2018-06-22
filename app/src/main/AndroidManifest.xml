@@ -52,21 +52,25 @@
         android:theme="@style/AppTheme.NoActionBar"
         tools:replace="android:icon">
 
-        <activity android:name=".ui.splash.SplashActivity">
+        <activity
+            android:name=".ui.splash.SplashActivity"
+            android:launchMode="singleInstance">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
 
-        <activity android:name=".ui.main.activity.MainActivity" />
+        <activity
+            android:name=".ui.main.activity.MainActivity"
+            android:launchMode="singleInstance" />
 
+        <!--company on-->
         <activity android:name=".ui.company.activity.NoticeDetailActivity" />
         <activity android:name=".ui.company.activity.NewsDetailActivity" />
         <activity android:name=".ui.company.activity.AttachmentActivity" />
-
-
-        <activity android:name=".ui.message.MessageActivity" />
+        <activity android:name=".ui.company.activity.MessageActivity" />
+        <!--company off-->
 
         <activity android:name=".ui.person.activity.PersonInfoActivity" />
 

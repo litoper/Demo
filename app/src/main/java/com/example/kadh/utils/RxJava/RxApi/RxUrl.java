@@ -24,7 +24,7 @@ public interface RxUrl {
          */
 
         public static final String NICAICAI = "";
-        //        public static final String BASE = "http://192.168.2.24/DJOA/";//蒋凡毅
+//        public static final String BASE = "http://192.168.2.24/DJOA/";//蒋凡毅
         //        static final String BASE = "http://192.168.2.21/DJOA/"; //朱诚
         //        static final String BASE = "http://192.168.23.43/DJOA/"; //开发库
 
@@ -33,13 +33,13 @@ public interface RxUrl {
          */
 
         //        static final String BASE = "http://101.37.29.29/DJOA/";
-        public static final String BASE = "https://oa.djcps.com/DJOA/";
+//        public static final String BASE = "https://oa.djcps.com/DJOA/";
 
         /**
          * 内网测试地址
          */
 
-//        public static final String BASE = "http://192.168.10.175/DJOA/";
+        public static final String BASE = "http://192.168.10.175/DJOA/";
 
         /**
          * 杭州外网测试服务器地址
@@ -49,9 +49,9 @@ public interface RxUrl {
         /**
          * 登录接口
          */
-        static final String LOGIN = "newlogin.do" + NICAICAI;//登录接口
-        static final String GETVERCODE = "verCode_login.do" + NICAICAI;//获取登录验证码
-        static final String CHECKVERSION = "checkVersionCommon.do" + NICAICAI;//校验app的版本更新
+        static final String LOGIN = "newlogin.do";//登录接口
+        static final String GETVERCODE = "verCode_login.do";//获取登录验证码
+        static final String CHECKVERSION = "checkVersionCommon.do";//校验app的版本更新
 
         /**
          * 首页接口

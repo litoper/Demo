@@ -9,6 +9,7 @@ import android.support.annotation.Nullable;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.view.KeyEvent;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.WindowManager;
@@ -172,6 +173,24 @@ public abstract class BaseActivity extends AppCompatActivity {
             i.putExtras(pBundle);
         }
         startActivityForResult(i, requestCode);
+    }
+
+
+    @Override
+    public void finish() {
+        super.finish();
+        overridePendingTransition(R.anim.move_left2, R.anim.move_right2);//上一步
+    }
+
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if (keyCode == KeyEvent.KEYCODE_BACK
+                && event.getAction() == KeyEvent.ACTION_DOWN) {
+            finish();
+//            overridePendingTransition(R.anim.leftmove2, R.anim.rightmove2);//上一步
+            return true;
+        }
+        return super.onKeyDown(keyCode, event);
     }
 
 }

@@ -43,73 +43,73 @@ import io.reactivex.functions.Consumer;
  */
 public class TensionSubmitActivity extends BaseActivityView<TensionSubmitPresenter> implements TensionSubmitAtvContract.View, BGASortableNinePhotoLayout.Delegate {
     @BindView(R.id.tension_submit_tv_role_content)
-    TextView                   mTvRoleContent;
+    TextView mTvRoleContent;
     @BindView(R.id.tension_submit_ll_role)
-    LinearLayout               mLlRole;
+    LinearLayout mLlRole;
     @BindView(R.id.tension_submit_tv_theme_content)
-    TextView                   mTvThemeContent;
+    TextView mTvThemeContent;
     @BindView(R.id.tension_submit_ll_theme)
-    LinearLayout               mLlTheme;
+    LinearLayout mLlTheme;
     @BindView(R.id.tension_submit_et_explains)
-    EditText                   mEtExplains;
+    EditText mEtExplains;
     @BindView(R.id.tension_submit_tv_explains_hint)
-    TextView                   mTvExplainsHint;
+    TextView mTvExplainsHint;
     @BindView(R.id.tension_submit_et_proposal)
-    EditText                   mEtProposal;
+    EditText mEtProposal;
     @BindView(R.id.tension_submit_bgalyt_image)
     BGASortableNinePhotoLayout mBgaLytImage;
     @BindView(R.id.tension_submit_tv_file)
-    TextView                   mTvFile;
+    TextView mTvFile;
     @BindView(R.id.tension_submit_iv_addfile)
-    ImageView                  mIvAddfile;
+    ImageView mIvAddfile;
     @BindView(R.id.tension_submit_rv_file)
-    RecyclerView               mRvFile;
+    RecyclerView mRvFile;
     @BindView(R.id.tension_submit_tv_is_anonymous)
-    TextView                   mTvIsAnonymous;
+    TextView mTvIsAnonymous;
     @BindView(R.id.tension_submit_iv_shudong_help)
-    ImageView                  mIvShudongHelp;
+    ImageView mIvShudongHelp;
     @BindView(R.id.tension_submit_ll_is_anonymous)
-    LinearLayout               mLlIsAnonymous;
+    LinearLayout mLlIsAnonymous;
     @BindView(R.id.tension_submit_sb_shudong)
-    SwitchButton               mSbShudong;
+    SwitchButton mSbShudong;
     @BindView(R.id.tension_submit_rl_is_anonymous)
-    RelativeLayout             mRlIsAnonymous;
+    RelativeLayout mRlIsAnonymous;
     @BindView(R.id.tension_submit_cb_state_autonym)
-    CheckBox                   mCbStateAutonym;
+    CheckBox mCbStateAutonym;
     @BindView(R.id.tension_submit_cb_state_anonym)
-    CheckBox                   mCbStateAnonym;
+    CheckBox mCbStateAnonym;
     @BindView(R.id.tension_submit_ll_autonym_hint)
-    LinearLayout               mLlAutonymHint;
+    LinearLayout mLlAutonymHint;
     @BindView(R.id.tension_submit_ll_shudong_state)
-    LinearLayout               mLlShudongState;
+    LinearLayout mLlShudongState;
     @BindView(R.id.tension_submit_iv_duty_dep_name)
-    ImageView                  mIvDutyDepName;
+    ImageView mIvDutyDepName;
     @BindView(R.id.tension_submit_tv_duty_dep_name)
-    TextView                   mTvDutyDepName;
+    TextView mTvDutyDepName;
     @BindView(R.id.tension_submit_rl_duty_dep_name)
-    RelativeLayout             mRlDutyDepName;
+    RelativeLayout mRlDutyDepName;
     @BindView(R.id.tension_submit_tv_notification)
-    TextView                   mTvNotification;
+    TextView mTvNotification;
     @BindView(R.id.tension_submit_sb_notification)
-    SwitchButton               mSbNotification;
+    SwitchButton mSbNotification;
     @BindView(R.id.tension_submit_rl_notification)
-    RelativeLayout             mRlNotification;
+    RelativeLayout mRlNotification;
     @BindView(R.id.tension_submit_tv_notice_dep_name)
-    TextView                   mTvNoticeDepName;
+    TextView mTvNoticeDepName;
     @BindView(R.id.tension_submit_iv_notice_dep_name)
-    ImageView                  mIvNoticeDepName;
+    ImageView mIvNoticeDepName;
     @BindView(R.id.tension_submit_ll_notice_dep_name)
-    LinearLayout               mLlNoticeDepName;
+    LinearLayout mLlNoticeDepName;
     @BindView(R.id.tension_submit_tv_notify_person)
-    TextView                   mTvNotifyPerson;
+    TextView mTvNotifyPerson;
     @BindView(R.id.tension_submit_gv_notify_person)
-    GridView                   mGvNotifyPerson;
+    GridView mGvNotifyPerson;
     @BindView(R.id.tension_submit_ll_notify_person)
-    LinearLayout               mLlNotifyPerson;
+    LinearLayout mLlNotifyPerson;
     @BindView(R.id.tension_submit_ll_root)
-    LinearLayout               mLlRoot;
+    LinearLayout mLlRoot;
     @BindView(R.id.tension_submit_btn_submit)
-    Button                     mBtnSubmit;
+    Button mBtnSubmit;
     private ArrayList<String> mSelectedPhotos;
 
     @Override
@@ -197,7 +197,7 @@ public class TensionSubmitActivity extends BaseActivityView<TensionSubmitPresent
             public void accept(Boolean aBoolean) {
                 if (aBoolean) {
                     // 拍照后照片的存放目录，改成你自己拍照后要存放照片的目录。如果不传递该参数的话就没有拍照功能
-                    File takePhotoDir = new File(Environment.getExternalStorageDirectory(), "DJOA");
+                    File takePhotoDir = new File(Environment.getExternalStorageDirectory(), "picture");
                     Intent photoPickerIntent = new BGAPhotoPickerActivity.IntentBuilder(mContext)
                             .cameraFileDir(takePhotoDir) // 拍照后照片的存放目录，改成你自己拍照后要存放照片的目录。如果不传递该参数的话则不开启图库里的拍照功能
                             //                .maxChooseCount(mBgaLytImage.getMaxItemCount() - mBgaLytImage.getItemCount()) // 图片选择张数的最大值

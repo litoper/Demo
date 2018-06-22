@@ -1,10 +1,11 @@
-package com.example.kadh.ui.message;
+package com.example.kadh.ui.company.adapter;
 
 import android.support.annotation.Nullable;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.example.kadh.R;
+import com.example.kadh.ui.company.bean.MessageBean;
 
 import java.util.List;
 

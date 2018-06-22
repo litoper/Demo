@@ -1,4 +1,4 @@
-package com.example.kadh.ui.message;
+package com.example.kadh.ui.company.bean;
 
 /**
  * @author: kadh

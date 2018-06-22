@@ -3,6 +3,7 @@ package com.example.kadh.utils.RxJava.RxApi;
 
 import com.example.kadh.bean.isValiDateProcessPermitBean;
 import com.example.kadh.ui.company.bean.CommentListBean;
+import com.example.kadh.ui.company.bean.MessageBean;
 import com.example.kadh.ui.company.bean.PublishListBean;
 import com.example.kadh.ui.company.bean.PublishNewDetailBean;
 import com.example.kadh.ui.company.bean.PublishNoticeDetailBean;
@@ -12,9 +13,9 @@ import com.example.kadh.ui.login.bean.LoginBean;
 import com.example.kadh.ui.main.bean.IsHasUnReadBean;
 import com.example.kadh.ui.main.bean.UserInfoBean;
 import com.example.kadh.ui.main.bean.WeatherBean;
-import com.example.kadh.ui.message.MessageBean;
 import com.example.kadh.ui.person.bean.QueryProTotalInfoBean;
 import com.example.kadh.ui.person.bean.RoleManageBean;
+import com.example.kadh.ui.person.bean.UpFieldBean;
 import com.example.kadh.ui.work.bean.ProcessModuleBean;
 import com.example.kadh.ui.work.bean.ProcessStatusBean;
 import com.example.kadh.utils.RxJava.BaseResponse;
@@ -23,11 +24,14 @@ import java.util.List;
 
 import io.reactivex.Flowable;
 import io.reactivex.Observable;
+import okhttp3.MultipartBody;
 import okhttp3.ResponseBody;
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
+import retrofit2.http.Multipart;
 import retrofit2.http.POST;
+import retrofit2.http.Part;
 import retrofit2.http.Query;
 import retrofit2.http.Streaming;
 import retrofit2.http.Url;
@@ -164,6 +168,10 @@ interface RxService {
     @GET
     Flowable<ResponseBody> download(@Url String url);
 
+
+    @Multipart
+    @POST(RxUrl.Url.UPFIELD)
+    Flowable<BaseResponse<List<UpFieldBean>>> upField(@Part MultipartBody.Part file, @Query("version") String version, @Query("fileName") String filename);
     //    @GET(RxUrl.Url.CHECKVERSION + NICAI)
     //    Observable<BaseResponse<UpDateModel>> checkVersion(@Query("appVersion") String version);
 

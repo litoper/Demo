@@ -3,6 +3,7 @@ package com.example.kadh.utils.RxJava.RxApi;
 
 import com.example.kadh.bean.isValiDateProcessPermitBean;
 import com.example.kadh.ui.company.bean.CommentListBean;
+import com.example.kadh.ui.company.bean.MessageBean;
 import com.example.kadh.ui.company.bean.PublishListBean;
 import com.example.kadh.ui.company.bean.PublishNewDetailBean;
 import com.example.kadh.ui.company.bean.PublishNoticeDetailBean;
@@ -12,9 +13,9 @@ import com.example.kadh.ui.login.bean.LoginBean;
 import com.example.kadh.ui.main.bean.IsHasUnReadBean;
 import com.example.kadh.ui.main.bean.UserInfoBean;
 import com.example.kadh.ui.main.bean.WeatherBean;
-import com.example.kadh.ui.message.MessageBean;
 import com.example.kadh.ui.person.bean.QueryProTotalInfoBean;
 import com.example.kadh.ui.person.bean.RoleManageBean;
+import com.example.kadh.ui.person.bean.UpFieldBean;
 import com.example.kadh.ui.work.bean.ProcessModuleBean;
 import com.example.kadh.ui.work.bean.ProcessStatusBean;
 import com.example.kadh.utils.RxJava.BaseResponse;
@@ -29,6 +30,7 @@ import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.annotations.NonNull;
 import io.reactivex.functions.Function;
 import io.reactivex.schedulers.Schedulers;
+import okhttp3.MultipartBody;
 import okhttp3.ResponseBody;
 
 /**
@@ -307,6 +309,21 @@ public class RxApi {
     public void downloadFile(String url, String savePath, String fileName, SubDownload<File> subDownload) {
         Flowable<ResponseBody> flowable = mRxService.download(url);
         toSubScribe(savePath, fileName, subDownload, flowable);
+    }
+
+
+    /**
+     * upField 头像上传
+     *
+     * @param subscriber
+     * @param file
+     * @param filename
+     * @return
+     */
+    public Flowable upField(FlowableSubscriber<BaseResponse<List<UpFieldBean>>> subscriber, MultipartBody.Part file, String filename) {
+        Flowable flowable = mRxService.upField(file, version, filename);
+        toSubscribe(flowable, subscriber);
+        return flowable;
     }
 
 
