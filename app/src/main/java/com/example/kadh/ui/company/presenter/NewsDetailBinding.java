@@ -1,6 +1,6 @@
 package com.example.kadh.ui.company.presenter;
 
-import com.example.kadh.base.BasePresenterImpl;
+import com.example.kadh.base.BaseBindingImpl;
 import com.example.kadh.ui.company.bean.CommentListBean;
 import com.example.kadh.ui.company.bean.PublishNewDetailBean;
 import com.example.kadh.ui.company.bean.UpManListBean;
@@ -22,11 +22,11 @@ import javax.inject.Inject;
  * @blog : http://www.nicaicaicai.com
  * @desc :
  */
-public class NewsDetailPresenter extends BasePresenterImpl<NewsDetailAtyContract.View> implements NewsDetailAtyContract.Presenter<NewsDetailAtyContract.View> {
+public class NewsDetailBinding extends BaseBindingImpl<NewsDetailAtyContract.View> implements NewsDetailAtyContract.Presenter<NewsDetailAtyContract.View> {
     private RxApi mRxApi;
 
     @Inject
-    public NewsDetailPresenter(RxApi rxApi) {
+    public NewsDetailBinding(RxApi rxApi) {
         mRxApi = rxApi;
     }
 

@@ -1,6 +1,6 @@
 package com.example.kadh.ui.work.presenter;
 
-import com.example.kadh.base.BasePresenterImpl;
+import com.example.kadh.base.BaseBindingImpl;
 import com.example.kadh.ui.work.bean.ProcessModuleBean;
 import com.example.kadh.ui.work.bean.ProcessStatusBean;
 import com.example.kadh.ui.work.contract.WorkFragContract;
@@ -20,13 +20,13 @@ import javax.inject.Inject;
  * @blog : http://www.nicaicaicai.com
  * @desc :
  */
-public class WorkPresenter extends BasePresenterImpl<WorkFragContract.View> implements WorkFragContract.Presenter<WorkFragContract.View> {
+public class WorkBinding extends BaseBindingImpl<WorkFragContract.View> implements WorkFragContract.Presenter<WorkFragContract.View> {
 
 
     private RxApi mRxApi;
 
     @Inject
-    public WorkPresenter(RxApi rxApi) {
+    public WorkBinding(RxApi rxApi) {
         mRxApi = rxApi;
     }
 

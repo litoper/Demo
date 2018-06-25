@@ -1,6 +1,6 @@
 package com.example.kadh.ui.tension.presenter;
 
-import com.example.kadh.base.BasePresenterImpl;
+import com.example.kadh.base.BaseBindingImpl;
 import com.example.kadh.ui.tension.contract.TensionAtyContract;
 import com.example.kadh.utils.RxJava.RxApi.RxApi;
 
@@ -13,12 +13,12 @@ import javax.inject.Inject;
  * @blog : http://www.nicaicaicai.com
  * @desc :
  */
-public class TensionPresenter extends BasePresenterImpl<TensionAtyContract.View> implements TensionAtyContract.Presenter<TensionAtyContract.View> {
+public class TensionBinding extends BaseBindingImpl<TensionAtyContract.View> implements TensionAtyContract.Presenter<TensionAtyContract.View> {
 
     private RxApi mRxApi;
 
     @Inject
-    public TensionPresenter(RxApi rxApi) {
+    public TensionBinding(RxApi rxApi) {
         mRxApi = rxApi;
     }
 }

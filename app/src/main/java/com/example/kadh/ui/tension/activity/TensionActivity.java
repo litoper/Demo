@@ -6,7 +6,7 @@ import com.example.kadh.R;
 import com.example.kadh.base.BaseActivityView;
 import com.example.kadh.component.AppComponent;
 import com.example.kadh.ui.tension.contract.TensionAtyContract;
-import com.example.kadh.ui.tension.presenter.TensionPresenter;
+import com.example.kadh.ui.tension.presenter.TensionBinding;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -18,7 +18,7 @@ import butterknife.OnClick;
  * @blog : http://www.nicaicaicai.com
  * @desc :
  */
-public class TensionActivity extends BaseActivityView<TensionPresenter> implements TensionAtyContract.View {
+public class TensionActivity extends BaseActivityView<TensionBinding> implements TensionAtyContract.View {
     @BindView(R.id.activity_tension_btn)
     Button mBtn;
 

@@ -1,6 +1,6 @@
 package com.example.kadh.ui.person.presenter;
 
-import com.example.kadh.base.BasePresenterImpl;
+import com.example.kadh.base.BaseBindingImpl;
 import com.example.kadh.ui.main.bean.UserInfoBean;
 import com.example.kadh.ui.person.bean.RoleManageBean;
 import com.example.kadh.ui.person.bean.UpFieldBean;
@@ -28,12 +28,12 @@ import okhttp3.RequestBody;
  * @blog : http://www.nicaicaicai.com
  * @desc :
  */
-public class PersonInfoPresenter extends BasePresenterImpl<PersonInfoAtyContract.View> implements PersonInfoAtyContract.Presenter<PersonInfoAtyContract.View> {
+public class PersonInfoBinding extends BaseBindingImpl<PersonInfoAtyContract.View> implements PersonInfoAtyContract.Presenter<PersonInfoAtyContract.View> {
 
     private RxApi mRxApi;
 
     @Inject
-    public PersonInfoPresenter(RxApi rxApi) {
+    public PersonInfoBinding(RxApi rxApi) {
         mRxApi = rxApi;
     }
 

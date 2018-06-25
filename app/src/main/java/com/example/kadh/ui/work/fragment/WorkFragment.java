@@ -16,7 +16,7 @@ import com.example.kadh.ui.work.adapter.WorkGridAdapter;
 import com.example.kadh.ui.work.bean.ProcessModuleBean;
 import com.example.kadh.ui.work.bean.ProcessStatusBean;
 import com.example.kadh.ui.work.contract.WorkFragContract;
-import com.example.kadh.ui.work.presenter.WorkPresenter;
+import com.example.kadh.ui.work.presenter.WorkBinding;
 import com.example.kadh.utils.NullUtils;
 import com.example.kadh.view.BadgeView;
 
@@ -32,7 +32,7 @@ import butterknife.BindView;
  * @blog : http://www.nicaicaicai.com
  * @desc :
  */
-public class WorkFragment extends BaseFragmentView<WorkPresenter> implements WorkFragContract.View {
+public class WorkFragment extends BaseFragmentView<WorkBinding> implements WorkFragContract.View {
     @BindView(R.id.fragment_main_work_toolbar)
     Toolbar mToolbar;
     @BindView(R.id.fragment_main_work_barlayout)

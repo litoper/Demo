@@ -1,6 +1,6 @@
 package com.example.kadh.ui.company.presenter;
 
-import com.example.kadh.base.BasePresenterImpl;
+import com.example.kadh.base.BaseBindingImpl;
 import com.example.kadh.ui.company.bean.PublishListBean;
 import com.example.kadh.ui.company.contract.CompanyFragContract;
 import com.example.kadh.utils.RxJava.BaseResponse;
@@ -19,12 +19,12 @@ import javax.inject.Inject;
  * @blog : http://www.nicaicaicai.com
  * @desc :
  */
-public class CompanyPresenter extends BasePresenterImpl<CompanyFragContract.View> implements CompanyFragContract.Presenter<CompanyFragContract.View> {
+public class CompanyBinding extends BaseBindingImpl<CompanyFragContract.View> implements CompanyFragContract.Presenter<CompanyFragContract.View> {
 
     RxApi mRxApi;
 
     @Inject
-    public CompanyPresenter(RxApi rxApi) {
+    public CompanyBinding(RxApi rxApi) {
         mRxApi = rxApi;
     }
 

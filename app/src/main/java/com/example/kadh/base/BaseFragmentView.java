@@ -9,7 +9,7 @@ import javax.inject.Inject;
  * @blog : http://www.nicaicaicai.com
  * @desc :
  */
-public abstract class BaseFragmentView<T extends BaseContract.BasePresenter> extends BaseFragment {
+public abstract class BaseFragmentView<T extends BaseContract.BaseBinding> extends BaseFragment {
 
     @Inject
     protected T mPresenter;

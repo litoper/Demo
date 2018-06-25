@@ -1,6 +1,6 @@
 package com.example.kadh.ui.login.presenter;
 
-import com.example.kadh.base.BasePresenterImpl;
+import com.example.kadh.base.BaseBindingImpl;
 import com.example.kadh.ui.login.bean.LoginBean;
 import com.example.kadh.ui.login.contract.LoginNormalFragContract;
 import com.example.kadh.utils.MD5helper;
@@ -22,12 +22,12 @@ import javax.inject.Inject;
  * @blog : http://www.nicaicaicai.com
  * @desc :
  */
-public class LoginNormalPresenter extends BasePresenterImpl<LoginNormalFragContract.View> implements LoginNormalFragContract.Presenter<LoginNormalFragContract.View> {
+public class LoginNormalBinding extends BaseBindingImpl<LoginNormalFragContract.View> implements LoginNormalFragContract.Presenter<LoginNormalFragContract.View> {
 
     private RxApi mRxApi;
 
     @Inject
-    public LoginNormalPresenter(RxApi rxApi) {
+    public LoginNormalBinding(RxApi rxApi) {
         mRxApi = rxApi;
     }
 

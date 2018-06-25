@@ -28,7 +28,7 @@ import com.example.kadh.ui.main.bean.UserInfoBean;
 import com.example.kadh.ui.person.bean.RoleManageBean;
 import com.example.kadh.ui.person.bean.UpFieldBean;
 import com.example.kadh.ui.person.contract.PersonInfoAtyContract;
-import com.example.kadh.ui.person.presenter.PersonInfoPresenter;
+import com.example.kadh.ui.person.presenter.PersonInfoBinding;
 import com.example.kadh.utils.GlideUtils;
 import com.example.kadh.utils.NullUtils;
 import com.example.kadh.utils.RxJava.RxApi.RxUrl;
@@ -55,7 +55,7 @@ import io.reactivex.functions.Consumer;
  * @blog : http://www.nicaicaicai.com
  * @desc :
  */
-public class PersonInfoActivity extends BaseActivityView<PersonInfoPresenter> implements PersonInfoAtyContract.View {
+public class PersonInfoActivity extends BaseActivityView<PersonInfoBinding> implements PersonInfoAtyContract.View {
 
     @BindView(R.id.activity_personal_civ_icon)
     CircleImageView mCivIcon;
@@ -322,7 +322,7 @@ public class PersonInfoActivity extends BaseActivityView<PersonInfoPresenter> im
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         if (mItemSave.isVisible() && keyCode == KeyEvent.KEYCODE_BACK && event.getAction() == KeyEvent.ACTION_DOWN) {
-            MaterialDialog show = new MaterialDialog.Builder(mContext)
+            MaterialDialog.Builder builder = new MaterialDialog.Builder(mContext)
                     .title("titile")
                     .content("内容")
                     .negativeText("算了")
@@ -339,7 +339,8 @@ public class PersonInfoActivity extends BaseActivityView<PersonInfoPresenter> im
                         public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
                             Toast.makeText(mContext, "which:" + which, Toast.LENGTH_SHORT).show();
                         }
-                    }).show();
+                    });
+            builder.show();
             return true;
         }
         return super.onKeyDown(keyCode, event);

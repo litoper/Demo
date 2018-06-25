@@ -9,7 +9,7 @@ import javax.inject.Inject;
  * @blog : http://www.nicaicaicai.com
  * @desc :
  */
-public abstract class BaseActivityView<T extends BaseContract.BasePresenter> extends BaseActivity {
+public abstract class BaseActivityView<T extends BaseContract.BaseBinding> extends BaseActivity {
 
 
     @Inject

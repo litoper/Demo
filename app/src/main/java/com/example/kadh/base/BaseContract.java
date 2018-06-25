@@ -9,9 +9,7 @@ package com.example.kadh.base;
  */
 public interface BaseContract {
     interface BasePresenter<T> {
-        void atachView(T view);
 
-        void detachView();
     }
 
     interface BaseView {
@@ -19,5 +17,11 @@ public interface BaseContract {
 
         void complete();
 
+    }
+
+    interface BaseBinding<T> {
+        void atachView(T view);
+
+        void detachView();
     }
 }

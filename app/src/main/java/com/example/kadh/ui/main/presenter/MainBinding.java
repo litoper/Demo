@@ -2,7 +2,7 @@ package com.example.kadh.ui.main.presenter;
 
 import android.support.v4.app.Fragment;
 
-import com.example.kadh.base.BasePresenterImpl;
+import com.example.kadh.base.BaseBindingImpl;
 import com.example.kadh.ui.company.fragment.CompanyFragment;
 import com.example.kadh.ui.main.bean.IsHasUnReadBean;
 import com.example.kadh.ui.main.bean.UserInfoBean;
@@ -24,12 +24,12 @@ import javax.inject.Inject;
 
 import io.reactivex.Flowable;
 
-public class MainPresenter extends BasePresenterImpl<MainAtyContract.View> implements MainAtyContract.Presenter<MainAtyContract.View> {
+public class MainBinding extends BaseBindingImpl<MainAtyContract.View> implements MainAtyContract.Presenter<MainAtyContract.View> {
 
     private RxApi mRxApi;
 
     @Inject
-    public MainPresenter(RxApi rxApi) {
+    public MainBinding(RxApi rxApi) {
         mRxApi = rxApi;
     }
 

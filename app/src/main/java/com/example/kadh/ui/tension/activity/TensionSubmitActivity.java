@@ -20,7 +20,7 @@ import com.example.kadh.R;
 import com.example.kadh.base.BaseActivityView;
 import com.example.kadh.component.AppComponent;
 import com.example.kadh.ui.tension.contract.TensionSubmitAtvContract;
-import com.example.kadh.ui.tension.presenter.TensionSubmitPresenter;
+import com.example.kadh.ui.tension.presenter.TensionSubmitBinding;
 import com.example.kadh.view.SwitchButton;
 import com.tbruyelle.rxpermissions2.RxPermissions;
 
@@ -41,7 +41,7 @@ import io.reactivex.functions.Consumer;
  * @blog : http://www.nicaicaicai.com
  * @desc :
  */
-public class TensionSubmitActivity extends BaseActivityView<TensionSubmitPresenter> implements TensionSubmitAtvContract.View, BGASortableNinePhotoLayout.Delegate {
+public class TensionSubmitActivity extends BaseActivityView<TensionSubmitBinding> implements TensionSubmitAtvContract.View, BGASortableNinePhotoLayout.Delegate {
     @BindView(R.id.tension_submit_tv_role_content)
     TextView mTvRoleContent;
     @BindView(R.id.tension_submit_ll_role)

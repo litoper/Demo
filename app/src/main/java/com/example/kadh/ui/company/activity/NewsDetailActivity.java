@@ -32,7 +32,7 @@ import com.example.kadh.ui.company.bean.PublishNewDetailBean;
 import com.example.kadh.ui.company.bean.UpManListBean;
 import com.example.kadh.ui.company.bean.UpNumberBean;
 import com.example.kadh.ui.company.contract.NewsDetailAtyContract;
-import com.example.kadh.ui.company.presenter.NewsDetailPresenter;
+import com.example.kadh.ui.company.presenter.NewsDetailBinding;
 import com.example.kadh.utils.GlideUtils;
 import com.example.kadh.utils.IMEUtils;
 import com.example.kadh.utils.NullUtils;
@@ -64,7 +64,7 @@ import butterknife.OnClick;
  * @blog : http://www.nicaicaicai.com
  * @desc :
  */
-public class NewsDetailActivity extends BaseActivityView<NewsDetailPresenter> implements NewsDetailAtyContract.View, HoverScrollViewNew.OnScrollListener {
+public class NewsDetailActivity extends BaseActivityView<NewsDetailBinding> implements NewsDetailAtyContract.View, HoverScrollViewNew.OnScrollListener {
 
 
     @BindView(R.id.activity_news_details_view_line)
