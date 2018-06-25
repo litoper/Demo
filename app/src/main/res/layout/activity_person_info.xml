@@ -166,7 +166,7 @@
             <LinearLayout
                 android:id="@+id/activity_personal_ll_group"
                 android:layout_width="wrap_content"
-                android:layout_height="34dp"
+                android:layout_height="40dp"
                 android:layout_gravity="center"
                 android:layout_marginTop="-20dp"
                 android:background="@drawable/bg_personal_group_white"

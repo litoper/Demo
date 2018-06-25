@@ -1,5 +1,8 @@
 package com.example.kadh.ui.person.bean;
 
+import com.example.kadh.bean.support.IsingleChoiceBean;
+import com.example.kadh.utils.NullUtils;
+
 /**
  * @author: kadh
  * @email : 36870855@qq.com
@@ -7,7 +10,7 @@ package com.example.kadh.ui.person.bean;
  * @blog : http://www.nicaicaicai.com
  * @desc :
  */
-public class RoleManageBean {
+public class RoleManageBean implements IsingleChoiceBean {
     /**
      * id : 102
      * rname : 管理员
@@ -17,6 +20,8 @@ public class RoleManageBean {
     private String id;
     private String rname;
     private String rdesc;
+    private String rtype;
+    private String rdefault;
 
     public String getId() {
         return id;
@@ -42,12 +47,35 @@ public class RoleManageBean {
         this.rdesc = rdesc;
     }
 
+    public String getRtype() {
+        return rtype;
+    }
+
+    public void setRtype(String rtype) {
+        this.rtype = rtype;
+    }
+
+    public String getRdefault() {
+        return rdefault;
+    }
+
+    public void setRdefault(String rdefault) {
+        this.rdefault = rdefault;
+    }
+
     @Override
     public String toString() {
         return "RoleManageBean{" +
                 "id='" + id + '\'' +
                 ", rname='" + rname + '\'' +
                 ", rdesc='" + rdesc + '\'' +
+                ", rtype='" + rtype + '\'' +
+                ", rdefault='" + rdefault + '\'' +
                 '}';
+    }
+
+    @Override
+    public String displayText() {
+        return NullUtils.filterEmpty(getRname());
     }
 }

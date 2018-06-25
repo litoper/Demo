@@ -18,7 +18,7 @@ public interface PersonInfoAtyContract {
     interface View extends BaseContract.BaseView {
         void showUserInfo(UserInfoBean userInfoBean);
 
-        void setRoleManageSingle(RoleManageBean roleManageBean);
+        void setRoleManageSingle(List<RoleManageBean> roleManageBean);
 
         void upFiledSuccess(List<UpFieldBean> data);
     }

@@ -51,12 +51,11 @@ public class PersonInfoBinding extends BaseBindingImpl<PersonInfoAtyContract.Vie
 
     @Override
     public void getRoleManageSingle(String userId) {
-
         mRxApi.getRoleManageSingle(new SubProtect<BaseResponse<List<RoleManageBean>>>(new SubNextImpl<BaseResponse<List<RoleManageBean>>>() {
             @Override
             public void onSubSuccess(BaseResponse<List<RoleManageBean>> response) {
-                if (NullUtils.isNull(response.data)) {
-                    mView.setRoleManageSingle(response.data.get(0));
+                if (!NullUtils.isNull(response.data)) {
+                    mView.setRoleManageSingle(response.data);
                 }
             }
         }), userId);

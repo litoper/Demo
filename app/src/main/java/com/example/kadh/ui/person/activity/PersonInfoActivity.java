@@ -30,7 +30,9 @@ import com.example.kadh.ui.person.bean.UpFieldBean;
 import com.example.kadh.ui.person.contract.PersonInfoAtyContract;
 import com.example.kadh.ui.person.presenter.PersonInfoBinding;
 import com.example.kadh.utils.GlideUtils;
+import com.example.kadh.utils.MdAlterHelper;
 import com.example.kadh.utils.NullUtils;
+import com.example.kadh.utils.RegularUtils;
 import com.example.kadh.utils.RxJava.RxApi.RxUrl;
 import com.example.kadh.view.CircleImageView.CircleImageView;
 import com.jakewharton.rxbinding2.view.RxView;
@@ -104,16 +106,58 @@ public class PersonInfoActivity extends BaseActivityView<PersonInfoBinding> impl
     public static final int CODE_CHOOSE_PHOTO = 666;
     public static final int CODE_CLIP_PHOTO = 168;
     private MenuItem mItemSave;
-    private String mUpFiledCode;
+    private List<RoleManageBean> mRoleManageBeans;
+    private MdAlterHelper mAlterHelper;
+    private String mModify_UpFiledCode;
+    private String mModify_RoleId;
+    private String mModify_Email;
 
+    @SuppressLint("CheckResult")
     @Override
     public void configViews() {
+        RxView.clicks(mLlGroup).throttleFirst(300, TimeUnit.MILLISECONDS).subscribe(new Consumer<Object>() {
+            @Override
+            public void accept(Object o) throws Exception {
+                if (!NullUtils.isNull(mRoleManageBeans)) {
+                    showRoleDialog();
+                }
+            }
+        });
 
+        RxView.clicks(mLlEmail).throttleFirst(300, TimeUnit.MILLISECONDS).subscribe(new Consumer<Object>() {
+            @Override
+            public void accept(Object o) throws Exception {
+                mAlterHelper.showInputDialog(
+                        "邮箱修改",
+                        null,
+                        "确定",
+                        "请输入邮箱",
+                        "",
+                        4,
+                        99,
+                        new MdAlterHelper.IclickCallBack() {
+                            @Override
+                            public void onClick(MaterialDialog dialog, String inputText, DialogAction which) {
+                                if (RegularUtils.isEmail(inputText)) {
+                                    mModify_Email = inputText;
+                                    mTvEmail.setText(inputText);
+                                    mItemSave.setVisible(true);
+                                    dialog.dismiss();
+                                } else {
+                                    Toast.makeText(mContext, "请正确填写邮箱!", Toast.LENGTH_SHORT).show();
+                                }
+                            }
+                        },
+                        null);
+            }
+        });
     }
 
     @Override
     public void initDatas() {
         mPresenter.getUseInfo();
+        mPresenter.getRoleManageSingle("");
+        mAlterHelper = new MdAlterHelper(this);
 
         // 拍照后照片的存放目录，改成你自己拍照后要存放照片的目录。如果不传递该参数的话就没有拍照功能
         File takePhotoDir = new File(Environment.getExternalStorageDirectory(), "picture");
@@ -188,19 +232,18 @@ public class PersonInfoActivity extends BaseActivityView<PersonInfoBinding> impl
     }
 
     @Override
-    public void setRoleManageSingle(RoleManageBean roleManageBean) {
-
+    public void setRoleManageSingle(List<RoleManageBean> roleManageBean) {
+        mRoleManageBeans = roleManageBean;
     }
 
     @Override
     public void upFiledSuccess(List<UpFieldBean> data) {
         mItemSave.setVisible(true);
-        mUpFiledCode = data.get(0).getCode();
+        mModify_UpFiledCode = data.get(0).getCode();
         GlideUtils.loadImageViewForHead(mContext, mPhotoHelper.getCropFilePath(), mCivIcon);
     }
 
-    @OnClick({R.id.activity_personal_civ_icon, R.id.activity_personal_ll_dep, R.id.activity_personal_ll_position, R.id.activity_personal_ll_phone, R.id
-            .activity_personal_ll_short, R.id.activity_personal_ll_email})
+    @OnClick({R.id.activity_personal_civ_icon, R.id.activity_personal_ll_dep, R.id.activity_personal_ll_position, R.id.activity_personal_ll_phone, R.id.activity_personal_ll_short, R.id.activity_personal_ll_email})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.activity_personal_ll_dep:
@@ -216,9 +259,25 @@ public class PersonInfoActivity extends BaseActivityView<PersonInfoBinding> impl
             case R.id.activity_personal_civ_icon:
                 openDialog();
                 break;
+
             default:
                 break;
         }
+    }
+
+    private void showRoleDialog() {
+        mAlterHelper.displaySingleDialog(true
+                , "请设置默认角色"
+                , mRoleManageBeans
+                , NullUtils.filterEmpty(mTvGroup.getText().toString())
+                , new MdAlterHelper.IdisplaySingleCallBack() {
+                    @Override
+                    public void onSelecton(int position, String selectText) {
+                        mTvGroup.setText(selectText);
+                        mModify_RoleId = mRoleManageBeans.get(position).getId();
+                        mItemSave.setVisible(true);
+                    }
+                });
     }
 
 
@@ -312,35 +371,29 @@ public class PersonInfoActivity extends BaseActivityView<PersonInfoBinding> impl
         }
     }
 
+    private void showSaveDialog() {
+        mAlterHelper.showNormalDialog("您还没有保存",
+                null,
+                "保存",
+                "取消",
+                new MaterialDialog.SingleButtonCallback() {
+                    @Override
+                    public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
 
-    @Override
-    public void onBackPressed() {
-        super.onBackPressed();
-
+                    }
+                },
+                new MaterialDialog.SingleButtonCallback() {
+                    @Override
+                    public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
+                        dialog.dismiss();
+                    }
+                });
     }
 
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         if (mItemSave.isVisible() && keyCode == KeyEvent.KEYCODE_BACK && event.getAction() == KeyEvent.ACTION_DOWN) {
-            MaterialDialog.Builder builder = new MaterialDialog.Builder(mContext)
-                    .title("titile")
-                    .content("内容")
-                    .negativeText("算了")
-                    .negativeColor(getResources().getColor(R.color.red_btn_bg_color))
-                    .positiveText("保存")
-                    .onPositive(new MaterialDialog.SingleButtonCallback() {
-                        @Override
-                        public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
-                            Toast.makeText(mContext, "which:" + which, Toast.LENGTH_SHORT).show();
-                        }
-                    })
-                    .onNegative(new MaterialDialog.SingleButtonCallback() {
-                        @Override
-                        public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
-                            Toast.makeText(mContext, "which:" + which, Toast.LENGTH_SHORT).show();
-                        }
-                    });
-            builder.show();
+            showSaveDialog();
             return true;
         }
         return super.onKeyDown(keyCode, event);
@@ -374,6 +427,5 @@ public class PersonInfoActivity extends BaseActivityView<PersonInfoBinding> impl
         super.onRestoreInstanceState(savedInstanceState);
         BGAPhotoHelper.onRestoreInstanceState(mPhotoHelper, savedInstanceState);
     }
-
 
 }

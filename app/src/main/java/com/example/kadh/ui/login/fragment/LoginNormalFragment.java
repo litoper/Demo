@@ -166,7 +166,7 @@ public class LoginNormalFragment extends BaseFragmentView<LoginNormalBinding> im
         if (!NullUtils.isEmpty(passwrod)) {
             mPasswrod = passwrod;
             mEtPassword.setText(passwrod);
-            checkInput(username, passwrod);
+//            checkInput(username, passwrod);
         }
     }
 
