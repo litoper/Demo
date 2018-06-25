@@ -1,26 +1,25 @@
 package com.example.kadh.ui.person.presenter;
 
-import android.Manifest;
-import android.annotation.SuppressLint;
-
 import com.example.kadh.base.BasePresenterImpl;
 import com.example.kadh.ui.main.bean.UserInfoBean;
-import com.example.kadh.ui.person.activity.PersonInfoActivity;
 import com.example.kadh.ui.person.bean.RoleManageBean;
+import com.example.kadh.ui.person.bean.UpFieldBean;
 import com.example.kadh.ui.person.contract.PersonInfoAtyContract;
 import com.example.kadh.utils.NullUtils;
 import com.example.kadh.utils.RxJava.BaseResponse;
 import com.example.kadh.utils.RxJava.RxApi.RxApi;
+import com.example.kadh.utils.RxJava.RxApi.RxManager;
 import com.example.kadh.utils.RxJava.RxSubscriber.SubNextImpl;
 import com.example.kadh.utils.RxJava.RxSubscriber.SubProtect;
-import com.tbruyelle.rxpermissions2.Permission;
-import com.tbruyelle.rxpermissions2.RxPermissions;
 
+import java.io.File;
 import java.util.List;
 
 import javax.inject.Inject;
 
-import io.reactivex.functions.Consumer;
+import okhttp3.MediaType;
+import okhttp3.MultipartBody;
+import okhttp3.RequestBody;
 
 /**
  * @author: kadh
@@ -63,21 +62,17 @@ public class PersonInfoPresenter extends BasePresenterImpl<PersonInfoAtyContract
         }), userId);
     }
 
-    @SuppressLint("CheckResult")
+
     @Override
-    public void checkPermissions(final PersonInfoActivity activity) {
-        new RxPermissions(activity).requestEach(Manifest.permission.CAMERA).subscribe(new Consumer<Permission>() {
+    public void upField(String cropFilePath) {
+        File file = new File(cropFilePath);
+        RequestBody body = RequestBody.create(MediaType.parse("form-data"), file);
+        MultipartBody.Part part = MultipartBody.Part.createFormData("file", file.getName(), body);
+        RxManager.getInstant().getRxApi().upField(new SubProtect<BaseResponse<List<UpFieldBean>>>(new SubNextImpl<BaseResponse<List<UpFieldBean>>>() {
             @Override
-            public void accept(Permission permission) throws Exception {
-                if (permission.granted) {
-
-
-                } else if (permission.shouldShowRequestPermissionRationale) {
-
-                } else {
-
-                }
+            public void onSubSuccess(BaseResponse<List<UpFieldBean>> response) {
+                mView.upFiledSuccess(response.data);
             }
-        });
+        }), part, "");
     }
 }

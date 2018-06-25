@@ -2,8 +2,10 @@ package com.example.kadh.ui.person.contract;
 
 import com.example.kadh.base.BaseContract;
 import com.example.kadh.ui.main.bean.UserInfoBean;
-import com.example.kadh.ui.person.activity.PersonInfoActivity;
 import com.example.kadh.ui.person.bean.RoleManageBean;
+import com.example.kadh.ui.person.bean.UpFieldBean;
+
+import java.util.List;
 
 /**
  * @author: kadh
@@ -17,6 +19,8 @@ public interface PersonInfoAtyContract {
         void showUserInfo(UserInfoBean userInfoBean);
 
         void setRoleManageSingle(RoleManageBean roleManageBean);
+
+        void upFiledSuccess(List<UpFieldBean> data);
     }
 
     interface Presenter<T> extends BaseContract.BasePresenter<T> {
@@ -24,6 +28,7 @@ public interface PersonInfoAtyContract {
 
         void getRoleManageSingle(String userId);
 
-        void checkPermissions(PersonInfoActivity consumer);
+
+        void upField(String cropFilePath);
     }
 }

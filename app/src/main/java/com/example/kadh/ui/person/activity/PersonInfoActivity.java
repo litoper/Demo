@@ -5,15 +5,21 @@ import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Environment;
+import android.support.annotation.NonNull;
 import android.support.v7.app.AlertDialog;
-import android.util.Log;
 import android.view.Gravity;
+import android.view.KeyEvent;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.afollestad.materialdialogs.DialogAction;
+import com.afollestad.materialdialogs.MaterialDialog;
 import com.example.kadh.R;
 import com.example.kadh.base.BaseActivityView;
 import com.example.kadh.component.AppComponent;
@@ -25,11 +31,7 @@ import com.example.kadh.ui.person.contract.PersonInfoAtyContract;
 import com.example.kadh.ui.person.presenter.PersonInfoPresenter;
 import com.example.kadh.utils.GlideUtils;
 import com.example.kadh.utils.NullUtils;
-import com.example.kadh.utils.RxJava.BaseResponse;
-import com.example.kadh.utils.RxJava.RxApi.RxManager;
 import com.example.kadh.utils.RxJava.RxApi.RxUrl;
-import com.example.kadh.utils.RxJava.RxSubscriber.SubNextImpl;
-import com.example.kadh.utils.RxJava.RxSubscriber.SubProtect;
 import com.example.kadh.view.CircleImageView.CircleImageView;
 import com.jakewharton.rxbinding2.view.RxView;
 import com.tbruyelle.rxpermissions2.RxPermissions;
@@ -45,9 +47,6 @@ import cn.bingoogolapple.photopicker.util.BGAPhotoHelper;
 import cn.bingoogolapple.photopicker.util.BGAPhotoPickerUtil;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.functions.Consumer;
-import okhttp3.MediaType;
-import okhttp3.MultipartBody;
-import okhttp3.RequestBody;
 
 /**
  * @author: kadh
@@ -100,6 +99,12 @@ public class PersonInfoActivity extends BaseActivityView<PersonInfoPresenter> im
     LinearLayout mLlEmail;
     private AlertDialog mDialog;
     private BGAPhotoHelper mPhotoHelper;
+
+    public static final int CODE_TAKE_PHOTO = 888;
+    public static final int CODE_CHOOSE_PHOTO = 666;
+    public static final int CODE_CLIP_PHOTO = 168;
+    private MenuItem mItemSave;
+    private String mUpFiledCode;
 
     @Override
     public void configViews() {
@@ -187,6 +192,13 @@ public class PersonInfoActivity extends BaseActivityView<PersonInfoPresenter> im
 
     }
 
+    @Override
+    public void upFiledSuccess(List<UpFieldBean> data) {
+        mItemSave.setVisible(true);
+        mUpFiledCode = data.get(0).getCode();
+        GlideUtils.loadImageViewForHead(mContext, mPhotoHelper.getCropFilePath(), mCivIcon);
+    }
+
     @OnClick({R.id.activity_personal_civ_icon, R.id.activity_personal_ll_dep, R.id.activity_personal_ll_position, R.id.activity_personal_ll_phone, R.id
             .activity_personal_ll_short, R.id.activity_personal_ll_email})
     public void onViewClicked(View view) {
@@ -217,40 +229,43 @@ public class PersonInfoActivity extends BaseActivityView<PersonInfoPresenter> im
         View v = View.inflate(this, R.layout.dialog_person_info_head, null);
         TextView mPhoto = (TextView) v.findViewById(R.id.dialog_tv_photo);
         TextView mAlbum = (TextView) v.findViewById(R.id.dialog_tv_album);
+
         //拍照
         RxView.clicks(mPhoto).throttleFirst(500, TimeUnit.MILLISECONDS).observeOn(AndroidSchedulers.mainThread()).subscribe(new Consumer<Object>() {
             @Override
             public void accept(Object o) throws Exception {
-                //                mPresenter.checkPermissions(PersonInfoActivity.this);
+                mDialog.dismiss();
+                new RxPermissions(PersonInfoActivity.this)
+                        .request(Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE)
+                        .subscribe(new Consumer<Boolean>() {
+                            @Override
+                            public void accept(Boolean aBoolean) throws Exception {
+                                if (aBoolean) {
+                                    startActivityForResult(mPhotoHelper.getTakePhotoIntent(), CODE_TAKE_PHOTO);
+                                }
+                            }
+                        });
+            }
+        });
 
-                new RxPermissions(PersonInfoActivity.this)
-                        .request(Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE)
-                        .subscribe(new Consumer<Boolean>() {
-                            @Override
-                            public void accept(Boolean aBoolean) throws Exception {
-                                if (aBoolean) {
-                                    startActivityForResult(mPhotoHelper.getTakePhotoIntent(), 888);
-                                }
-                            }
-                        });
-            }
-        });
         //相册
-        mAlbum.setOnClickListener(new View.OnClickListener() {
+        RxView.clicks(mAlbum).throttleFirst(500, TimeUnit.MILLISECONDS).observeOn(AndroidSchedulers.mainThread()).subscribe(new Consumer<Object>() {
             @Override
-            public void onClick(View view) {
+            public void accept(Object o) throws Exception {
+                mDialog.dismiss();
                 new RxPermissions(PersonInfoActivity.this)
                         .request(Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE)
                         .subscribe(new Consumer<Boolean>() {
                             @Override
                             public void accept(Boolean aBoolean) throws Exception {
                                 if (aBoolean) {
-                                    startActivityForResult(mPhotoHelper.getChooseSystemGalleryIntent(), 666);
+                                    startActivityForResult(mPhotoHelper.getChooseSystemGalleryIntent(), CODE_CHOOSE_PHOTO);
                                 }
                             }
                         });
             }
         });
+
         mDialog = alertDialogBuilder.create();
         mDialog.setView(v);
         mDialog.show();
@@ -264,9 +279,9 @@ public class PersonInfoActivity extends BaseActivityView<PersonInfoPresenter> im
         super.onActivityResult(requestCode, resultCode, data);
         if (resultCode == RESULT_OK) {
             switch (requestCode) {
-                case 888:
+                case CODE_TAKE_PHOTO:
                     try {
-                        startActivityForResult(mPhotoHelper.getCropIntent(mPhotoHelper.getCameraFilePath(), 200, 200), 168);
+                        startActivityForResult(mPhotoHelper.getCropIntent(mPhotoHelper.getCameraFilePath(), 200, 200), CODE_CLIP_PHOTO);
                     } catch (Exception e) {
                         mPhotoHelper.deleteCameraFile();
                         mPhotoHelper.deleteCropFile();
@@ -274,39 +289,78 @@ public class PersonInfoActivity extends BaseActivityView<PersonInfoPresenter> im
                         e.printStackTrace();
                     }
                     break;
-                case 666:
+                case CODE_CHOOSE_PHOTO:
                     try {
-                        startActivityForResult(mPhotoHelper.getCropIntent(mPhotoHelper.getFilePathFromUri(data.getData()), 200, 200), 168);
+                        startActivityForResult(mPhotoHelper.getCropIntent(mPhotoHelper.getFilePathFromUri(data.getData()), 200, 200), CODE_CLIP_PHOTO);
                     } catch (IOException e) {
                         mPhotoHelper.deleteCropFile();
                         BGAPhotoPickerUtil.show(R.string.bga_pp_not_support_crop);
                         e.printStackTrace();
                     }
                     break;
-                case 168:
-                    String cropFilePath = mPhotoHelper.getCropFilePath();
-                    File file = new File(cropFilePath);
-                    RequestBody body = RequestBody.create(MediaType.parse("form-data"), file);
-                    MultipartBody.Part part = MultipartBody.Part.createFormData("file", file.getName(), body);
-                    RxManager.getInstant().getRxApi().upField(new SubProtect<BaseResponse<List<UpFieldBean>>>(new SubNextImpl<BaseResponse<List<UpFieldBean>>>() {
-                        @Override
-                        public void onSubSuccess(BaseResponse<List<UpFieldBean>> response) {
-                            Log.d("PersonInfoActivity", "response:" + response);
-                        }
-                    }), part, "");
-                    GlideUtils.loadImageViewForHead(mContext, mPhotoHelper.getCropFilePath(), mCivIcon);
+                case CODE_CLIP_PHOTO:
+                    mPresenter.upField(mPhotoHelper.getCropFilePath());
                     break;
                 default:
                     break;
             }
         } else {
-            if (requestCode == 168) {
+            if (requestCode == CODE_CLIP_PHOTO) {
                 mPhotoHelper.deleteCameraFile();
                 mPhotoHelper.deleteCropFile();
             }
         }
     }
 
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+
+    }
+
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if (mItemSave.isVisible() && keyCode == KeyEvent.KEYCODE_BACK && event.getAction() == KeyEvent.ACTION_DOWN) {
+            MaterialDialog show = new MaterialDialog.Builder(mContext)
+                    .title("titile")
+                    .content("内容")
+                    .negativeText("算了")
+                    .negativeColor(getResources().getColor(R.color.red_btn_bg_color))
+                    .positiveText("保存")
+                    .onPositive(new MaterialDialog.SingleButtonCallback() {
+                        @Override
+                        public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
+                            Toast.makeText(mContext, "which:" + which, Toast.LENGTH_SHORT).show();
+                        }
+                    })
+                    .onNegative(new MaterialDialog.SingleButtonCallback() {
+                        @Override
+                        public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
+                            Toast.makeText(mContext, "which:" + which, Toast.LENGTH_SHORT).show();
+                        }
+                    }).show();
+            return true;
+        }
+        return super.onKeyDown(keyCode, event);
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_save, menu);
+        mItemSave = menu.findItem(R.id.action_save);
+        mItemSave.setVisible(false);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if (item.getItemId() == R.id.action_save) {
+
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
+    }
 
     @Override
     protected void onSaveInstanceState(Bundle outState) {
