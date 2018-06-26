@@ -21,6 +21,9 @@ public interface PersonInfoAtyContract {
         void setRoleManageSingle(List<RoleManageBean> roleManageBean);
 
         void upFiledSuccess(List<UpFieldBean> data);
+
+        void postUserInfoSuccess(String data, String flag);
+
     }
 
     interface Presenter<T> extends BaseContract.BasePresenter<T> {
@@ -30,5 +33,7 @@ public interface PersonInfoAtyContract {
 
 
         void upField(String cropFilePath);
+
+        void postUserInfo(String uimage, String id, String uemail, String flag);
     }
 }

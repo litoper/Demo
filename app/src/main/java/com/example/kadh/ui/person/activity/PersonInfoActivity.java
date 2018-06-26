@@ -34,6 +34,7 @@ import com.example.kadh.utils.MdAlterHelper;
 import com.example.kadh.utils.NullUtils;
 import com.example.kadh.utils.RegularUtils;
 import com.example.kadh.utils.RxJava.RxApi.RxUrl;
+import com.example.kadh.utils.SpUtil;
 import com.example.kadh.view.CircleImageView.CircleImageView;
 import com.jakewharton.rxbinding2.view.RxView;
 import com.tbruyelle.rxpermissions2.RxPermissions;
@@ -127,14 +128,7 @@ public class PersonInfoActivity extends BaseActivityView<PersonInfoPresenter> im
         RxView.clicks(mLlEmail).throttleFirst(300, TimeUnit.MILLISECONDS).subscribe(new Consumer<Object>() {
             @Override
             public void accept(Object o) throws Exception {
-                mAlterHelper.showInputDialog(
-                        "邮箱修改",
-                        null,
-                        "确定",
-                        "请输入邮箱",
-                        "",
-                        4,
-                        99,
+                mAlterHelper.showInputDialog("邮箱修改", null, "确定", "请输入邮箱", "", 4, 99,
                         new MdAlterHelper.IclickCallBack() {
                             @Override
                             public void onClick(MaterialDialog dialog, String inputText, DialogAction which) {
@@ -243,6 +237,17 @@ public class PersonInfoActivity extends BaseActivityView<PersonInfoPresenter> im
         GlideUtils.loadImageViewForHead(mContext, mPhotoHelper.getCropFilePath(), mCivIcon);
     }
 
+    @Override
+    public void postUserInfoSuccess(String data, String flag) {
+        Toast.makeText(mContext, "修改成功", Toast.LENGTH_SHORT).show();
+        mItemSave.setVisible(false);
+        SpUtil.getInstance().putString(SpUtil.LOGIN_INFO_USERICO, mModify_UpFiledCode);
+        setResult(RESULT_OK);
+        if ("finish".equals(flag)) {
+            finish();
+        }
+    }
+
     @OnClick({R.id.activity_personal_civ_icon, R.id.activity_personal_ll_dep, R.id.activity_personal_ll_position, R.id.activity_personal_ll_phone, R.id.activity_personal_ll_short, R.id.activity_personal_ll_email})
     public void onViewClicked(View view) {
         switch (view.getId()) {
@@ -257,9 +262,8 @@ public class PersonInfoActivity extends BaseActivityView<PersonInfoPresenter> im
             case R.id.activity_personal_ll_email:
                 break;
             case R.id.activity_personal_civ_icon:
-                openDialog();
+                openChoiceDialog();
                 break;
-
             default:
                 break;
         }
@@ -282,48 +286,56 @@ public class PersonInfoActivity extends BaseActivityView<PersonInfoPresenter> im
 
 
     @SuppressLint("CheckResult")
-    private void openDialog() {
+    private void openChoiceDialog() {
         AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this, R.style.CallPhoneStyle);
 
         View v = View.inflate(this, R.layout.dialog_person_info_head, null);
-        TextView mPhoto = (TextView) v.findViewById(R.id.dialog_tv_photo);
-        TextView mAlbum = (TextView) v.findViewById(R.id.dialog_tv_album);
+        TextView mPhoto = v.findViewById(R.id.dialog_tv_photo);
+        TextView mAlbum = v.findViewById(R.id.dialog_tv_album);
 
         //拍照
-        RxView.clicks(mPhoto).throttleFirst(500, TimeUnit.MILLISECONDS).observeOn(AndroidSchedulers.mainThread()).subscribe(new Consumer<Object>() {
-            @Override
-            public void accept(Object o) throws Exception {
-                mDialog.dismiss();
-                new RxPermissions(PersonInfoActivity.this)
-                        .request(Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE)
-                        .subscribe(new Consumer<Boolean>() {
-                            @Override
-                            public void accept(Boolean aBoolean) throws Exception {
-                                if (aBoolean) {
-                                    startActivityForResult(mPhotoHelper.getTakePhotoIntent(), CODE_TAKE_PHOTO);
-                                }
-                            }
-                        });
-            }
-        });
+        RxView
+                .clicks(mPhoto)
+                .throttleFirst(500, TimeUnit.MILLISECONDS)
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Consumer<Object>() {
+                    @Override
+                    public void accept(Object o) throws Exception {
+                        mDialog.dismiss();
+                        new RxPermissions(PersonInfoActivity.this)
+                                .request(Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE)
+                                .subscribe(new Consumer<Boolean>() {
+                                    @Override
+                                    public void accept(Boolean aBoolean) throws Exception {
+                                        if (aBoolean) {
+                                            startActivityForResult(mPhotoHelper.getTakePhotoIntent(), CODE_TAKE_PHOTO);
+                                        }
+                                    }
+                                });
+                    }
+                });
 
         //相册
-        RxView.clicks(mAlbum).throttleFirst(500, TimeUnit.MILLISECONDS).observeOn(AndroidSchedulers.mainThread()).subscribe(new Consumer<Object>() {
-            @Override
-            public void accept(Object o) throws Exception {
-                mDialog.dismiss();
-                new RxPermissions(PersonInfoActivity.this)
-                        .request(Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE)
-                        .subscribe(new Consumer<Boolean>() {
-                            @Override
-                            public void accept(Boolean aBoolean) throws Exception {
-                                if (aBoolean) {
-                                    startActivityForResult(mPhotoHelper.getChooseSystemGalleryIntent(), CODE_CHOOSE_PHOTO);
-                                }
-                            }
-                        });
-            }
-        });
+        RxView
+                .clicks(mAlbum)
+                .throttleFirst(500, TimeUnit.MILLISECONDS)
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Consumer<Object>() {
+                    @Override
+                    public void accept(Object o) throws Exception {
+                        mDialog.dismiss();
+                        new RxPermissions(PersonInfoActivity.this)
+                                .request(Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE)
+                                .subscribe(new Consumer<Boolean>() {
+                                    @Override
+                                    public void accept(Boolean aBoolean) throws Exception {
+                                        if (aBoolean) {
+                                            startActivityForResult(mPhotoHelper.getChooseSystemGalleryIntent(), CODE_CHOOSE_PHOTO);
+                                        }
+                                    }
+                                });
+                    }
+                });
 
         mDialog = alertDialogBuilder.create();
         mDialog.setView(v);
@@ -379,7 +391,7 @@ public class PersonInfoActivity extends BaseActivityView<PersonInfoPresenter> im
                 new MaterialDialog.SingleButtonCallback() {
                     @Override
                     public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
-
+                        mPresenter.postUserInfo(NullUtils.filterEmpty(mModify_UpFiledCode), NullUtils.filterEmpty(mModify_RoleId), NullUtils.filterEmpty(mModify_Email), "finish");
                     }
                 },
                 new MaterialDialog.SingleButtonCallback() {
@@ -409,11 +421,20 @@ public class PersonInfoActivity extends BaseActivityView<PersonInfoPresenter> im
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        if (item.getItemId() == R.id.action_save) {
-
-            return true;
+        switch (item.getItemId()) {
+            case R.id.action_save:
+                mPresenter.postUserInfo(NullUtils.filterEmpty(mModify_UpFiledCode), NullUtils.filterEmpty(mModify_RoleId), NullUtils.filterEmpty(mModify_Email), "");
+                return true;
+            case android.R.id.home:
+                if (mItemSave.isVisible()) {
+                    showSaveDialog();
+                } else {
+                    finish();
+                }
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
         }
-        return super.onOptionsItemSelected(item);
     }
 
     @Override

@@ -8,7 +8,6 @@ import com.example.kadh.ui.person.contract.PersonInfoAtyContract;
 import com.example.kadh.utils.NullUtils;
 import com.example.kadh.utils.RxJava.BaseResponse;
 import com.example.kadh.utils.RxJava.RxApi.RxApi;
-import com.example.kadh.utils.RxJava.RxApi.RxManager;
 import com.example.kadh.utils.RxJava.RxSubscriber.SubNextImpl;
 import com.example.kadh.utils.RxJava.RxSubscriber.SubProtect;
 
@@ -67,11 +66,21 @@ public class PersonInfoPresenter extends BaseBindingImpl<PersonInfoAtyContract.V
         File file = new File(cropFilePath);
         RequestBody body = RequestBody.create(MediaType.parse("form-data"), file);
         MultipartBody.Part part = MultipartBody.Part.createFormData("file", file.getName(), body);
-        RxManager.getInstant().getRxApi().upField(new SubProtect<BaseResponse<List<UpFieldBean>>>(new SubNextImpl<BaseResponse<List<UpFieldBean>>>() {
+        mRxApi.upField(new SubProtect<BaseResponse<List<UpFieldBean>>>(new SubNextImpl<BaseResponse<List<UpFieldBean>>>() {
             @Override
             public void onSubSuccess(BaseResponse<List<UpFieldBean>> response) {
                 mView.upFiledSuccess(response.data);
             }
         }), part, "");
+    }
+
+    @Override
+    public void postUserInfo(String uimage, String id, String uemail, final String flag) {
+        mRxApi.postUserInfo(new SubProtect<BaseResponse<String>>(new SubNextImpl<BaseResponse<String>>() {
+            @Override
+            public void onSubSuccess(BaseResponse<String> response) {
+                mView.postUserInfoSuccess(response.data, flag);
+            }
+        }), uimage, id, uemail);
     }
 }

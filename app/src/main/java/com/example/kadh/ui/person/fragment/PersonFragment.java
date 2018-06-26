@@ -1,5 +1,7 @@
 package com.example.kadh.ui.person.fragment;
 
+import android.app.Activity;
+import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.text.Spannable;
 import android.text.SpannableString;
@@ -71,12 +73,6 @@ public class PersonFragment extends BaseFragment {
         getTimeInfo();
     }
 
-    private void setUserInfo() {
-        String userIcon = SpUtil.getInstance().getString(SpUtil.LOGIN_INFO_USERICO);
-        String userName = SpUtil.getInstance().getString(SpUtil.LOGIN_INFO_USERNAME);
-        mTvName.setText(userName);
-        GlideUtils.loadImageView(mContext, RxUrl.Url.BASE + userIcon, mCivPersonal);
-    }
 
     private void getTimeInfo() {
         RxManager.getInstant().getRxApi().queryProcessBaseTotalInfo(new SubProtect<BaseResponse<QueryProTotalInfoBean>>(new SubNextImpl<BaseResponse<QueryProTotalInfoBean>>() {
@@ -113,12 +109,18 @@ public class PersonFragment extends BaseFragment {
 
     }
 
+    private void setUserInfo() {
+        String userIcon = SpUtil.getInstance().getString(SpUtil.LOGIN_INFO_USERICO);
+        String userName = SpUtil.getInstance().getString(SpUtil.LOGIN_INFO_USERNAME);
+        mTvName.setText(userName);
+        GlideUtils.loadImageView(mContext, RxUrl.Url.BASE + userIcon, mCivPersonal);
+    }
 
     @OnClick({R.id.person_civ_personal, R.id.person_ll_attence, R.id.person_ll_company, R.id.person_ll_help, R.id.person_ll_setting})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.person_civ_personal://进入个人中心
-                openActivity(PersonInfoActivity.class);
+                openActivity(PersonInfoActivity.class, 888);
                 break;
             case R.id.person_ll_attence://考勤记录
 //                openActivity(AttenceActivity.class);
@@ -134,6 +136,16 @@ public class PersonFragment extends BaseFragment {
                 break;
             default:
                 break;
+        }
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode == Activity.RESULT_OK) {
+            if (requestCode == 888) {
+                setUserInfo();
+            }
         }
     }
 }

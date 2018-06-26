@@ -9,6 +9,7 @@ import com.example.kadh.ui.company.bean.PublishNewDetailBean;
 import com.example.kadh.ui.company.bean.PublishNoticeDetailBean;
 import com.example.kadh.ui.company.bean.UpManListBean;
 import com.example.kadh.ui.company.bean.UpNumberBean;
+import com.example.kadh.ui.contacts.bean.ContactRecentBean;
 import com.example.kadh.ui.login.bean.LoginBean;
 import com.example.kadh.ui.main.bean.IsHasUnReadBean;
 import com.example.kadh.ui.main.bean.UserInfoBean;
@@ -189,5 +190,21 @@ interface RxService {
     //    @Streaming
     //    @GET
     //    Observable<ResponseBody> download(@Url String url);
+
+
+    @FormUrlEncoded
+    @POST(RxUrl.Url.POSTUSERINFO)
+    Flowable<BaseResponse<String>> postUserInfo(
+            @Field("uimage") String uimage,
+            @Field("urole") String id,
+            @Field("uemail") String uemail,
+            @Field("version") String version);
+
+    @GET(RxUrl.Url.GETCONTACTUPDATEDATA)
+    Flowable<BaseResponse<String>> getContactUpdateData(@Query("updateTime") String updateTime, @Query("version") String version);
+
+
+    @GET(RxUrl.Url.GETRECENTCONTACT)
+    Flowable<BaseResponse<ContactRecentBean>> getRecentContact(@Query("time") String time, @Query("version") String version);
 
 }

@@ -89,6 +89,10 @@
         <activity android:name=".ui.login.activity.LoginForgetActivity" />
         <!--login off-->
 
+        <!--contacts on-->
+        <activity android:name=".ui.contacts.activity.ContactsGroupActivity" />
+        <!--contacts off-->
+
 
         <!--photopicker on-->
         <activity

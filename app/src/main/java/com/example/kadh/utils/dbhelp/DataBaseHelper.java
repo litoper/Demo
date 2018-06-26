@@ -6,6 +6,8 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
+import com.example.kadh.utils.NullUtils;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -45,7 +47,7 @@ public abstract class DataBaseHelper {
      */
     private String[] mDbUpdateSql;
 
-    protected abstract int getMDbVersion(Context context);
+    protected abstract int getDbVersion(Context context);
 
     protected abstract String getDbName(Context context);
 
@@ -56,7 +58,7 @@ public abstract class DataBaseHelper {
     protected abstract void rebuildAllTable();
 
     public DataBaseHelper(Context context) {
-        this.mDbVersion = this.getMDbVersion(context);
+        this.mDbVersion = this.getDbVersion(context);
         this.mDbName = this.getDbName(context);
         this.mDbCreateSql = this.getDbCreateSql(context);
         this.mDbUpdateSql = this.getDbUpdateSql(context);
@@ -105,7 +107,6 @@ public abstract class DataBaseHelper {
 //        }
         return this.mDb;
     }
-
 
     public void close() {
         this.mDb.close();
@@ -398,6 +399,14 @@ public abstract class DataBaseHelper {
 
     public void setTransactionSuccessful() {
         this.mDb.setTransactionSuccessful();
+    }
+
+    public boolean isDbExist() {
+        return !NullUtils.isNull(this.mDbHelper.getDatabaseName());
+    }
+
+    public boolean isDbLockedByCurrentThread() {
+        return mDb.isDbLockedByCurrentThread();
     }
 
 }

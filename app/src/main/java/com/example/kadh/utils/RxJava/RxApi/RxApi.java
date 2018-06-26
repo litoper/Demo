@@ -9,6 +9,7 @@ import com.example.kadh.ui.company.bean.PublishNewDetailBean;
 import com.example.kadh.ui.company.bean.PublishNoticeDetailBean;
 import com.example.kadh.ui.company.bean.UpManListBean;
 import com.example.kadh.ui.company.bean.UpNumberBean;
+import com.example.kadh.ui.contacts.bean.ContactRecentBean;
 import com.example.kadh.ui.login.bean.LoginBean;
 import com.example.kadh.ui.main.bean.IsHasUnReadBean;
 import com.example.kadh.ui.main.bean.UserInfoBean;
@@ -327,6 +328,48 @@ public class RxApi {
     }
 
 
+    /**
+     * 上传修改的个人信息
+     *
+     * @param subscriber
+     * @param uimage
+     * @param id
+     * @param uemail
+     * @return
+     */
+    public Flowable postUserInfo(FlowableSubscriber<BaseResponse<String>> subscriber, String uimage, String id, String uemail) {
+        Flowable flowable = mRxService.postUserInfo(uimage, id, uemail, version);
+        toSubscribe(flowable, subscriber);
+        return flowable;
+    }
+
+
+    /**
+     * 通讯录更新
+     *
+     * @param subscriber
+     * @param updateTime
+     */
+    public Flowable getContactUpdateData(FlowableSubscriber<BaseResponse<String>> subscriber, String updateTime) {
+        Flowable flowable = mRxService.getContactUpdateData(updateTime, version);
+        toSubscribe(flowable, subscriber);
+        return flowable;
+    }
+
+
+    /**
+     * 获取通讯录页面最近联系人
+     *
+     * @param subscriber
+     */
+    public Flowable getRecentContact(FlowableSubscriber<BaseResponse<ContactRecentBean>> subscriber, String time) {
+        Flowable flowable = mRxService.getRecentContact(time, version);
+        toSubscribe(flowable, subscriber);
+        return flowable;
+    }
+
+
+    //******************************************************************************************************************************//
     // subscribeOn(): 指定 subscribe() 发生在 IO 线程
     // observeOn(): 指定 Subscriber 的回调发生在主线程
     private void toSubscribe(Flowable flowable, FlowableSubscriber subscriber) {

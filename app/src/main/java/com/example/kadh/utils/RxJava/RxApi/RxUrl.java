@@ -24,7 +24,7 @@ public interface RxUrl {
          */
 
         public static final String NICAICAI = "";
-        public static final String BASE = "http://192.168.2.24/DJOA/";//蒋凡毅
+//        public static final String BASE = "http://192.168.2.24/DJOA/";//蒋凡毅
         //        static final String BASE = "http://192.168.2.21/DJOA/"; //朱诚
         //        static final String BASE = "http://192.168.23.43/DJOA/"; //开发库
 
@@ -39,7 +39,7 @@ public interface RxUrl {
          * 内网测试地址
          */
 
-//        public static final String BASE = "http://192.168.10.175/DJOA/";
+        public static final String BASE = "http://192.168.10.175/DJOA/";
 
         /**
          * 杭州外网测试服务器地址
@@ -161,6 +161,7 @@ public interface RxUrl {
         static final String GETUSERANDROLEINFO = "app_getUserAndRoleInfo.do";//获取指定公司底下，所有的用户角色信息，对应：cmp_user_role_ass表
         static final String GETRECENTCONTACT = "app_getRecentContact.do";//获取指定公司底下，所有的用户角色信息，对应：cmp_user_role_ass表
         static final String DELRECENTCONTACT = "app_delRecentContact.do";//获取指定公司底下，所有的用户角色信息，对应：cmp_user_role_ass表
+        static final String GETCONTACTUPDATEDATA = "app_getContactUpdateData.do";//
 
         /**
          * 会议相关接口

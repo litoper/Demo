@@ -49,10 +49,10 @@ public class LoginNormalPresenter extends BaseBindingImpl<LoginNormalFragContrac
         SpUtil.getInstance().putString(SpUtil.LOGIN_USERNAME, username);
         SpUtil.getInstance().putString(SpUtil.LOGIN_PASSWORD, passwrod);
         //保存登陆返回信息
-        SpUtil.getInstance().put(SpUtil.LOGIN_INFO_PUSHID, bean.getPushID());
-        SpUtil.getInstance().put(SpUtil.LOGIN_INFO_USERID, bean.getUserid());
-        SpUtil.getInstance().put(SpUtil.LOGIN_INFO_USERNAME, bean.getUserName());
-        SpUtil.getInstance().put(SpUtil.LOGIN_INFO_USERICO, bean.getUserIco());
+        SpUtil.getInstance().putString(SpUtil.LOGIN_INFO_PUSHID, bean.getPushID());
+        SpUtil.getInstance().putString(SpUtil.LOGIN_INFO_USERID, bean.getUserid());
+        SpUtil.getInstance().putString(SpUtil.LOGIN_INFO_USERNAME, bean.getUserName());
+        SpUtil.getInstance().putString(SpUtil.LOGIN_INFO_USERICO, bean.getUserIco());
     }
 
     @Override

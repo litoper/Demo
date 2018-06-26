@@ -2,6 +2,7 @@ package com.example.kadh.component;
 
 import com.example.kadh.ui.company.activity.NewsDetailActivity;
 import com.example.kadh.ui.company.fragment.CompanyFragment;
+import com.example.kadh.ui.contacts.fragment.ContactsFragment;
 import com.example.kadh.ui.login.fragment.LoginNormalFragment;
 import com.example.kadh.ui.login.fragment.LoginVerifyFragment;
 import com.example.kadh.ui.main.activity.MainActivity;
@@ -29,5 +30,7 @@ public interface MainComponent {
     void inject(WorkFragment fragment);
 
     void inject(PersonInfoActivity activity);
+
+    void inject(ContactsFragment fragment);
 
 }

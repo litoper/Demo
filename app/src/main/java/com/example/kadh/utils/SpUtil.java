@@ -45,6 +45,8 @@ public class SpUtil {
     public static final String PUSH_INFO_HUA_WEI_TOKEN = "hua_wei_token";
     //手机品牌
     public static final String INFO_PHONE_BRAND = "phone_brand";
+    //
+    public static final String DB_UPDATE_TIME = "db_update_time";
 
 
     public synchronized static SpUtil getInstance() {

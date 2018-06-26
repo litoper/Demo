@@ -44,7 +44,7 @@ public class CmpDBHelper extends DataBaseHelper {
 
 
     @Override
-    protected int getMDbVersion(Context context) {
+    protected int getDbVersion(Context context) {
         return 1;
     }
 
@@ -71,7 +71,8 @@ public class CmpDBHelper extends DataBaseHelper {
                 "ufdepartment_id TEXT," +
                 "ufdepartment TEXT," +
                 "create_time TEXT," +
-                "update_time TEXT)";
+                "update_time TEXT," +
+                "isdel TEXT)";
 
         a[1] = "CREATE TABLE " + TABLE_ASS + " (" +
                 "pid INTEGER PRIMARY KEY AUTOINCREMENT," +
@@ -80,7 +81,8 @@ public class CmpDBHelper extends DataBaseHelper {
                 "cmp_user_id TEXT," +
                 "rdefault TEXT," +
                 "create_time TEXT," +
-                "update_time TEXT)";
+                "update_time TEXT," +
+                "isdel TEXT)";
 
         a[2] = "CREATE TABLE " + TABLE_ROLE + " (" +
                 "pid INTEGER PRIMARY KEY AUTOINCREMENT," +
@@ -89,7 +91,8 @@ public class CmpDBHelper extends DataBaseHelper {
                 "rdesc TEXT," +
                 "cmp_org_id TEXT," +
                 "create_time TEXT," +
-                "update_time TEXT)";
+                "update_time TEXT," +
+                "isdel TEXT)";
 
         a[3] = "CREATE TABLE " + TABLE_ORG + " (" +
                 "pid INTEGER PRIMARY KEY AUTOINCREMENT," +
@@ -99,7 +102,8 @@ public class CmpDBHelper extends DataBaseHelper {
                 "ofather TEXT," +
                 "otype TEXT," +
                 "create_time TEXT," +
-                "update_time TEXT)";
+                "update_time TEXT," +
+                "isdel TEXT)";
         return a;
     }
 
@@ -108,12 +112,13 @@ public class CmpDBHelper extends DataBaseHelper {
         return new String[0];
     }
 
+
     @Override
     public void rebuildAllTable() {
         mCmpDBHelper.delete(CmpDBHelper.TABLE_ORG);
         mCmpDBHelper.delete(CmpDBHelper.TABLE_USER);
         mCmpDBHelper.delete(CmpDBHelper.TABLE_ASS);
         mCmpDBHelper.delete(CmpDBHelper.TABLE_ROLE);
-        this.getDbCreateSql(mContext);
+        this.open();
     }
 }
