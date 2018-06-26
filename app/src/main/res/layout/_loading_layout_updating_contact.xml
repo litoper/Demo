@@ -2,24 +2,24 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
     android:layout_gravity="center"
     android:gravity="center"
     android:orientation="vertical"
     android:paddingBottom="30dp">
 
-    <ProgressBar
-        android:layout_width="30dp"
-        android:layout_height="30dp"
-        android:layout_gravity="center"
-        android:progress="80" />
+    <ImageView
+        android:id="@+id/contacts_iv_loading"
+        android:layout_width="110dp"
+        android:layout_height="110dp"
+        android:background="@mipmap/contact_update" />
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:text="加载中..."
-        android:textColor="#999999"
-        android:textSize="16sp" />
+        android:layout_marginTop="30dp"
+        android:text="正在同步"
+        android:textSize="18sp" />
+
 </LinearLayout>

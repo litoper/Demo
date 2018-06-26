@@ -74,6 +74,9 @@
 
         <activity android:name=".ui.person.activity.PersonInfoActivity" />
 
+        <!--work on-->
+        <activity android:name=".ui.work.activity.ProcessListActivity" />
+        <!--work off-->
 
         <!--tension on-->
         <activity android:name=".ui.tension.activity.TensionActivity" />

@@ -60,7 +60,9 @@ public class MainActivity extends BaseActivityView<MainPresenter> implements Mai
     public void initDatas() {
         mPresenter.initViewPager();
         mPresenter.initBottomNavigationBar();
-        mPresenter.initSubListener();
+        mPresenter.getUseInfo();
+        mPresenter.getWeather();
+        mPresenter.isHasUnRead();
         this.checkPermission();
         PushReceiverManager.getInstance().setAlias();
     }
@@ -226,6 +228,12 @@ public class MainActivity extends BaseActivityView<MainPresenter> implements Mai
             return true;
         }
         return super.onKeyDown(keyCode, event);
+    }
+
+    @Override
+    protected void onRestart() {
+        super.onRestart();
+        mPresenter.isHasUnRead();
     }
 
     @OnClick(R.id.activity_main_fab)

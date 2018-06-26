@@ -1,7 +1,6 @@
 package com.example.kadh.ui.contacts.fragment;
 
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -20,6 +19,7 @@ import com.example.kadh.ui.contacts.bean.ContactRecentBean;
 import com.example.kadh.ui.contacts.bean.ContractDbBean;
 import com.example.kadh.ui.contacts.contract.ContactsFrgContract;
 import com.example.kadh.ui.contacts.presenter.ContactsPresenter;
+import com.example.kadh.view.LoadingLayout;
 
 import java.util.List;
 
@@ -32,6 +32,8 @@ public class ContactsFragment extends BaseFragmentView<ContactsPresenter> implem
     RecyclerView mRvDb;
     @BindView(R.id.fragment_contacts_rv_recent)
     RecyclerView mRvRecent;
+    @BindView(R.id.fragment_contacts_loading)
+    LoadingLayout mLoadingLayout;
 
     @BindView(R.id.common_toolbar)
     Toolbar mCommonToolbar;
@@ -45,20 +47,14 @@ public class ContactsFragment extends BaseFragmentView<ContactsPresenter> implem
 
     @Override
     protected void configViews() {
-
+        mLoadingLayout.setLoading(R.layout._loading_layout_updating_contact);
     }
 
     @Override
     protected void initDatas() {
         mPresenter.queryDataFromDb();
         mPresenter.getRecentContact();
-        initToolBar();
-    }
-
-    public void initToolBar() {
-        mCommonToolbar.setTitle("东经科技");
-        setHasOptionsMenu(true);
-        ((AppCompatActivity) mActivity).setSupportActionBar(mCommonToolbar);
+        mCommonToolbar.setTitle("通讯录");
     }
 
     @Override
@@ -68,14 +64,18 @@ public class ContactsFragment extends BaseFragmentView<ContactsPresenter> implem
 
     @Override
     public void showError() {
-
+        mLoadingLayout.showError();
     }
 
     @Override
     public void complete() {
-
+        mLoadingLayout.showContent();
     }
 
+
+    public void updating() {
+        mLoadingLayout.showLoading();
+    }
 
     @Override
     public void showDataFromDb(final List<ContractDbBean> dbBeans) {

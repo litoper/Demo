@@ -35,6 +35,6 @@
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
             android:layout_toLeftOf="@id/item_contacts_iv_arrow"
-            android:paddingRight="20dp" />
+            android:paddingRight="5dp" />
     </RelativeLayout>
 </LinearLayout>

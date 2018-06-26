@@ -17,6 +17,7 @@ import com.example.kadh.ui.main.bean.WeatherBean;
 import com.example.kadh.ui.person.bean.QueryProTotalInfoBean;
 import com.example.kadh.ui.person.bean.RoleManageBean;
 import com.example.kadh.ui.person.bean.UpFieldBean;
+import com.example.kadh.ui.work.bean.ProcessListBean;
 import com.example.kadh.ui.work.bean.ProcessModuleBean;
 import com.example.kadh.ui.work.bean.ProcessStatusBean;
 import com.example.kadh.utils.RxJava.BaseResponse;
@@ -368,6 +369,17 @@ public class RxApi {
         return flowable;
     }
 
+
+    /**
+     * getProcessList 获取流程列表
+     *
+     * @param subscriber
+     */
+    public Flowable getProcessList(FlowableSubscriber<BaseResponse<List<ProcessListBean>>> subscriber, String type) {
+        Flowable flowable = mRxService.getProcessList(type, version);
+        toSubscribe(flowable, subscriber);
+        return flowable;
+    }
 
     //******************************************************************************************************************************//
     // subscribeOn(): 指定 subscribe() 发生在 IO 线程

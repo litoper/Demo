@@ -6,6 +6,7 @@ import com.example.kadh.ui.company.bean.PublishNewDetailBean;
 import com.example.kadh.ui.company.bean.UpManListBean;
 import com.example.kadh.ui.company.bean.UpNumberBean;
 import com.example.kadh.ui.company.contract.NewsDetailAtyContract;
+import com.example.kadh.utils.NullUtils;
 import com.example.kadh.utils.RxJava.BaseResponse;
 import com.example.kadh.utils.RxJava.RxApi.RxApi;
 import com.example.kadh.utils.RxJava.RxSubscriber.SubNextImpl;
@@ -35,7 +36,9 @@ public class NewsDetailPresenter extends BaseBindingImpl<NewsDetailAtyContract.V
         mRxApi.getNewsDetailByPublishId(new SubProtect<BaseResponse<List<PublishNewDetailBean>>>(new SubNextImpl<BaseResponse<List<PublishNewDetailBean>>>() {
             @Override
             public void onSubSuccess(BaseResponse<List<PublishNewDetailBean>> response) {
-                mView.showNewsDetailByPublishId(response.data.get(0));
+                if (!NullUtils.isNull(response.data)) {
+                    mView.showNewsDetailByPublishId(response.data.get(0));
+                }
             }
         }), publishId);
     }

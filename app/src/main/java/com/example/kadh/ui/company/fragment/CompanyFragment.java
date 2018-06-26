@@ -54,6 +54,7 @@ public class CompanyFragment extends BaseFragmentView<CompanyPresenter> implemen
     private int mPage = 1;
     private PublishAdapter mPublishAdapter;
     private List<PublishListBean> mPublishListBeans = new ArrayList<>();
+    private MenuItem mItemMsg;
 
 
     @Override
@@ -133,6 +134,7 @@ public class CompanyFragment extends BaseFragmentView<CompanyPresenter> implemen
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         inflater.inflate(R.menu.menu_main_company, menu);
+        mItemMsg = menu.findItem(R.id.action_message);
         super.onCreateOptionsMenu(menu, inflater);
     }
 
@@ -176,6 +178,24 @@ public class CompanyFragment extends BaseFragmentView<CompanyPresenter> implemen
         } else {
             mLoading.showContent();
         }
+    }
+
+    @Override
+    public void upMessageState(String state) {
+        if (mItemMsg != null) {
+            switch (state) {
+                case "0":
+                    mItemMsg.setIcon(R.mipmap.ic_message_normal);
+                    break;
+                case "1":
+                    mItemMsg.setIcon(R.mipmap.ic_message_red);
+                    break;
+                default:
+                    mItemMsg.setIcon(R.mipmap.ic_message_normal);
+                    break;
+            }
+        }
+
     }
 
 

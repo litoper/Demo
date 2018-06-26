@@ -24,12 +24,14 @@ import java.util.List;
 
 import javax.inject.Inject;
 
-import io.reactivex.Flowable;
-
 public class MainPresenter extends BaseBindingImpl<MainAtyContract.View> implements MainAtyContract.Presenter<MainAtyContract.View> {
 
     private RxApi mRxApi;
     private String mLocalTime;
+    private ContactsFragment mContactsFragment;
+    private WorkFragment mWorkFragment;
+    private CompanyFragment mCompanyFragment;
+    private PersonFragment mPersonFragment;
 
 
     @Inject
@@ -41,15 +43,15 @@ public class MainPresenter extends BaseBindingImpl<MainAtyContract.View> impleme
     @Override
     public void initViewPager() {
         List<Fragment> fragmentList = new ArrayList<>();
-        CompanyFragment frgCompany = new CompanyFragment();
-        WorkFragment frgWork = new WorkFragment();
-        ContactsFragment frgTxl = new ContactsFragment();
-        PersonFragment frgPerson = new PersonFragment();
+        mCompanyFragment = new CompanyFragment();
+        mWorkFragment = new WorkFragment();
+        mContactsFragment = new ContactsFragment();
+        mPersonFragment = new PersonFragment();
 
-        fragmentList.add(frgCompany);
-        fragmentList.add(frgWork);
-        fragmentList.add(frgTxl);
-        fragmentList.add(frgPerson);
+        fragmentList.add(mCompanyFragment);
+        fragmentList.add(mWorkFragment);
+        fragmentList.add(mContactsFragment);
+        fragmentList.add(mPersonFragment);
 
         mView.showViewPager(fragmentList);
     }
@@ -66,23 +68,55 @@ public class MainPresenter extends BaseBindingImpl<MainAtyContract.View> impleme
 
     @Override
     public void initSubListener() {
-        mLocalTime = SpUtil.getInstance().getString(SpUtil.DB_UPDATE_TIME);
+    }
 
-        Flowable useInfo = mRxApi.getUseInfo(new SubProtect<BaseResponse<List<UserInfoBean>>>(new SubNextImpl<BaseResponse<List<UserInfoBean>>>() {
+    @Override
+    public void getContactUpdateData(final String nowTime) {
+        mLocalTime = SpUtil.getInstance().getString(SpUtil.DB_UPDATE_TIME);
+        mRxApi.getContactUpdateData(new SubProtect<BaseResponse<String>>(new SubNextImpl<BaseResponse<String>>() {
+            @Override
+            public void onSubSuccess(BaseResponse<String> response) {
+                saveDataToDb(response.data, nowTime);
+            }
+        }), NullUtils.filterNull(mLocalTime));
+
+    }
+
+    @Override
+    public void getUseInfo() {
+        mRxApi.getUseInfo(new SubProtect<BaseResponse<List<UserInfoBean>>>(new SubNextImpl<BaseResponse<List<UserInfoBean>>>() {
             @Override
             public void onSubSuccess(BaseResponse<List<UserInfoBean>> response) {
             }
         }), "");
+    }
 
-        Flowable hasUnRead = mRxApi.isHasUnRead(new SubProtect<BaseResponse<IsHasUnReadBean>>(new SubNextImpl<BaseResponse<IsHasUnReadBean>>() {
+    @Override
+    public void isHasUnRead() {
+        mRxApi.isHasUnRead(new SubProtect<BaseResponse<IsHasUnReadBean>>(new SubNextImpl<BaseResponse<IsHasUnReadBean>>() {
             @Override
             public void onSubSuccess(BaseResponse<IsHasUnReadBean> response) {
                 if (response.data != null) {
+
                     mView.showBadge(response.data);
+                    mCompanyFragment.upMessageState(NullUtils.filterNull(response.data.getUnReadMsgState()));
+
+                    switch (response.data.getUpdateStatus()) {
+                        case "1":
+                            mContactsFragment.updating();
+                            getContactUpdateData(response.data.getNowTime());
+                            break;
+                        default:
+                            break;
+                    }
                 }
             }
         }));
-        Flowable weather = mRxApi.getWeather(new SubProtect<BaseResponse<List<WeatherBean>>>(new SubNextImpl<BaseResponse<List<WeatherBean>>>() {
+    }
+
+    @Override
+    public void getWeather() {
+        mRxApi.getWeather(new SubProtect<BaseResponse<List<WeatherBean>>>(new SubNextImpl<BaseResponse<List<WeatherBean>>>() {
             @Override
             public void onSubSuccess(BaseResponse<List<WeatherBean>> response) {
                 if (!NullUtils.isNull(response.data)) {
@@ -91,33 +125,30 @@ public class MainPresenter extends BaseBindingImpl<MainAtyContract.View> impleme
             }
         }), "温州");
 
-        Flowable contact = mRxApi.getContactUpdateData(new SubProtect<BaseResponse<String>>(new SubNextImpl<BaseResponse<String>>() {
-            @Override
-            public void onSubSuccess(BaseResponse<String> response) {
-                saveDataToDb(response.data);
-            }
-        }), "");
-
-
-        mRxApi.toConcatSub(new SubProtect<BaseResponse>(new SubNextImpl<BaseResponse>() {
-            @Override
-            public void onSubSuccess(BaseResponse response) {
-
-            }
-        }), useInfo, weather, hasUnRead, contact);
     }
 
-    private void saveDataToDb(String data) {
-        CmpDBHelper.getInstance().beginTransaction();
-        if (NullUtils.isNull(mLocalTime) && !CmpDBHelper.getInstance().isDbLockedByCurrentThread()) {
-            CmpDBHelper.getInstance().rebuildAllTable();
+    private void saveDataToDb(String data, String nowTime) {
+        if (NullUtils.isNull(data)) {
+            SpUtil.getInstance().putString(SpUtil.DB_UPDATE_TIME, nowTime);
+        } else {
+            try {
+                CmpDBHelper.getInstance().beginTransaction();
+                if (NullUtils.isNull(mLocalTime) && !CmpDBHelper.getInstance().isDbLockedByCurrentThread()) {
+                    CmpDBHelper.getInstance().rebuildAllTable();
+                }
+                String[] sqlites = data.split(";");
+                for (String sqlite : sqlites) {
+                    CmpDBHelper.getInstance().execSQL(sqlite);
+                }
+                CmpDBHelper.getInstance().setTransactionSuccessful();
+                SpUtil.getInstance().putString(SpUtil.DB_UPDATE_TIME, nowTime);
+            } catch (Exception e) {
+                e.printStackTrace();
+            } finally {
+                CmpDBHelper.getInstance().endTransaction();
+            }
         }
-        String[] sqlites = data.split(";");
-        for (String sqlite : sqlites) {
-            CmpDBHelper.getInstance().execSQL(sqlite);
-        }
-        CmpDBHelper.getInstance().setTransactionSuccessful();
-        CmpDBHelper.getInstance().endTransaction();
+        mContactsFragment.complete();
     }
 
 }

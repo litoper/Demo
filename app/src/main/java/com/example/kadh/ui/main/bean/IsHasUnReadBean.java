@@ -16,6 +16,15 @@ public class IsHasUnReadBean {
     private String unReadMsgState;
     private String waitDealState;
 
+    /**
+     * 通讯录更新
+     * nowTime:时间戳
+     * updateStatus:0 不更新  1 更新
+     */
+    private String nowTime;
+    private String updateStatus;
+
+
     public String getUnReadMsgState() {
         return unReadMsgState;
     }
@@ -32,11 +41,29 @@ public class IsHasUnReadBean {
         this.waitDealState = waitDealState;
     }
 
+    public String getNowTime() {
+        return nowTime;
+    }
+
+    public void setNowTime(String nowTime) {
+        this.nowTime = nowTime;
+    }
+
+    public String getUpdateStatus() {
+        return updateStatus;
+    }
+
+    public void setUpdateStatus(String updateStatus) {
+        this.updateStatus = updateStatus;
+    }
+
     @Override
     public String toString() {
         return "IsHasUnReadBean{" +
                 "unReadMsgState='" + unReadMsgState + '\'' +
                 ", waitDealState='" + waitDealState + '\'' +
+                ", nowTime='" + nowTime + '\'' +
+                ", updateStatus='" + updateStatus + '\'' +
                 '}';
     }
 }

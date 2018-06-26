@@ -23,13 +23,43 @@ public interface MainAtyContract {
     }
 
     interface Presenter<T> extends BaseContract.BasePresenter<T> {
+        /**
+         * 初始化主页面vp容器
+         */
         void initViewPager();
 
+        /**
+         * 初始化主页面底部栏
+         */
         void initBottomNavigationBar();
 
         void initPush();
 
         void initSubListener();
+
+        /**
+         * 获取个人信息
+         */
+        void getUseInfo();
+
+        /**
+         * 获取底部及待办小红点,通讯录更新时间
+         */
+        void isHasUnRead();
+
+        /**
+         * 获取天气
+         */
+        void getWeather();
+
+
+        /**
+         * 通讯录更新
+         *
+         * @param nowTime
+         */
+        void getContactUpdateData(String nowTime);
+
 
     }
 }
