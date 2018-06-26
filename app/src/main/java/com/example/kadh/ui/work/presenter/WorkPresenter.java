@@ -20,13 +20,13 @@ import javax.inject.Inject;
  * @blog : http://www.nicaicaicai.com
  * @desc :
  */
-public class WorkBinding extends BaseBindingImpl<WorkFragContract.View> implements WorkFragContract.Presenter<WorkFragContract.View> {
+public class WorkPresenter extends BaseBindingImpl<WorkFragContract.View> implements WorkFragContract.Presenter<WorkFragContract.View> {
 
 
     private RxApi mRxApi;
 
     @Inject
-    public WorkBinding(RxApi rxApi) {
+    public WorkPresenter(RxApi rxApi) {
         mRxApi = rxApi;
     }
 

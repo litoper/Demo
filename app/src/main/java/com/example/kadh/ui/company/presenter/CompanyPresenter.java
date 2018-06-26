@@ -19,12 +19,12 @@ import javax.inject.Inject;
  * @blog : http://www.nicaicaicai.com
  * @desc :
  */
-public class CompanyBinding extends BaseBindingImpl<CompanyFragContract.View> implements CompanyFragContract.Presenter<CompanyFragContract.View> {
+public class CompanyPresenter extends BaseBindingImpl<CompanyFragContract.View> implements CompanyFragContract.Presenter<CompanyFragContract.View> {
 
     RxApi mRxApi;
 
     @Inject
-    public CompanyBinding(RxApi rxApi) {
+    public CompanyPresenter(RxApi rxApi) {
         mRxApi = rxApi;
     }
 

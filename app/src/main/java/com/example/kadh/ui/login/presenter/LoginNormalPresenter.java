@@ -22,12 +22,12 @@ import javax.inject.Inject;
  * @blog : http://www.nicaicaicai.com
  * @desc :
  */
-public class LoginNormalBinding extends BaseBindingImpl<LoginNormalFragContract.View> implements LoginNormalFragContract.Presenter<LoginNormalFragContract.View> {
+public class LoginNormalPresenter extends BaseBindingImpl<LoginNormalFragContract.View> implements LoginNormalFragContract.Presenter<LoginNormalFragContract.View> {
 
     private RxApi mRxApi;
 
     @Inject
-    public LoginNormalBinding(RxApi rxApi) {
+    public LoginNormalPresenter(RxApi rxApi) {
         mRxApi = rxApi;
     }
 

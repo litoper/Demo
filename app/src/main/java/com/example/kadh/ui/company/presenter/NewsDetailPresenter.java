@@ -22,11 +22,11 @@ import javax.inject.Inject;
  * @blog : http://www.nicaicaicai.com
  * @desc :
  */
-public class NewsDetailBinding extends BaseBindingImpl<NewsDetailAtyContract.View> implements NewsDetailAtyContract.Presenter<NewsDetailAtyContract.View> {
+public class NewsDetailPresenter extends BaseBindingImpl<NewsDetailAtyContract.View> implements NewsDetailAtyContract.Presenter<NewsDetailAtyContract.View> {
     private RxApi mRxApi;
 
     @Inject
-    public NewsDetailBinding(RxApi rxApi) {
+    public NewsDetailPresenter(RxApi rxApi) {
         mRxApi = rxApi;
     }
 

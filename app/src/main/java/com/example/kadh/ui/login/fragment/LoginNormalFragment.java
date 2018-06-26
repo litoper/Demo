@@ -13,7 +13,7 @@ import com.example.kadh.base.BaseFragmentView;
 import com.example.kadh.component.AppComponent;
 import com.example.kadh.component.DaggerMainComponent;
 import com.example.kadh.ui.login.activity.LoginForgetActivity;
-import com.example.kadh.ui.login.presenter.LoginNormalBinding;
+import com.example.kadh.ui.login.presenter.LoginNormalPresenter;
 import com.example.kadh.ui.main.activity.MainActivity;
 import com.example.kadh.ui.login.contract.LoginNormalFragContract;
 import com.example.kadh.utils.NullUtils;
@@ -33,7 +33,7 @@ import io.reactivex.functions.Consumer;
  * @blog : http://www.nicaicaicai.com
  * @desc :
  */
-public class LoginNormalFragment extends BaseFragmentView<LoginNormalBinding> implements LoginNormalFragContract.View {
+public class LoginNormalFragment extends BaseFragmentView<LoginNormalPresenter> implements LoginNormalFragContract.View {
 
     @BindView(R.id.login_normal_btn_clear)
     Button mBtnClear;

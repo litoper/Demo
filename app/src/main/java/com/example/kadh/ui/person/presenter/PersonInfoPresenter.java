@@ -28,12 +28,12 @@ import okhttp3.RequestBody;
  * @blog : http://www.nicaicaicai.com
  * @desc :
  */
-public class PersonInfoBinding extends BaseBindingImpl<PersonInfoAtyContract.View> implements PersonInfoAtyContract.Presenter<PersonInfoAtyContract.View> {
+public class PersonInfoPresenter extends BaseBindingImpl<PersonInfoAtyContract.View> implements PersonInfoAtyContract.Presenter<PersonInfoAtyContract.View> {
 
     private RxApi mRxApi;
 
     @Inject
-    public PersonInfoBinding(RxApi rxApi) {
+    public PersonInfoPresenter(RxApi rxApi) {
         mRxApi = rxApi;
     }
 

@@ -24,12 +24,12 @@ import javax.inject.Inject;
 
 import io.reactivex.Flowable;
 
-public class MainBinding extends BaseBindingImpl<MainAtyContract.View> implements MainAtyContract.Presenter<MainAtyContract.View> {
+public class MainPresenter extends BaseBindingImpl<MainAtyContract.View> implements MainAtyContract.Presenter<MainAtyContract.View> {
 
     private RxApi mRxApi;
 
     @Inject
-    public MainBinding(RxApi rxApi) {
+    public MainPresenter(RxApi rxApi) {
         mRxApi = rxApi;
     }
 

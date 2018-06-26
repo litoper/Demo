@@ -28,7 +28,7 @@ import com.example.kadh.ui.main.bean.UserInfoBean;
 import com.example.kadh.ui.person.bean.RoleManageBean;
 import com.example.kadh.ui.person.bean.UpFieldBean;
 import com.example.kadh.ui.person.contract.PersonInfoAtyContract;
-import com.example.kadh.ui.person.presenter.PersonInfoBinding;
+import com.example.kadh.ui.person.presenter.PersonInfoPresenter;
 import com.example.kadh.utils.GlideUtils;
 import com.example.kadh.utils.MdAlterHelper;
 import com.example.kadh.utils.NullUtils;
@@ -57,7 +57,7 @@ import io.reactivex.functions.Consumer;
  * @blog : http://www.nicaicaicai.com
  * @desc :
  */
-public class PersonInfoActivity extends BaseActivityView<PersonInfoBinding> implements PersonInfoAtyContract.View {
+public class PersonInfoActivity extends BaseActivityView<PersonInfoPresenter> implements PersonInfoAtyContract.View {
 
     @BindView(R.id.activity_personal_civ_icon)
     CircleImageView mCivIcon;

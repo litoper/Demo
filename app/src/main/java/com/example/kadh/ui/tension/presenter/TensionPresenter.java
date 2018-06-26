@@ -13,12 +13,12 @@ import javax.inject.Inject;
  * @blog : http://www.nicaicaicai.com
  * @desc :
  */
-public class TensionBinding extends BaseBindingImpl<TensionAtyContract.View> implements TensionAtyContract.Presenter<TensionAtyContract.View> {
+public class TensionPresenter extends BaseBindingImpl<TensionAtyContract.View> implements TensionAtyContract.Presenter<TensionAtyContract.View> {
 
     private RxApi mRxApi;
 
     @Inject
-    public TensionBinding(RxApi rxApi) {
+    public TensionPresenter(RxApi rxApi) {
         mRxApi = rxApi;
     }
 }

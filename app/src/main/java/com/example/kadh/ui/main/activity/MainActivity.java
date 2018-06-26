@@ -21,7 +21,7 @@ import com.example.kadh.ui.main.adapter.MainPagerAdapter;
 import com.example.kadh.ui.main.bean.IsHasUnReadBean;
 import com.example.kadh.ui.main.bean.WeatherBean;
 import com.example.kadh.ui.main.contract.MainAtyContract;
-import com.example.kadh.ui.main.presenter.MainBinding;
+import com.example.kadh.ui.main.presenter.MainPresenter;
 import com.example.kadh.ui.tension.activity.TensionActivity;
 import com.tbruyelle.rxpermissions2.Permission;
 import com.tbruyelle.rxpermissions2.RxPermissions;
@@ -40,7 +40,7 @@ import io.reactivex.functions.Consumer;
  * @desc :
  */
 
-public class MainActivity extends BaseActivityView<MainBinding> implements MainAtyContract.View {
+public class MainActivity extends BaseActivityView<MainPresenter> implements MainAtyContract.View {
     @BindView(R.id.activity_main_vp)
     ViewPager mVp;
     @BindView(R.id.activity_main_bnb)
