@@ -17,9 +17,11 @@ import com.example.kadh.ui.main.bean.WeatherBean;
 import com.example.kadh.ui.person.bean.QueryProTotalInfoBean;
 import com.example.kadh.ui.person.bean.RoleManageBean;
 import com.example.kadh.ui.person.bean.UpFieldBean;
+import com.example.kadh.ui.work.bean.ProcessContentBean;
 import com.example.kadh.ui.work.bean.ProcessListBean;
 import com.example.kadh.ui.work.bean.ProcessModuleBean;
 import com.example.kadh.ui.work.bean.ProcessStatusBean;
+import com.example.kadh.ui.work.bean.ProcessUserDetailBean;
 import com.example.kadh.utils.RxJava.BaseResponse;
 
 import java.util.List;
@@ -210,6 +212,12 @@ interface RxService {
 
     @GET(RxUrl.Url.GETPROCESSLIST)
     Flowable<BaseResponse<List<ProcessListBean>>> getProcessList(@Query("type") String type, @Query("version") String version);
+
+    @GET(RxUrl.Url.GETPROCESSCONTENT)
+    Flowable<BaseResponse<List<ProcessContentBean>>> getProcessContent(@Query("processid") String processid, @Query("version") String version);
+
+    @GET(RxUrl.Url.PROCESSUSERDETAIL)
+    Flowable<BaseResponse<List<ProcessUserDetailBean>>> processUserDetail(@Query("pid") String pid, @Query("version") String version);
 
 
 }

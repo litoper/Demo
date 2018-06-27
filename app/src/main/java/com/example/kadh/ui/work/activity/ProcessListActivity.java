@@ -10,7 +10,7 @@ import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.example.kadh.R;
 import com.example.kadh.base.BaseActivity;
 import com.example.kadh.component.AppComponent;
-import com.example.kadh.ui.work.bean.ProcessListAdapter;
+import com.example.kadh.ui.work.adapter.ProcessListAdapter;
 import com.example.kadh.ui.work.bean.ProcessListBean;
 import com.example.kadh.utils.NullUtils;
 import com.example.kadh.utils.RxJava.BaseResponse;

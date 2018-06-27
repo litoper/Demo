@@ -17,9 +17,11 @@ import com.example.kadh.ui.main.bean.WeatherBean;
 import com.example.kadh.ui.person.bean.QueryProTotalInfoBean;
 import com.example.kadh.ui.person.bean.RoleManageBean;
 import com.example.kadh.ui.person.bean.UpFieldBean;
+import com.example.kadh.ui.work.bean.ProcessContentBean;
 import com.example.kadh.ui.work.bean.ProcessListBean;
 import com.example.kadh.ui.work.bean.ProcessModuleBean;
 import com.example.kadh.ui.work.bean.ProcessStatusBean;
+import com.example.kadh.ui.work.bean.ProcessUserDetailBean;
 import com.example.kadh.utils.RxJava.BaseResponse;
 import com.example.kadh.utils.RxJava.RxSubscriber.SubDownload;
 
@@ -380,6 +382,31 @@ public class RxApi {
         toSubscribe(flowable, subscriber);
         return flowable;
     }
+
+    /**
+     * getProcessContent 获取发起流程的流程列表
+     *
+     * @param subscriber
+     */
+    public Flowable getProcessContent(FlowableSubscriber<BaseResponse<List<ProcessContentBean>>> subscriber, String processid) {
+        Flowable flowable = mRxService.getProcessContent(processid, version);
+        toSubscribe(flowable, subscriber);
+        return flowable;
+    }
+
+    /**
+     * 获取用户填写详细内容
+     * processUserDetail
+     *
+     * @param subscriber
+     * @param pid
+     */
+    public Flowable processUserDetail(FlowableSubscriber<BaseResponse<List<ProcessUserDetailBean>>> subscriber, String pid) {
+        Flowable flowable = mRxService.processUserDetail(pid, version);
+        toSubscribe(flowable, subscriber);
+        return flowable;
+    }
+
 
     //******************************************************************************************************************************//
     // subscribeOn(): 指定 subscribe() 发生在 IO 线程

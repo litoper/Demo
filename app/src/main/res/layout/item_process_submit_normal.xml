@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:id="@+id/item_process_submit_normal_rl_root"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:background="@color/white"
+        android:gravity="center_vertical">
+
+        <TextView
+            android:id="@+id/item_process_submit_normal_tv_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingLeft="20dp"
+            android:textColor="@color/black"
+            android:textSize="17sp" />
+
+        <ImageView
+            android:id="@+id/item_process_submit_normal_iv_jiantou"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:paddingRight="20dp"
+            android:paddingTop="5dp"
+            android:src="@mipmap/common_arrow_down" />
+
+        <TextView
+            android:id="@+id/item_process_submit_text_tv_value"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toLeftOf="@id/item_process_submit_normal_iv_jiantou"
+            android:ellipsize="end"
+            android:paddingLeft="90dp"
+            android:paddingRight="10dp"
+            android:singleLine="true"
+            android:textColor="@color/gray_text" />
+    </RelativeLayout>
+
+</LinearLayout>

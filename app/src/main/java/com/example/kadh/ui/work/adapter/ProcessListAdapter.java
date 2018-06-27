@@ -1,10 +1,11 @@
-package com.example.kadh.ui.work.bean;
+package com.example.kadh.ui.work.adapter;
 
 import android.support.annotation.Nullable;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.example.kadh.R;
+import com.example.kadh.ui.work.bean.ProcessListBean;
 
 import java.util.List;
 
