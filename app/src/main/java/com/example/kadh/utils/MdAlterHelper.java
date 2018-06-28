@@ -8,8 +8,7 @@ import android.view.View;
 import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.example.kadh.R;
-import com.example.kadh.bean.support.IsingleChoiceBean1;
-import com.example.kadh.bean.support.IsingleChoiceBean2;
+import com.example.kadh.bean.support.IsingleChoiceBean;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -21,7 +20,7 @@ import java.util.List;
  * @blog : http://www.nicaicaicai.com
  * @desc :
  */
-public class MdAlterHelper {
+public class MdAlterHelper<T> {
 
     private Activity mActivity;
     private MaterialDialog mMaterialDialog;
@@ -139,34 +138,7 @@ public class MdAlterHelper {
     }
 
 
-    public void displaySingleDialog2(boolean cancelable, String title, List<IsingleChoiceBean2> items, @NonNull String matchKey, @NonNull final IdisplaySingleCallBack singleCallBack) {
-        int selectedIndex = -1;
-
-        List<String> stringList = new ArrayList<>();
-        for (int i = 0; i < items.size(); i++) {
-            stringList.add(items.get(i).displayText());
-            if (matchKey.equals(items.get(i).displayText())) {
-                selectedIndex = i;
-            }
-        }
-
-        new MaterialDialog.Builder(mActivity)
-                .canceledOnTouchOutside(cancelable)
-                .title(title)
-                .items(stringList)
-                .itemsCallbackSingleChoice(selectedIndex, new MaterialDialog.ListCallbackSingleChoice() {
-                    @Override
-                    public boolean onSelection(MaterialDialog dialog, View itemView, int which, CharSequence text) {
-                        if (singleCallBack != null) {
-                            singleCallBack.onSelection(which, String.valueOf(text));
-                        }
-                        return false;
-                    }
-                })
-                .show();
-    }
-
-    public void displaySingleDialog1(boolean cancelable, String title, List<IsingleChoiceBean1> items, @NonNull String matchKey, @NonNull final IdisplaySingleCallBack singleCallBack) {
+    public void displaySingleDialog(boolean cancelable, String title, List<IsingleChoiceBean> items, @NonNull String matchKey, @NonNull final IdisplaySingleCallBack singleCallBack) {
         int selectedIndex = -1;
 
         List<String> stringList = new ArrayList<>();
@@ -194,7 +166,7 @@ public class MdAlterHelper {
     }
 
 
-    public void displayMulitDialog2(boolean cancelable, String title, List<IsingleChoiceBean1> items, Integer[] matchKeyS, @NonNull final IdisplayMulitCallBack mulitCallBack) {
+    public void displayMulitDialog(boolean cancelable, String title, List<IsingleChoiceBean> items, Integer[] matchKeyS, @NonNull final IdisplayMulitCallBack mulitCallBack) {
 
 
         new MaterialDialog.Builder(mActivity)

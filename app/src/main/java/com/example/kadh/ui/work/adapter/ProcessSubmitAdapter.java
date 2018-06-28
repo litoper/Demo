@@ -10,6 +10,7 @@ import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.afollestad.materialdialogs.MaterialDialog;
 import com.chad.library.adapter.base.BaseMultiItemQuickAdapter;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.ess.filepicker.FilePicker;
@@ -17,7 +18,6 @@ import com.ess.filepicker.model.EssFile;
 import com.ess.filepicker.util.Const;
 import com.example.kadh.R;
 import com.example.kadh.base.CommonViewHolder;
-import com.example.kadh.bean.support.IsingleChoiceBean2;
 import com.example.kadh.ui.work.activity.ProcessSubmitActivity;
 import com.example.kadh.ui.work.bean.ProcessContentBean;
 import com.example.kadh.ui.work.bean.ProcessSingleChoiceBean;
@@ -29,6 +29,7 @@ import com.tbruyelle.rxpermissions2.RxPermissions;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import cn.bingoogolapple.photopicker.activity.BGAPhotoPickerActivity;
@@ -252,6 +253,7 @@ public class ProcessSubmitAdapter extends BaseMultiItemQuickAdapter<ProcessConte
                         showMulitChoiceDialog(getData(), position, adapter);
                         break;
                     case "5"://日期选择
+                        // TODO: 2018/6/28  
                         break;
                     default:
                         break;
@@ -266,44 +268,99 @@ public class ProcessSubmitAdapter extends BaseMultiItemQuickAdapter<ProcessConte
 
     }
 
-    private void showMulitChoiceDialog(List<ProcessContentBean> data, int pos, BaseQuickAdapter adapter) {
-//        new MdAlterHelper(mActivity).displayMulitDialog2(true,title,);
+    private void showMulitChoiceDialog(List<ProcessContentBean> data, final int pos, final BaseQuickAdapter adapter) {
+        final ProcessContentBean bean = data.get(pos);
+        final String title = bean.getPtitle();
+        final int pminLength = Integer.parseInt(bean.getPminLength());
+        final int pmaxLength = Integer.parseInt(bean.getPmaxLength());
 
+        String[] items = bean.getPtype_choose().split(",");
+        int[] itemsIds = new int[items.length];
+        for (int i = 0; i < items.length; i++) {
+            itemsIds[i] = i;
+        }
+
+        Integer[] selectIndices = null;
+        if (!NullUtils.isNull(bean.getChooseValue())) {
+            String[] split = bean.getChooseValue().split(",");
+            selectIndices = new Integer[split.length];
+            for (int i = 0; i < split.length; i++) {
+                selectIndices[i] = Integer.parseInt(split[i]);
+            }
+        }
+
+        new MaterialDialog.Builder(mActivity)
+                .title(title)
+                .items(Arrays.asList(items))
+                .itemsIds(itemsIds)
+                .autoDismiss(false)
+                .positiveText("确定")
+                .itemsCallbackMultiChoice(selectIndices, new MaterialDialog.ListCallbackMultiChoice() {
+                    @Override
+                    public boolean onSelection(MaterialDialog dialog, Integer[] which, CharSequence[] text) {
+                        if (which.length > pmaxLength) {
+                            Toast.makeText(mContext, title + "最多能选择" + pmaxLength + "个", Toast.LENGTH_SHORT).show();
+                            return false;
+                        }
+
+                        if (which.length < pminLength) {
+                            Toast.makeText(mContext, title + "最少需选择" + pminLength + "个", Toast.LENGTH_SHORT).show();
+                            return false;
+                        }
+
+                        String index = "";
+                        String value = "";
+                        for (int i = 0; i < which.length; i++) {
+                            index = which[i] + "," + index;
+                            value = text[i] + "," + value;
+                        }
+
+                        bean.setChooseValue(index.substring(0, index.length() - 1));
+                        bean.setContext(value.substring(0, value.length() - 1));
+
+                        TextView tvValue = (TextView) adapter.getViewByPosition(mRvProcess, pos, R.id.item_process_submit_normal_tv_value);
+                        tvValue.setText(bean.getContext());
+                        dialog.dismiss();
+                        return false;
+                    }
+                })
+                .show();
     }
 
     private void showSingleChoiceDialog(List<ProcessContentBean> data, final int pos, final BaseQuickAdapter adapter) {
         final ProcessContentBean bean = data.get(pos);
         String title = NullUtils.filterEmpty(bean.getPtitle());
         String matchKey = NullUtils.filterEmpty(bean.getContext());
-        final List<IsingleChoiceBean2> singleChoiceBeans = new ArrayList<IsingleChoiceBean2>();
+        final List<ProcessSingleChoiceBean> singleChoiceBeans = new ArrayList<ProcessSingleChoiceBean>();
 
-        String[] name = bean.getPtype_choose().split(",");
+        String[] items = bean.getPtype_choose().split(",");
         String[] value = null;
 
         if (NullUtils.isNull(bean.getPtype_chooseValue())) {
-            for (int i = 0; i < name.length; i++) {
+            for (int i = 0; i < items.length; i++) {
                 ProcessSingleChoiceBean choiceBean = new ProcessSingleChoiceBean();
-                choiceBean.setName(name[i]);
+                choiceBean.setName(items[i]);
                 choiceBean.setValue("0");
                 singleChoiceBeans.add(choiceBean);
             }
         } else {
             value = bean.getPtype_chooseValue().split(",");
-            for (int i = 0; i < name.length; i++) {
+            for (int i = 0; i < items.length; i++) {
                 ProcessSingleChoiceBean choiceBean = new ProcessSingleChoiceBean();
-                choiceBean.setName(name[i]);
+                choiceBean.setName(items[i]);
                 choiceBean.setValue(value[i]);
                 singleChoiceBeans.add(choiceBean);
             }
         }
 
-        new MdAlterHelper(mActivity).displaySingleDialog2(true, title, singleChoiceBeans, matchKey, new MdAlterHelper.IdisplaySingleCallBack() {
+        new MdAlterHelper(mActivity).displaySingleDialog(true, title, singleChoiceBeans, matchKey, new MdAlterHelper.IdisplaySingleCallBack() {
             @Override
             public void onSelection(int position, String selectText) {
                 TextView tvValue = (TextView) adapter.getViewByPosition(mRvProcess, pos, R.id.item_process_submit_normal_tv_value);
                 tvValue.setText(selectText);
-                bean.setChooseValue(NullUtils.filterEmpty(singleChoiceBeans.get(position).value()));
-                bean.setContext(NullUtils.filterEmpty(singleChoiceBeans.get(position).displayText()));
+                bean.setChooseValue(NullUtils.filterEmpty(singleChoiceBeans.get(position).getValue()));
+                bean.setContext(NullUtils.filterEmpty(singleChoiceBeans.get(position).getName()));
+                //单选点击后根据下标修改数据源相应位置的CheckPos
                 bean.setCheckPos(position);
             }
         });

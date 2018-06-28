@@ -1,6 +1,6 @@
 package com.example.kadh.ui.work.bean;
 
-import com.example.kadh.bean.support.IsingleChoiceBean2;
+import com.example.kadh.bean.support.IsingleChoiceBean;
 
 /**
  * @author: kadh
@@ -9,7 +9,7 @@ import com.example.kadh.bean.support.IsingleChoiceBean2;
  * @blog : http://www.nicaicaicai.com
  * @desc :
  */
-public class ProcessSingleChoiceBean implements IsingleChoiceBean2 {
+public class ProcessSingleChoiceBean implements IsingleChoiceBean {
     private String name;
     private String value;
 
@@ -42,8 +42,4 @@ public class ProcessSingleChoiceBean implements IsingleChoiceBean2 {
         return getName();
     }
 
-    @Override
-    public String value() {
-        return getValue();
-    }
 }
