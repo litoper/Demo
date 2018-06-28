@@ -270,13 +270,13 @@ public class PersonInfoActivity extends BaseActivityView<PersonInfoPresenter> im
     }
 
     private void showRoleDialog() {
-        mAlterHelper.displaySingleDialog(true
+        mAlterHelper.displaySingleDialog1(true
                 , "请设置默认角色"
                 , mRoleManageBeans
                 , NullUtils.filterEmpty(mTvGroup.getText().toString())
                 , new MdAlterHelper.IdisplaySingleCallBack() {
                     @Override
-                    public void onSelecton(int position, String selectText) {
+                    public void onSelection(int position, String selectText) {
                         mTvGroup.setText(selectText);
                         mModify_RoleId = mRoleManageBeans.get(position).getId();
                         mItemSave.setVisible(true);

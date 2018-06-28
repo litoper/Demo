@@ -6,8 +6,8 @@ import android.content.Intent;
 import android.os.Environment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.View;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.chad.library.adapter.base.BaseMultiItemQuickAdapter;
@@ -17,10 +17,13 @@ import com.ess.filepicker.model.EssFile;
 import com.ess.filepicker.util.Const;
 import com.example.kadh.R;
 import com.example.kadh.base.CommonViewHolder;
+import com.example.kadh.bean.support.IsingleChoiceBean2;
 import com.example.kadh.ui.work.activity.ProcessSubmitActivity;
 import com.example.kadh.ui.work.bean.ProcessContentBean;
+import com.example.kadh.ui.work.bean.ProcessSingleChoiceBean;
 import com.example.kadh.ui.work.presenter.ProcessSubmitPresenter;
 import com.example.kadh.utils.DateUtils;
+import com.example.kadh.utils.MdAlterHelper;
 import com.example.kadh.utils.NullUtils;
 import com.tbruyelle.rxpermissions2.RxPermissions;
 
@@ -43,6 +46,7 @@ import io.reactivex.functions.Consumer;
 public class ProcessSubmitAdapter extends BaseMultiItemQuickAdapter<ProcessContentBean, CommonViewHolder> implements BGASortableNinePhotoLayout.Delegate, BaseQuickAdapter.OnItemChildClickListener {
 
     private final String mCurrentTime;
+    private RecyclerView mRvProcess;
     private ProcessSubmitActivity mActivity;
     private ProcessSubmitPresenter mPresenter;
     private ArrayList<String> mSelectedPhotos;
@@ -56,10 +60,12 @@ public class ProcessSubmitAdapter extends BaseMultiItemQuickAdapter<ProcessConte
      * some initialization data.
      *
      * @param data      A new list is created out of this one to avoid mutable list
+     * @param rvProcess
      * @param presenter
      */
-    public ProcessSubmitAdapter(List<ProcessContentBean> data, ProcessSubmitActivity activity, ProcessSubmitPresenter presenter) {
+    public ProcessSubmitAdapter(List<ProcessContentBean> data, RecyclerView rvProcess, ProcessSubmitActivity activity, ProcessSubmitPresenter presenter) {
         super(data);
+        mRvProcess = rvProcess;
         mActivity = activity;
         mPresenter = presenter;
         mSelectedPhotos = new ArrayList<>();
@@ -136,6 +142,7 @@ public class ProcessSubmitAdapter extends BaseMultiItemQuickAdapter<ProcessConte
 
     private void processItemNormal(CommonViewHolder helper, ProcessContentBean item) {
         // TODO: 2018/6/28 单选/多选/时间选择器 待完善
+        helper.addOnClickListener(R.id.item_process_submit_normal_ll_root);
         helper.setText(R.id.item_process_submit_normal_tv_title, NullUtils.filterEmpty(item.getPtitle()));
         switch (item.getPtype()) {
             case "1":
@@ -235,14 +242,72 @@ public class ProcessSubmitAdapter extends BaseMultiItemQuickAdapter<ProcessConte
 
     @Override
     public void onItemChildClick(BaseQuickAdapter adapter, View view, int position) {
-        Log.d(TAG, "onItemChildClick() position = [" + position + "]");
-        FilePicker
-                .from(mActivity)
-                .chooseForMimeType()
-                .setMaxCount(5)
-                .setFileTypes("png", "doc", "xls", "gif", "txt", "mp4", "zip")
-                .requestCode(168)
-                .start();
+        switch (adapter.getItemViewType(position)) {
+            case ProcessContentBean.NORMAL:
+                switch (getData().get(position).getPtype()) {
+                    case "1"://单选
+                        showSingleChoiceDialog(getData(), position, adapter);
+                        break;
+                    case "2"://多选
+                        showMulitChoiceDialog(getData(), position, adapter);
+                        break;
+                    case "5"://日期选择
+                        break;
+                    default:
+                        break;
+                }
+                break;
+            case ProcessContentBean.ATT:
+                FilePicker.from(mActivity).chooseForMimeType().setMaxCount(5).setFileTypes("png", "doc", "xls", "gif", "txt", "mp4", "zip").requestCode(168).start();
+                break;
+            default:
+                break;
+        }
+
+    }
+
+    private void showMulitChoiceDialog(List<ProcessContentBean> data, int pos, BaseQuickAdapter adapter) {
+//        new MdAlterHelper(mActivity).displayMulitDialog2(true,title,);
+
+    }
+
+    private void showSingleChoiceDialog(List<ProcessContentBean> data, final int pos, final BaseQuickAdapter adapter) {
+        final ProcessContentBean bean = data.get(pos);
+        String title = NullUtils.filterEmpty(bean.getPtitle());
+        String matchKey = NullUtils.filterEmpty(bean.getContext());
+        final List<IsingleChoiceBean2> singleChoiceBeans = new ArrayList<IsingleChoiceBean2>();
+
+        String[] name = bean.getPtype_choose().split(",");
+        String[] value = null;
+
+        if (NullUtils.isNull(bean.getPtype_chooseValue())) {
+            for (int i = 0; i < name.length; i++) {
+                ProcessSingleChoiceBean choiceBean = new ProcessSingleChoiceBean();
+                choiceBean.setName(name[i]);
+                choiceBean.setValue("0");
+                singleChoiceBeans.add(choiceBean);
+            }
+        } else {
+            value = bean.getPtype_chooseValue().split(",");
+            for (int i = 0; i < name.length; i++) {
+                ProcessSingleChoiceBean choiceBean = new ProcessSingleChoiceBean();
+                choiceBean.setName(name[i]);
+                choiceBean.setValue(value[i]);
+                singleChoiceBeans.add(choiceBean);
+            }
+        }
+
+        new MdAlterHelper(mActivity).displaySingleDialog2(true, title, singleChoiceBeans, matchKey, new MdAlterHelper.IdisplaySingleCallBack() {
+            @Override
+            public void onSelection(int position, String selectText) {
+                TextView tvValue = (TextView) adapter.getViewByPosition(mRvProcess, pos, R.id.item_process_submit_normal_tv_value);
+                tvValue.setText(selectText);
+                bean.setChooseValue(NullUtils.filterEmpty(singleChoiceBeans.get(position).value()));
+                bean.setContext(NullUtils.filterEmpty(singleChoiceBeans.get(position).displayText()));
+                bean.setCheckPos(position);
+            }
+        });
+
     }
 }
 

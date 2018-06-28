@@ -7,7 +7,7 @@ package com.example.kadh.bean.support;
  * @blog : http://www.nicaicaicai.com
  * @desc :
  */
-public interface IsingleChoiceBean {
+public interface IsingleChoiceBean1 {
     /**
      * 返回需要展示的文本
      *

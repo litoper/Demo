@@ -13,7 +13,7 @@ import java.util.Map;
 public class NullUtils {
 
     public static boolean isEmpty(String str) {
-        if (str == null || "".equals(str)) {
+        if (str == null || "".equals(str) || "\"\"".equals(str)) {
             return true;
         }
         for (int i = 0; i < str.length(); i++) {
@@ -30,7 +30,7 @@ public class NullUtils {
     }
 
     public static boolean isNull(String str) {
-        if (str == null || "".equals(str) || "null".equalsIgnoreCase(str)) {
+        if (str == null || "".equals(str) || "\"\"".equals(str) || "null".equalsIgnoreCase(str)) {
             return true;
         }
         for (int i = 0; i < str.length(); i++) {
@@ -52,7 +52,7 @@ public class NullUtils {
 
 
     public static String filterNull(String str, String _default, String tail) {
-        if (str == null || "".equals(str) || "null".equalsIgnoreCase(str)) {
+        if (str == null || "".equals(str) || "\"\"".equals(str) || "null".equalsIgnoreCase(str)) {
             return _default;
         } else {
             if (tail != null) {
@@ -71,7 +71,7 @@ public class NullUtils {
     }
 
     public static String filterEmpty(String str, String _default, String tail) {
-        if (str == null || "".equals(str)) {
+        if (str == null || "".equals(str) || "\"\"".equals(str)) {
             return _default;
         } else {
             if (tail != null) {

@@ -8,7 +8,8 @@ import android.view.View;
 import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.example.kadh.R;
-import com.example.kadh.bean.support.IsingleChoiceBean;
+import com.example.kadh.bean.support.IsingleChoiceBean1;
+import com.example.kadh.bean.support.IsingleChoiceBean2;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -20,7 +21,7 @@ import java.util.List;
  * @blog : http://www.nicaicaicai.com
  * @desc :
  */
-public class MdAlterHelper<T> {
+public class MdAlterHelper {
 
     private Activity mActivity;
     private MaterialDialog mMaterialDialog;
@@ -138,7 +139,7 @@ public class MdAlterHelper<T> {
     }
 
 
-    public void displaySingleDialog(boolean cancelable, String title, List<IsingleChoiceBean> items, @NonNull String matchKey, @NonNull final IdisplaySingleCallBack singleCallBack) {
+    public void displaySingleDialog2(boolean cancelable, String title, List<IsingleChoiceBean2> items, @NonNull String matchKey, @NonNull final IdisplaySingleCallBack singleCallBack) {
         int selectedIndex = -1;
 
         List<String> stringList = new ArrayList<>();
@@ -157,7 +158,7 @@ public class MdAlterHelper<T> {
                     @Override
                     public boolean onSelection(MaterialDialog dialog, View itemView, int which, CharSequence text) {
                         if (singleCallBack != null) {
-                            singleCallBack.onSelecton(which, String.valueOf(text));
+                            singleCallBack.onSelection(which, String.valueOf(text));
                         }
                         return false;
                     }
@@ -165,8 +166,59 @@ public class MdAlterHelper<T> {
                 .show();
     }
 
+    public void displaySingleDialog1(boolean cancelable, String title, List<IsingleChoiceBean1> items, @NonNull String matchKey, @NonNull final IdisplaySingleCallBack singleCallBack) {
+        int selectedIndex = -1;
+
+        List<String> stringList = new ArrayList<>();
+        for (int i = 0; i < items.size(); i++) {
+            stringList.add(items.get(i).displayText());
+            if (matchKey.equals(items.get(i).displayText())) {
+                selectedIndex = i;
+            }
+        }
+
+        new MaterialDialog.Builder(mActivity)
+                .canceledOnTouchOutside(cancelable)
+                .title(title)
+                .items(stringList)
+                .itemsCallbackSingleChoice(selectedIndex, new MaterialDialog.ListCallbackSingleChoice() {
+                    @Override
+                    public boolean onSelection(MaterialDialog dialog, View itemView, int which, CharSequence text) {
+                        if (singleCallBack != null) {
+                            singleCallBack.onSelection(which, String.valueOf(text));
+                        }
+                        return false;
+                    }
+                })
+                .show();
+    }
+
+
+    public void displayMulitDialog2(boolean cancelable, String title, List<IsingleChoiceBean1> items, Integer[] matchKeyS, @NonNull final IdisplayMulitCallBack mulitCallBack) {
+
+
+        new MaterialDialog.Builder(mActivity)
+                .canceledOnTouchOutside(cancelable)
+                .title(title)
+                .items(items)
+                .itemsCallbackMultiChoice(matchKeyS, new MaterialDialog.ListCallbackMultiChoice() {
+                    @Override
+                    public boolean onSelection(MaterialDialog dialog, Integer[] which, CharSequence[] text) {
+                        if (mulitCallBack != null) {
+                            mulitCallBack.onSelection(which, text);
+                        }
+                        return false;
+                    }
+                }).show();
+
+    }
+
+    public interface IdisplayMulitCallBack {
+        void onSelection(Integer[] which, CharSequence[] text);
+    }
+
     public interface IdisplaySingleCallBack {
-        void onSelecton(int position, String selectText);
+        void onSelection(int position, String selectText);
     }
 
     public interface IshowInputCallBack {

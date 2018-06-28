@@ -97,7 +97,7 @@ public class ProcessSubmitActivity extends BaseActivityView<ProcessSubmitPresent
             }
         }
 
-        mProcessSubmitAdapter = new ProcessSubmitAdapter(mProcessContentBeans, this, mPresenter);
+        mProcessSubmitAdapter = new ProcessSubmitAdapter(mProcessContentBeans, mRvProcess, this, mPresenter);
         mProcessSubmitAdapter.setOnItemChildClickListener(mProcessSubmitAdapter);
         LinearLayoutManager layoutManager = new LinearLayoutManager(mContext);
         mRvProcess.addItemDecoration(new DividerItemDecoration(mContext, DividerItemDecoration.VERTICAL));
