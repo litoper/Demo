@@ -19,13 +19,13 @@ import com.example.kadh.R;
 import com.example.kadh.base.BaseFragmentView;
 import com.example.kadh.component.AppComponent;
 import com.example.kadh.component.DaggerMainComponent;
+import com.example.kadh.ui.company.activity.MessageActivity;
 import com.example.kadh.ui.company.activity.NewsDetailActivity;
 import com.example.kadh.ui.company.activity.NoticeDetailActivity;
 import com.example.kadh.ui.company.adapter.PublishAdapter;
 import com.example.kadh.ui.company.bean.PublishListBean;
 import com.example.kadh.ui.company.contract.CompanyFragContract;
 import com.example.kadh.ui.company.presenter.CompanyPresenter;
-import com.example.kadh.ui.company.activity.MessageActivity;
 import com.example.kadh.utils.NullUtils;
 import com.example.kadh.view.LoadingLayout;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
@@ -55,6 +55,13 @@ public class CompanyFragment extends BaseFragmentView<CompanyPresenter> implemen
     private PublishAdapter mPublishAdapter;
     private List<PublishListBean> mPublishListBeans = new ArrayList<>();
     private MenuItem mItemMsg;
+
+    public static CompanyFragment newInstance() {
+        return new CompanyFragment();
+    }
+
+    public CompanyFragment() {
+    }
 
 
     @Override

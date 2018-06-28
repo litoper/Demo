@@ -18,8 +18,8 @@ import com.example.kadh.ui.person.bean.QueryProTotalInfoBean;
 import com.example.kadh.ui.setting.SettingActivity;
 import com.example.kadh.utils.GlideUtils;
 import com.example.kadh.utils.RxJava.BaseResponse;
-import com.example.kadh.utils.RxJava.RxApi.RxUrl;
 import com.example.kadh.utils.RxJava.RxApi.RxManager;
+import com.example.kadh.utils.RxJava.RxApi.RxUrl;
 import com.example.kadh.utils.RxJava.RxSubscriber.SubNextImpl;
 import com.example.kadh.utils.RxJava.RxSubscriber.SubProtect;
 import com.example.kadh.utils.SpUtil;
@@ -51,6 +51,14 @@ public class PersonFragment extends BaseFragment {
     LinearLayout mLlSetting;
     @BindView(R.id.person_smart_refresh)
     SmartRefreshLayout mSmartRefresh;
+
+    public static PersonFragment newInstance() {
+        return new PersonFragment();
+    }
+
+    public PersonFragment() {
+    }
+
 
     @Override
     public int getLayoutResId() {

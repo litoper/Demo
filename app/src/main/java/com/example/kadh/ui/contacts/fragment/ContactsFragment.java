@@ -40,6 +40,13 @@ public class ContactsFragment extends BaseFragmentView<ContactsPresenter> implem
     private ContactDbAdapter mDbAdapter;
 
 
+    public static ContactsFragment newInstance() {
+        return new ContactsFragment();
+    }
+
+    public ContactsFragment() {
+    }
+
     @Override
     public int getLayoutResId() {
         return R.layout.fragment_contracts;

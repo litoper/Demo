@@ -43,10 +43,11 @@ public class MainPresenter extends BaseBindingImpl<MainAtyContract.View> impleme
     @Override
     public void initViewPager() {
         List<Fragment> fragmentList = new ArrayList<>();
-        mCompanyFragment = new CompanyFragment();
-        mWorkFragment = new WorkFragment();
-        mContactsFragment = new ContactsFragment();
-        mPersonFragment = new PersonFragment();
+
+        mCompanyFragment = CompanyFragment.newInstance();
+        mWorkFragment = WorkFragment.newInstance();
+        mContactsFragment = ContactsFragment.newInstance();
+        mPersonFragment = PersonFragment.newInstance();
 
         fragmentList.add(mCompanyFragment);
         fragmentList.add(mWorkFragment);

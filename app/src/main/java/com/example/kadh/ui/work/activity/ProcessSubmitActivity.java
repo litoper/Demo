@@ -7,6 +7,7 @@ import android.widget.Button;
 import com.example.kadh.R;
 import com.example.kadh.base.BaseActivityView;
 import com.example.kadh.component.AppComponent;
+import com.example.kadh.component.DaggerMainComponent;
 import com.example.kadh.ui.work.adapter.ProcessSubmitAdapter;
 import com.example.kadh.ui.work.bean.ProcessContentBean;
 import com.example.kadh.ui.work.contract.ProcessSubmitContract;
@@ -68,7 +69,7 @@ public class ProcessSubmitActivity extends BaseActivityView<ProcessSubmitPresent
 
     @Override
     protected void setupActivityComponent(AppComponent appComponent) {
-
+        DaggerMainComponent.builder().appComponent(appComponent).build().inject(this);
     }
 
     @Override

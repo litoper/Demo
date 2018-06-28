@@ -62,6 +62,13 @@ public class WorkFragment extends BaseFragmentView<WorkPresenter> implements Wor
     private GridLayoutManager mGridLayoutManager;
     private Bundle mBundle;
 
+    public static WorkFragment newInstance() {
+        return new WorkFragment();
+    }
+
+    public WorkFragment() {
+    }
+
     @Override
     public void showError() {
 

@@ -76,6 +76,7 @@
 
         <!--work on-->
         <activity android:name=".ui.work.activity.ProcessListActivity" />
+        <activity android:name=".ui.work.activity.ProcessSubmitActivity" />
         <!--work off-->
 
         <!--tension on-->
