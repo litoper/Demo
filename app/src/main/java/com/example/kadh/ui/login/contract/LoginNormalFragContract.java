@@ -20,10 +20,11 @@ public interface LoginNormalFragContract {
         void loginSuccess();
 
         void loginFail();
+
+        void showFastDialog();
     }
 
     interface Presenter<T> extends BaseContract.BasePresenter<T> {
-        void getFastData();
 
         void getLoginData();
 

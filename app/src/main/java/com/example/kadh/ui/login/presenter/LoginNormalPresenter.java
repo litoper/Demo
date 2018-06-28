@@ -31,10 +31,6 @@ public class LoginNormalPresenter extends BaseBindingImpl<LoginNormalFragContrac
         mRxApi = rxApi;
     }
 
-    @Override
-    public void getFastData() {
-        //初始化快速登陆列表数据
-    }
 
     @Override
     public void getLoginData() {

@@ -8,14 +8,16 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.afollestad.materialdialogs.MaterialDialog;
+import com.example.kadh.BuildConfig;
 import com.example.kadh.R;
 import com.example.kadh.base.BaseFragmentView;
 import com.example.kadh.component.AppComponent;
 import com.example.kadh.component.DaggerMainComponent;
 import com.example.kadh.ui.login.activity.LoginForgetActivity;
+import com.example.kadh.ui.login.contract.LoginNormalFragContract;
 import com.example.kadh.ui.login.presenter.LoginNormalPresenter;
 import com.example.kadh.ui.main.activity.MainActivity;
-import com.example.kadh.ui.login.contract.LoginNormalFragContract;
 import com.example.kadh.utils.NullUtils;
 import com.jakewharton.rxbinding2.view.RxView;
 import com.jakewharton.rxbinding2.widget.RxTextView;
@@ -87,18 +89,17 @@ public class LoginNormalFragment extends BaseFragmentView<LoginNormalPresenter> 
             }
         });
 
-        RxView.clicks(mBtnForget).throttleFirst(1, TimeUnit.SECONDS).observeOn(AndroidSchedulers.mainThread()).subscribe(new Consumer<Object>() {
+        RxView.clicks(mBtnForget).throttleFirst(500, TimeUnit.MILLISECONDS).observeOn(AndroidSchedulers.mainThread()).subscribe(new Consumer<Object>() {
             @Override
             public void accept(Object o) throws Exception {
                 openActivity(LoginForgetActivity.class);
             }
         });
 
-        RxView.clicks(mBtnFastlogin).throttleFirst(1, TimeUnit.SECONDS).observeOn(AndroidSchedulers.mainThread()).subscribe(new Consumer<Object>() {
+        RxView.clicks(mBtnFastlogin).throttleFirst(500, TimeUnit.MILLISECONDS).observeOn(AndroidSchedulers.mainThread()).subscribe(new Consumer<Object>() {
             @Override
             public void accept(Object o) throws Exception {
-                Toast.makeText(mActivity, "快速登陆", Toast.LENGTH_SHORT).show();
-                openActivity(MainActivity.class);
+                showFastDialog();
             }
         });
 
@@ -109,7 +110,7 @@ public class LoginNormalFragment extends BaseFragmentView<LoginNormalPresenter> 
             }
         });
 
-        RxView.clicks(mBtnClear).throttleFirst(1, TimeUnit.SECONDS).observeOn(AndroidSchedulers.mainThread()).subscribe(new Consumer<Object>() {
+        RxView.clicks(mBtnClear).throttleFirst(500, TimeUnit.MILLISECONDS).observeOn(AndroidSchedulers.mainThread()).subscribe(new Consumer<Object>() {
             @Override
             public void accept(Object o) throws Exception {
                 mEtUsername.setText("");
@@ -139,7 +140,9 @@ public class LoginNormalFragment extends BaseFragmentView<LoginNormalPresenter> 
     @Override
     protected void initDatas() {
         mPresenter.getLoginData();
-        mPresenter.getFastData();
+        if (BuildConfig.DEBUG) {
+            mBtnFastlogin.setVisibility(View.VISIBLE);
+        }
     }
 
     @Override
@@ -189,6 +192,27 @@ public class LoginNormalFragment extends BaseFragmentView<LoginNormalPresenter> 
     @Override
     public void loginFail() {
         Toast.makeText(mActivity, "服务器异常,请反馈给研发中心,谢谢!!", Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void showFastDialog() {
+        String[] stringArray = getResources().getStringArray(R.array.fastLogin);
+        String trim = mEtUsername.getText().toString().trim();
+        int selectedIndex = -1;
+        for (int i = 0; i < stringArray.length; i++) {
+            if (stringArray[i].contains(trim)) {
+                selectedIndex = i;
+            }
+        }
+
+        new MaterialDialog.Builder(mContext).title("快速登录").items(stringArray).itemsCallbackSingleChoice(selectedIndex, new MaterialDialog.ListCallbackSingleChoice() {
+            @Override
+            public boolean onSelection(MaterialDialog dialog, View itemView, int which, CharSequence text) {
+                mEtUsername.setText(String.valueOf(text).split(" ")[1]);
+                mEtPassword.setText("dj123456");
+                return true;
+            }
+        }).show();
     }
 
 }

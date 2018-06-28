@@ -109,7 +109,8 @@
             android:gravity="center"
             android:text="快  速  登  录"
             android:textColor="@android:color/white"
-            android:textSize="21sp" />
+            android:textSize="21sp"
+            android:visibility="gone" />
 
         <Button
             android:id="@+id/login_normal_btn_forget"
