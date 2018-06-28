@@ -42,6 +42,7 @@ dependencies {
     implementation files('libs/HwPush_SDK_V2705.jar')
     implementation files('libs/MiPush_SDK_Client_3_4_5.jar')
     implementation files('libs/utdid4all-1.1.5.3_proguard.jar')
+    implementation files('libs/litepal-2.0.0.jar')
     androidTestImplementation('com.android.support.test.espresso:espresso-core:3.0.2', {
         exclude group: 'com.android.support', module: 'support-annotations'
     })
@@ -94,7 +95,7 @@ dependencies {
     implementation 'com.github.CymChad:BaseRecyclerViewAdapterHelper:2.9.30'
     implementation 'com.github.f0ris.sweetalert:library:1.5.1'
     implementation 'org.jsoup:jsoup:1.10.3'
-    implementation files('libs/litepal-2.0.0.jar')
+    implementation 'cn.imlibo:FilePicker:v0.0.5_alpha'
 
     debugImplementation 'com.amitshekhar.android:debug-db:1.0.3'
 }

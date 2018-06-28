@@ -97,7 +97,8 @@ public class ProcessSubmitActivity extends BaseActivityView<ProcessSubmitPresent
             }
         }
 
-        mProcessSubmitAdapter = new ProcessSubmitAdapter(mProcessContentBeans, this);
+        mProcessSubmitAdapter = new ProcessSubmitAdapter(mProcessContentBeans, this, mPresenter);
+        mProcessSubmitAdapter.setOnItemChildClickListener(mProcessSubmitAdapter);
         LinearLayoutManager layoutManager = new LinearLayoutManager(mContext);
         mRvProcess.addItemDecoration(new DividerItemDecoration(mContext, DividerItemDecoration.VERTICAL));
         mRvProcess.setLayoutManager(layoutManager);
@@ -111,7 +112,7 @@ public class ProcessSubmitActivity extends BaseActivityView<ProcessSubmitPresent
         super.onActivityResult(requestCode, resultCode, data);
         if (resultCode == RESULT_OK) {
             if (data != null) {
-                mProcessSubmitAdapter.updateImage(requestCode, data);
+                mProcessSubmitAdapter.updateResultData(requestCode, data);
             }
         }
     }

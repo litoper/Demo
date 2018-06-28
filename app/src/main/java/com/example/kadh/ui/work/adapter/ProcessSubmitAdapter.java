@@ -4,14 +4,22 @@ import android.Manifest;
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Environment;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
 
 import com.chad.library.adapter.base.BaseMultiItemQuickAdapter;
+import com.chad.library.adapter.base.BaseQuickAdapter;
+import com.ess.filepicker.FilePicker;
+import com.ess.filepicker.model.EssFile;
+import com.ess.filepicker.util.Const;
 import com.example.kadh.R;
 import com.example.kadh.base.CommonViewHolder;
 import com.example.kadh.ui.work.activity.ProcessSubmitActivity;
 import com.example.kadh.ui.work.bean.ProcessContentBean;
+import com.example.kadh.ui.work.presenter.ProcessSubmitPresenter;
 import com.example.kadh.utils.DateUtils;
 import com.example.kadh.utils.NullUtils;
 import com.tbruyelle.rxpermissions2.RxPermissions;
@@ -32,22 +40,28 @@ import io.reactivex.functions.Consumer;
  * @blog : http://www.nicaicaicai.com
  * @desc :
  */
-public class ProcessSubmitAdapter extends BaseMultiItemQuickAdapter<ProcessContentBean, CommonViewHolder> implements BGASortableNinePhotoLayout.Delegate {
+public class ProcessSubmitAdapter extends BaseMultiItemQuickAdapter<ProcessContentBean, CommonViewHolder> implements BGASortableNinePhotoLayout.Delegate, BaseQuickAdapter.OnItemChildClickListener {
 
     private final String mCurrentTime;
     private ProcessSubmitActivity mActivity;
+    private ProcessSubmitPresenter mPresenter;
     private ArrayList<String> mSelectedPhotos;
+    private List<EssFile> mSelectedFiles;
     private BGASortableNinePhotoLayout mBgaLytImage;
+    private RecyclerView mRvAttValue;
+    private ProcessItemAttAdapter mItemAttAdapter;
 
     /**
      * Same as QuickAdapter#QuickAdapter(Context,int) but with
      * some initialization data.
      *
-     * @param data A new list is created out of this one to avoid mutable list
+     * @param data      A new list is created out of this one to avoid mutable list
+     * @param presenter
      */
-    public ProcessSubmitAdapter(List<ProcessContentBean> data, ProcessSubmitActivity activity) {
+    public ProcessSubmitAdapter(List<ProcessContentBean> data, ProcessSubmitActivity activity, ProcessSubmitPresenter presenter) {
         super(data);
         mActivity = activity;
+        mPresenter = presenter;
         mSelectedPhotos = new ArrayList<>();
         mCurrentTime = DateUtils.getCurrentDate(DateUtils.DateFormat.FORMAT_MM);
         addItemType(ProcessContentBean.NORMAL, R.layout.item_process_submit_normal);
@@ -68,6 +82,7 @@ public class ProcessSubmitAdapter extends BaseMultiItemQuickAdapter<ProcessConte
                 processItemMtext(helper, item);
                 break;
             case ProcessContentBean.ATT:
+                processItemAtt(helper, item);
                 break;
             case ProcessContentBean.PHOTO:
                 processItemPhoto(helper, item);
@@ -77,6 +92,21 @@ public class ProcessSubmitAdapter extends BaseMultiItemQuickAdapter<ProcessConte
                 break;
             default:
                 break;
+        }
+    }
+
+    private void processItemAtt(CommonViewHolder helper, ProcessContentBean item) {
+        helper.setText(R.id.item_process_submit_att_tv_title, NullUtils.filterEmpty(item.getPtitle()));
+        helper.addOnClickListener(R.id.item_process_submit_att_iv_add);
+        mRvAttValue = helper.getView(R.id.item_process_submit_att_rv_value);
+        if (mItemAttAdapter == null) {
+            mItemAttAdapter = new ProcessItemAttAdapter(R.layout.item_process_submit_att_file, mSelectedFiles);
+            mItemAttAdapter.setOnItemChildClickListener(mItemAttAdapter);
+            mRvAttValue.setLayoutManager(new LinearLayoutManager(mActivity));
+            mRvAttValue.setAdapter(mItemAttAdapter);
+            mRvAttValue.setHasFixedSize(true);
+        } else {
+            mItemAttAdapter.setNewData(mSelectedFiles);
         }
     }
 
@@ -183,13 +213,36 @@ public class ProcessSubmitAdapter extends BaseMultiItemQuickAdapter<ProcessConte
 
     }
 
-    public void updateImage(int requestCode, Intent data) {
-        mSelectedPhotos = data.getStringArrayListExtra("EXTRA_SELECTED_PHOTOS");
-        if (requestCode == 888) {
-            mBgaLytImage.setData(BGAPhotoPickerActivity.getSelectedPhotos(data));
-        } else if (requestCode == 666) {
-            mBgaLytImage.setData(BGAPhotoPickerPreviewActivity.getSelectedPhotos(data));
+
+    public void updateResultData(int requestCode, Intent data) {
+        switch (requestCode) {
+            case 888:
+                mSelectedPhotos = data.getStringArrayListExtra("EXTRA_SELECTED_PHOTOS");
+                mBgaLytImage.setData(BGAPhotoPickerActivity.getSelectedPhotos(data));
+                break;
+            case 666:
+                mSelectedPhotos = data.getStringArrayListExtra("EXTRA_SELECTED_PHOTOS");
+                mBgaLytImage.setData(BGAPhotoPickerPreviewActivity.getSelectedPhotos(data));
+                break;
+            case 168:
+                mSelectedFiles = data.getParcelableArrayListExtra(Const.EXTRA_RESULT_SELECTION);
+                mItemAttAdapter.setNewData(mSelectedFiles);
+                break;
+            default:
+                break;
         }
+    }
+
+    @Override
+    public void onItemChildClick(BaseQuickAdapter adapter, View view, int position) {
+        Log.d(TAG, "onItemChildClick() position = [" + position + "]");
+        FilePicker
+                .from(mActivity)
+                .chooseForMimeType()
+                .setMaxCount(5)
+                .setFileTypes("png", "doc", "xls", "gif", "txt", "mp4", "zip")
+                .requestCode(168)
+                .start();
     }
 }
 

@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:gravity="center_vertical">
+
+
+    <ImageView
+        android:id="@+id/item_process_submit_att_iv_delete"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:padding="8dp"
+        android:src="@mipmap/started_reject_icon2x" />
+
+    <TextView
+        android:id="@+id/item_process_submit_att_tv_fileName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="2dp"
+        android:ellipsize="end"
+        android:singleLine="true"
+        android:text="文件名"
+        android:textSize="16sp" />
+</LinearLayout>

@@ -4,49 +4,47 @@
     android:layout_height="wrap_content"
     android:orientation="vertical">
 
-    <RelativeLayout
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/white"
-        android:gravity="center_vertical">
+        android:gravity="center_vertical"
+        android:orientation="vertical">
 
-        <TextView
-            android:id="@+id/submit_tv_att_title"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_margin="20dp"
-            android:text="附件"
-            android:textColor="@color/black"
-            android:textSize="17sp" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
 
+            <TextView
+                android:id="@+id/item_process_submit_att_tv_title"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_margin="20dp"
+                android:layout_weight="1"
+                android:text="附件"
+                android:textColor="@color/black"
+                android:textSize="17sp" />
+
+            <ImageView
+                android:id="@+id/item_process_submit_att_iv_add"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="bottom"
+                android:paddingEnd="20dp"
+                android:paddingStart="20dp"
+                android:paddingTop="20dp"
+                android:src="@mipmap/work_add2x" />
+        </LinearLayout>
 
         <android.support.v7.widget.RecyclerView
-            android:id="@+id/submit_rv_att_value"
-            android:layout_width="wrap_content"
+            android:id="@+id/item_process_submit_att_rv_value"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@id/submit_tv_att_title"
-            android:layout_marginBottom="20dp"
+            android:layout_marginBottom="10dp"
+            android:layout_marginEnd="20dp"
             android:layout_marginStart="20dp"
             android:textColor="@color/gray_text" />
 
 
-        <!--<TextView-->
-        <!--android:id="@+id/submit_et_att_value"-->
-        <!--android:layout_width="wrap_content"-->
-        <!--android:layout_height="wrap_content"-->
-        <!--android:layout_below="@id/submit_tv_att_title"-->
-        <!--android:layout_marginBottom="20dp"-->
-        <!--android:layout_marginStart="30dp"-->
-        <!--android:textColor="@color/gray_value"-->
-        <!--android:textSize="14sp"/>-->
-
-        <ImageView
-            android:id="@+id/work_iv_file_submit"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentEnd="true"
-            android:layout_centerVertical="true"
-            android:paddingRight="20dp"
-            android:src="@mipmap/work_add2x" />
-    </RelativeLayout>
+    </LinearLayout>
 </LinearLayout>
