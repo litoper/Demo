@@ -76,7 +76,9 @@
 
         <!--work on-->
         <activity android:name=".ui.work.activity.ProcessListActivity" />
-        <activity android:name=".ui.work.activity.ProcessSubmitActivity" />
+        <activity
+            android:name=".ui.work.activity.ProcessSubmitActivity"
+            android:windowSoftInputMode="adjustPan|stateAlwaysHidden" />
         <!--work off-->
 
         <!--tension on-->

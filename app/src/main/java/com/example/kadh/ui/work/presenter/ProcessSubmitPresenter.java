@@ -45,9 +45,8 @@ public class ProcessSubmitPresenter extends BaseBindingImpl<ProcessSubmitContrac
                             }
                         }
                     }
-                    mView.showProcessContent(contentBeans);
                 }
-
+                mView.showProcessContent(contentBeans);
             }
         }), processid);
 

@@ -1,5 +1,7 @@
 package com.example.kadh.ui.work.activity;
 
+import android.content.Intent;
+import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.widget.Button;
@@ -44,6 +46,7 @@ public class ProcessSubmitActivity extends BaseActivityView<ProcessSubmitPresent
     @Override
     public void initDatas() {
         if (!NullUtils.isNull(mPid)) {
+            //重新发起
             mPresenter.processUserDetail(mPid, mProcessid);
         } else {
             mPresenter.getProcessContent(mProcessid, null);
@@ -94,11 +97,22 @@ public class ProcessSubmitActivity extends BaseActivityView<ProcessSubmitPresent
             }
         }
 
-        mProcessSubmitAdapter = new ProcessSubmitAdapter(mProcessContentBeans);
+        mProcessSubmitAdapter = new ProcessSubmitAdapter(mProcessContentBeans, this);
         LinearLayoutManager layoutManager = new LinearLayoutManager(mContext);
+        mRvProcess.addItemDecoration(new DividerItemDecoration(mContext, DividerItemDecoration.VERTICAL));
         mRvProcess.setLayoutManager(layoutManager);
         mRvProcess.setAdapter(mProcessSubmitAdapter);
         // TODO: 2018/6/27  
 
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode == RESULT_OK) {
+            if (data != null) {
+                mProcessSubmitAdapter.updateImage(requestCode, data);
+            }
+        }
     }
 }
