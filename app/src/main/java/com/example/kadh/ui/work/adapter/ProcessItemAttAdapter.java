@@ -6,7 +6,7 @@ import android.view.View;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.ess.filepicker.model.EssFile;
 import com.example.kadh.R;
-import com.example.kadh.base.CommonViewHolder;
+import com.example.kadh.base.BaseViewHolderImpl;
 
 import java.util.List;
 
@@ -17,13 +17,13 @@ import java.util.List;
  * @blog : http://www.nicaicaicai.com
  * @desc :
  */
-public class ProcessItemAttAdapter extends BaseQuickAdapter<EssFile, CommonViewHolder> implements BaseQuickAdapter.OnItemChildClickListener {
+public class ProcessItemAttAdapter extends BaseQuickAdapter<EssFile, BaseViewHolderImpl> implements BaseQuickAdapter.OnItemChildClickListener {
     public ProcessItemAttAdapter(int layoutResId, @Nullable List data) {
         super(layoutResId, data);
     }
 
     @Override
-    protected void convert(CommonViewHolder helper, EssFile item) {
+    protected void convert(BaseViewHolderImpl helper, EssFile item) {
         helper.setText(R.id.item_process_submit_att_tv_fileName, item.getName());
         helper.addOnClickListener(R.id.item_process_submit_att_iv_delete);
     }

@@ -270,7 +270,7 @@ public class PersonInfoActivity extends BaseActivityView<PersonInfoPresenter> im
     }
 
     private void showRoleDialog() {
-        mAlterHelper.displaySingleDialog1(true
+        mAlterHelper.displaySingleDialog(true
                 , "请设置默认角色"
                 , mRoleManageBeans
                 , NullUtils.filterEmpty(mTvGroup.getText().toString())

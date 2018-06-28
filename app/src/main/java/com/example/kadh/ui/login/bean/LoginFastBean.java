@@ -1,6 +1,6 @@
 package com.example.kadh.ui.login.bean;
 
-import com.example.kadh.bean.support.IsingleChoiceBean1;
+import com.example.kadh.bean.support.IsingleChoiceBean;
 
 /**
  * @author: kadh
@@ -9,7 +9,7 @@ import com.example.kadh.bean.support.IsingleChoiceBean1;
  * @blog : http://www.nicaicaicai.com
  * @desc :
  */
-public class LoginFastBean implements IsingleChoiceBean1 {
+public class LoginFastBean implements IsingleChoiceBean {
 
     private String userId;
     private String userName;

@@ -13,8 +13,8 @@ import com.chad.library.adapter.base.BaseViewHolder;
  * @blog : http://www.nicaicaicai.com
  * @desc :
  */
-public class CommonViewHolder extends BaseViewHolder {
-    public CommonViewHolder(View view) {
+public class BaseViewHolderImpl extends BaseViewHolder {
+    public BaseViewHolderImpl(View view) {
         super(view);
     }
 

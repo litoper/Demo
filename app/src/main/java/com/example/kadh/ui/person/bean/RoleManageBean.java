@@ -1,6 +1,6 @@
 package com.example.kadh.ui.person.bean;
 
-import com.example.kadh.bean.support.IsingleChoiceBean1;
+import com.example.kadh.bean.support.IsingleChoiceBean;
 import com.example.kadh.utils.NullUtils;
 
 /**
@@ -10,7 +10,7 @@ import com.example.kadh.utils.NullUtils;
  * @blog : http://www.nicaicaicai.com
  * @desc :
  */
-public class RoleManageBean implements IsingleChoiceBean1 {
+public class RoleManageBean implements IsingleChoiceBean {
     /**
      * id : 102
      * rname : 管理员
