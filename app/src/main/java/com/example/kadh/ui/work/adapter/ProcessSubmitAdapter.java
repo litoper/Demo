@@ -6,7 +6,10 @@ import android.content.Intent;
 import android.os.Environment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -25,11 +28,13 @@ import com.example.kadh.ui.work.presenter.ProcessSubmitPresenter;
 import com.example.kadh.utils.DateUtils;
 import com.example.kadh.utils.MdAlterHelper;
 import com.example.kadh.utils.NullUtils;
+import com.example.kadh.view.TimeSelector.TimeSelector;
 import com.tbruyelle.rxpermissions2.RxPermissions;
 
 import java.io.File;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Calendar;
 import java.util.List;
 
 import cn.bingoogolapple.photopicker.activity.BGAPhotoPickerActivity;
@@ -55,6 +60,7 @@ public class ProcessSubmitAdapter extends BaseMultiItemQuickAdapter<ProcessConte
     private BGASortableNinePhotoLayout mBgaLytImage;
     private RecyclerView mRvAttValue;
     private ProcessItemAttAdapter mItemAttAdapter;
+    private TimeSelector mTimeSelector;
 
     /**
      * Same as QuickAdapter#QuickAdapter(Context,int) but with
@@ -117,8 +123,8 @@ public class ProcessSubmitAdapter extends BaseMultiItemQuickAdapter<ProcessConte
         }
     }
 
-    private void processItemText(BaseViewHolderImpl helper, ProcessContentBean item) {
-        // TODO: 2018/6/28 输入框文本监听 待添加
+    private void processItemText(BaseViewHolderImpl helper, final ProcessContentBean item) {
+        addTextChangeListener(helper, item);
         helper.setText(R.id.item_process_submit_text_tv_title, NullUtils.filterEmpty(item.getPtitle()));
         helper.setHint(R.id.item_process_submit_text_et_value, NullUtils.filterEmpty(item.getPlayer()));
         helper.setText(R.id.item_process_submit_text_et_value, NullUtils.filterEmpty(item.getContext()));
@@ -127,7 +133,7 @@ public class ProcessSubmitAdapter extends BaseMultiItemQuickAdapter<ProcessConte
 
 
     private void processItemMtext(BaseViewHolderImpl helper, ProcessContentBean item) {
-        // TODO: 2018/6/28 输入框文本变化监听待添加
+        addTextChangeListener(helper, item);
         helper.setText(R.id.item_process_submit_mtext_tv_title, NullUtils.filterEmpty(item.getPtitle()));
         helper.setHint(R.id.item_process_submit_mtext_et_value, NullUtils.filterEmpty(item.getPlayer()));
         helper.setText(R.id.item_process_submit_mtext_et_value, NullUtils.filterEmpty(item.getContext()));
@@ -221,6 +227,26 @@ public class ProcessSubmitAdapter extends BaseMultiItemQuickAdapter<ProcessConte
 
     }
 
+    private void addTextChangeListener(BaseViewHolderImpl helper, final ProcessContentBean item) {
+        EditText etValue = helper.getView(R.id.item_process_submit_text_et_value);
+        etValue.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                item.setContext(s.toString().trim());
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+            }
+        });
+    }
+
 
     public void updateResultData(int requestCode, Intent data) {
         switch (requestCode) {
@@ -254,6 +280,7 @@ public class ProcessSubmitAdapter extends BaseMultiItemQuickAdapter<ProcessConte
                         break;
                     case "5"://日期选择
                         // TODO: 2018/6/28
+                        showTimeSelectorDialog(getData(), position, adapter);
                         break;
                     default:
                         break;
@@ -264,6 +291,26 @@ public class ProcessSubmitAdapter extends BaseMultiItemQuickAdapter<ProcessConte
                 break;
             default:
                 break;
+        }
+
+    }
+
+    private void showTimeSelectorDialog(List<ProcessContentBean> data, int position, BaseQuickAdapter adapter) {
+        final TextView tvValue = (TextView) adapter.getViewByPosition(mRvProcess, position, R.id.item_process_submit_normal_tv_value);
+        final ProcessContentBean contentBean = data.get(position);
+        mTimeSelector = new TimeSelector(mContext, new TimeSelector.ResultHandler() {
+            @Override
+            public void handle(String time, Calendar calender) {
+                contentBean.setContext(time);
+                tvValue.setText(time);
+
+            }
+        }, "2000-1-1 00:00", "2030-12-31 00:00");
+
+        if (NullUtils.isNull(contentBean.getContext())) {
+            mTimeSelector.show(mCurrentTime);
+        } else {
+            mTimeSelector.show(contentBean.getContext());
         }
 
     }

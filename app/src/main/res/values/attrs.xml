@@ -58,7 +58,7 @@
     <!--CircleImageView-->
 
 
-    <declare-styleable name="SwitchButton" >
+    <declare-styleable name="SwitchButton">
         <attr name="kswThumbDrawable" dateFormat="reference" />
         <attr name="kswThumbColor" dateFormat="color|reference" />
         <attr name="kswThumbMargin" dateFormat="dimension|reference" />
@@ -82,5 +82,11 @@
         <attr name="kswTextExtra" dateFormat="dimension" />
         <attr name="kswTextAdjust" dateFormat="dimension" />
     </declare-styleable>
+
+    <!---->
+    <declare-styleable name="PickerView">
+        <attr name="isLoop" format="boolean" />
+    </declare-styleable>
+    <!---->
 
 </resources>
