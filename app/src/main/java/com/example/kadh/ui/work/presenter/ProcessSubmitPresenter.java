@@ -85,31 +85,59 @@ public class ProcessSubmitPresenter extends BaseBindingImpl<ProcessSubmitContrac
     public void checkSubmitData(List<ProcessContentBean> data) {
         for (ProcessContentBean bean : data) {
             switch (NullUtils.filterNull(bean.getPtype())) {
-                case "1":
-
+                case "1"://单选
+                    checkSingle(bean);
                     break;
-                case "2":
-
+                case "2"://多选
+                    if (checkMulit(bean)) return;
                     break;
-                case "3":
-                case "4":
-                    checkText(bean);
+                case "3"://单文本
+                case "4"://多文本
+                    if (checkText(bean)) return;
                     break;
-                case "5":
-
+                case "5"://日期
+                    checkDate(bean);
                     break;
-                case "6":
-
+                case "6"://图片
+                    checkPic(bean);
                     break;
-                case "7":
-
+                case "7"://附件
+                    checkAtt(bean);
                     break;
                 default:
+                    bean.setContext(NullUtils.filterNull(bean.getContext(), "未填写"));
                     break;
             }
-
-
         }
+    }
+
+    private boolean checkMulit(ProcessContentBean bean) {
+        String[] split = NullUtils.filterEmpty(bean.getChooseValue()).split(",");
+        if (split.length > Integer.parseInt(bean.getPmaxLength())) {
+            Toast.makeText(App.getApp(), bean.getPtitle() + "->应小于等于" + bean.getPmaxLength(), Toast.LENGTH_SHORT).show();
+            return true;
+        }
+        if (split.length < Integer.parseInt(bean.getPminLength())) {
+            Toast.makeText(App.getApp(), bean.getPtitle() + "->应大于等于" + bean.getPminLength(), Toast.LENGTH_SHORT).show();
+            return true;
+        }
+        return false;
+    }
+
+    private void checkSingle(ProcessContentBean bean) {
+        //nothing
+    }
+
+    private void checkAtt(ProcessContentBean bean) {
+        // TODO: 2018/6/29 流程提交附件处理
+    }
+
+    private void checkPic(ProcessContentBean bean) {
+        // TODO: 2018/6/29 流程提交图片处理
+    }
+
+    private void checkDate(ProcessContentBean bean) {
+
     }
 
     /**
@@ -117,51 +145,74 @@ public class ProcessSubmitPresenter extends BaseBindingImpl<ProcessSubmitContrac
      *
      * @param bean
      */
-    private void checkText(ProcessContentBean bean) {
+    private boolean checkText(ProcessContentBean bean) {
         switch (bean.getPcheck()) {
             case "0":
-                if (NullUtils.filterEmpty(bean.getContext()).length() > Integer.parseInt(bean.getPmaxLength())) {
+                if (NullUtils.filterEmpty(bean.getContext().trim()).length() > Integer.parseInt(bean.getPmaxLength())) {
                     Toast.makeText(App.getApp(), bean.getPtitle() + "->长度应小于" + (Integer.parseInt(bean.getPmaxLength()) + 1) + "个", Toast.LENGTH_SHORT).show();
-                    return;
+                    return true;
                 }
-                if (NullUtils.filterEmpty(bean.getContext()).length() > Integer.parseInt(bean.getPminLength())) {
-                    Toast.makeText(App.getApp(), bean.getPtitle() + "->长度应大于" + (Integer.parseInt(bean.getPmaxLength()) + 1) + "个", Toast.LENGTH_SHORT).show();
-                    return;
+                if (NullUtils.filterEmpty(bean.getContext().trim()).length() < Integer.parseInt(bean.getPminLength())) {
+                    Toast.makeText(App.getApp(), bean.getPtitle() + "->长度应大于" + (Integer.parseInt(bean.getPminLength()) - 1) + "个", Toast.LENGTH_SHORT).show();
+                    return true;
                 }
                 break;
             case "1":
-
                 if (!CheckUtils.isInt(bean.getContext())) {
                     Toast.makeText(App.getApp(), bean.getPtitle() + "->为空或格式错误(整数)", Toast.LENGTH_SHORT).show();
-                    return;
+                    return true;
                 }
                 if (Integer.parseInt(bean.getContext()) > Integer.parseInt(bean.getPmaxLength())) {
                     Toast.makeText(App.getApp(), bean.getPtitle() + "->应小于等于" + bean.getPmaxLength(), Toast.LENGTH_SHORT).show();
-                    return;
+                    return true;
                 }
                 if (Integer.parseInt(bean.getContext()) < Integer.parseInt(bean.getPminLength())) {
                     Toast.makeText(App.getApp(), bean.getPtitle() + "->应大于等于" + bean.getPminLength(), Toast.LENGTH_SHORT).show();
-                    return;
+                    return true;
                 }
                 break;
             case "2":
-                // TODO: 2018/6/29  
+                if (!CheckUtils.isDouble(bean.getContext())) {
+                    Toast.makeText(App.getApp(), bean.getPtitle() + "->为空或格式错误(数字)", Toast.LENGTH_SHORT).show();
+                    return true;
+                }
+                if (Double.parseDouble(bean.getContext()) > Double.parseDouble(bean.getPmaxLength())) {
+                    Toast.makeText(App.getApp(), bean.getPtitle() + "->应小于等于" + bean.getPmaxLength(), Toast.LENGTH_SHORT).show();
+                    return true;
+                }
+                if (Double.parseDouble(bean.getContext()) < Double.parseDouble(bean.getPminLength())) {
+                    Toast.makeText(App.getApp(), bean.getPtitle() + "->应大于等于" + bean.getPminLength(), Toast.LENGTH_SHORT).show();
+                    return true;
+                }
                 break;
             case "3":
-
+                if (!CheckUtils.isMobile(bean.getContext())) {
+                    Toast.makeText(App.getApp(), bean.getPtitle() + "->为空或格式错误(手机号码)", Toast.LENGTH_SHORT).show();
+                    return true;
+                }
                 break;
             case "4":
-
+                if (!CheckUtils.isEmail(bean.getContext())) {
+                    Toast.makeText(App.getApp(), bean.getPtitle() + "->为空或格式错误(邮箱)", Toast.LENGTH_SHORT).show();
+                    return true;
+                }
                 break;
             case "5":
-
+                if (!CheckUtils.isIdCard(bean.getContext())) {
+                    Toast.makeText(App.getApp(), bean.getPtitle() + "->为空或格式错误(身份证)", Toast.LENGTH_SHORT).show();
+                    return true;
+                }
                 break;
             case "6":
-
+                if (!CheckUtils.isPhone(bean.getContext())) {
+                    Toast.makeText(App.getApp(), bean.getPtitle() + "->为空或格式错误(座机)", Toast.LENGTH_SHORT).show();
+                    return true;
+                }
                 break;
             default:
-                break;
+                return false;
         }
+        return false;
     }
 
 

@@ -4,6 +4,7 @@ import android.Manifest;
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Environment;
+import android.support.annotation.IdRes;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.Editable;
@@ -124,7 +125,7 @@ public class ProcessSubmitAdapter extends BaseMultiItemQuickAdapter<ProcessConte
     }
 
     private void processItemText(BaseViewHolderImpl helper, final ProcessContentBean item) {
-        addTextChangeListener(helper, item);
+        addTextChangeListener(helper, R.id.item_process_submit_text_et_value, item);
         helper.setText(R.id.item_process_submit_text_tv_title, NullUtils.filterEmpty(item.getPtitle()));
         helper.setHint(R.id.item_process_submit_text_et_value, NullUtils.filterEmpty(item.getPlayer()));
         helper.setText(R.id.item_process_submit_text_et_value, NullUtils.filterEmpty(item.getContext()));
@@ -133,7 +134,7 @@ public class ProcessSubmitAdapter extends BaseMultiItemQuickAdapter<ProcessConte
 
 
     private void processItemMtext(BaseViewHolderImpl helper, ProcessContentBean item) {
-        addTextChangeListener(helper, item);
+        addTextChangeListener(helper, R.id.item_process_submit_mtext_et_value, item);
         helper.setText(R.id.item_process_submit_mtext_tv_title, NullUtils.filterEmpty(item.getPtitle()));
         helper.setHint(R.id.item_process_submit_mtext_et_value, NullUtils.filterEmpty(item.getPlayer()));
         helper.setText(R.id.item_process_submit_mtext_et_value, NullUtils.filterEmpty(item.getContext()));
@@ -173,9 +174,7 @@ public class ProcessSubmitAdapter extends BaseMultiItemQuickAdapter<ProcessConte
                 helper.setText(R.id.item_process_submit_normal_tv_value, NullUtils.filterEmpty(item.getContext(), item.getPtype()));
                 break;
             case "5":
-                if (item.getContext() == null) {
-                    item.setContext(mCurrentTime);
-                }
+                item.setContext(NullUtils.filterNull(item.getContext(), mCurrentTime));
                 helper.setText(R.id.item_process_submit_normal_tv_value, NullUtils.filterEmpty(item.getContext()));
                 break;
             default:
@@ -227,8 +226,8 @@ public class ProcessSubmitAdapter extends BaseMultiItemQuickAdapter<ProcessConte
 
     }
 
-    private void addTextChangeListener(BaseViewHolderImpl helper, final ProcessContentBean item) {
-        EditText etValue = helper.getView(R.id.item_process_submit_text_et_value);
+    private void addTextChangeListener(BaseViewHolderImpl helper, @IdRes int idRes, final ProcessContentBean item) {
+        EditText etValue = helper.getView(idRes);
         etValue.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
