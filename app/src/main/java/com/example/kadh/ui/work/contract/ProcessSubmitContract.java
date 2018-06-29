@@ -23,6 +23,10 @@ public interface ProcessSubmitContract {
         void getProcessContent(String processid, List<ProcessUserDetailBean> data);
 
         void processUserDetail(String pid, String processid);
+
+        void processSubmit(List<ProcessContentBean> data, String processid, String pid, String pname);
+
+        void checkSubmitData(List<ProcessContentBean> data);
     }
 
 }

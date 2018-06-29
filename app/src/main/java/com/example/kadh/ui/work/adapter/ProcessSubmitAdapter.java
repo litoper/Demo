@@ -249,6 +249,7 @@ public class ProcessSubmitAdapter extends BaseMultiItemQuickAdapter<ProcessConte
 
 
     public void updateResultData(int requestCode, Intent data) {
+        // TODO: 2018/6/29 图片及附件上传待添加完善
         switch (requestCode) {
             case 888:
                 mSelectedPhotos = data.getStringArrayListExtra("EXTRA_SELECTED_PHOTOS");
@@ -279,7 +280,6 @@ public class ProcessSubmitAdapter extends BaseMultiItemQuickAdapter<ProcessConte
                         showMulitChoiceDialog(getData(), position, adapter);
                         break;
                     case "5"://日期选择
-                        // TODO: 2018/6/28
                         showTimeSelectorDialog(getData(), position, adapter);
                         break;
                     default:

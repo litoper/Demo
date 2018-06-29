@@ -19,6 +19,7 @@ import com.example.kadh.utils.NullUtils;
 import java.util.List;
 
 import butterknife.BindView;
+import butterknife.OnClick;
 
 /**
  * @author: kadh
@@ -37,6 +38,7 @@ public class ProcessSubmitActivity extends BaseActivityView<ProcessSubmitPresent
     private String mResubmit;
     private List<ProcessContentBean> mProcessContentBeans;
     private ProcessSubmitAdapter mProcessSubmitAdapter;
+    private String mPname;
 
     @Override
     public void configViews() {
@@ -56,11 +58,11 @@ public class ProcessSubmitActivity extends BaseActivityView<ProcessSubmitPresent
     @Override
     public void initToolBar() {
         mProcessid = getIntent().getStringExtra("processid");
-        String pname = getIntent().getStringExtra("pname");
+        mPname = getIntent().getStringExtra("pname");
         mPid = getIntent().getStringExtra("pid");
         mResubmit = getIntent().getStringExtra("resubmit");
 
-        mCommonToolbar.setTitle(NullUtils.filterEmpty(pname));
+        mCommonToolbar.setTitle(NullUtils.filterEmpty(mPname));
         mCommonToolbar.setNavigationIcon(R.drawable.common_back);
 
     }
@@ -115,5 +117,11 @@ public class ProcessSubmitActivity extends BaseActivityView<ProcessSubmitPresent
                 mProcessSubmitAdapter.updateResultData(requestCode, data);
             }
         }
+    }
+
+
+    @OnClick(R.id.activity_work_process_submit_btn_commit)
+    public void onViewClicked() {
+        mPresenter.processSubmit(mProcessContentBeans, mProcessid, mPid, mPname);
     }
 }
