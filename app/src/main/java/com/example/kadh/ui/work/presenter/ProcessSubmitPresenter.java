@@ -3,6 +3,7 @@ package com.example.kadh.ui.work.presenter;
 import android.util.Log;
 import android.widget.Toast;
 
+import com.ess.filepicker.model.EssFile;
 import com.example.kadh.app.App;
 import com.example.kadh.base.BaseBindingImpl;
 import com.example.kadh.ui.person.bean.UpFieldBean;
@@ -23,12 +24,14 @@ import org.json.JSONObject;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.LinkedHashMap;
 import java.util.List;
 
 import javax.inject.Inject;
 
 import cn.bingoogolapple.photopicker.widget.BGASortableNinePhotoLayout;
 import io.reactivex.Flowable;
+import io.reactivex.functions.Function;
 import okhttp3.MediaType;
 import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
@@ -145,13 +148,19 @@ public class ProcessSubmitPresenter extends BaseBindingImpl<ProcessSubmitContrac
     }
 
     @Override
-    public void upLoadField(ArrayList<String> selectedPhotos, BGASortableNinePhotoLayout bgaLytImage) {
+    public void upLoadField(ArrayList<String> selectedPhotos, final LinkedHashMap<String, UpFieldBean> savePhotos, final BGASortableNinePhotoLayout bgaLytImage) {
         List<Flowable> flowableList = new ArrayList<>();
-        for (String selectedPhoto : selectedPhotos) {
+        for (final String selectedPhoto : selectedPhotos) {
             File file = new File(selectedPhoto);
             RequestBody requestBody = RequestBody.create(MediaType.parse("form-data"), file);
             MultipartBody.Part part = MultipartBody.Part.createFormData("file", file.getName(), requestBody);
-            Flowable flowable = mRxApi.upLoadField(part, file.getName());
+            Flowable flowable = mRxApi.upLoadField(part, file.getName()).map(new Function<BaseResponse<List<UpFieldBean>>,BaseResponse<List<UpFieldBean>>>() {
+                @Override
+                public BaseResponse<List<UpFieldBean>> apply(BaseResponse<List<UpFieldBean>> response) throws Exception {
+                    response.data.get(0).setLocalPath(selectedPhoto);
+                    return response;
+                }
+            });
             flowableList.add(flowable);
         }
 
@@ -160,15 +169,17 @@ public class ProcessSubmitPresenter extends BaseBindingImpl<ProcessSubmitContrac
         mRxApi.toConcatSub(new SubProtect<BaseResponse<List<UpFieldBean>>>(new SubNextImpl<BaseResponse<List<UpFieldBean>>>() {
             @Override
             public void onSubSuccess(BaseResponse<List<UpFieldBean>> response) {
-                Log.d("ProcessSubmitPresenter", "response.data:" + response.data);
+                UpFieldBean upFieldBean = response.data.get(0);
+                bgaLytImage.addLastItem(upFieldBean.getLocalPath());
+                savePhotos.put(upFieldBean.getLocalPath(), upFieldBean);
             }
         }), flowables);
     }
 
 
     @Override
-    public void upLoadField(ArrayList<String> selectedPhotos, ProcessItemAttAdapter itemAttAdapter) {
-
+    public void upLoadField(ArrayList<String> selectedPhotos, LinkedHashMap<String, EssFile> savaPhoto, ProcessItemAttAdapter itemAttAdapter) {
+        // TODO: 2018/7/2  
     }
 
     private boolean checkMulit(ProcessContentBean bean) {

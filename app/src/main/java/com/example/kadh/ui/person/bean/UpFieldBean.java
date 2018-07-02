@@ -11,6 +11,7 @@ public class UpFieldBean {
     private String code;
     private String fileName;
     private String oa_file__id;
+    private String localPath;
 
     public String getCode() {
         return code;
@@ -34,6 +35,14 @@ public class UpFieldBean {
 
     public void setOa_file__id(String oa_file__id) {
         this.oa_file__id = oa_file__id;
+    }
+
+    public String getLocalPath() {
+        return localPath;
+    }
+
+    public void setLocalPath(String localPath) {
+        this.localPath = localPath;
     }
 
     @Override
