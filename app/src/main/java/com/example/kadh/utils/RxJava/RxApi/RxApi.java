@@ -17,6 +17,7 @@ import com.example.kadh.ui.main.bean.WeatherBean;
 import com.example.kadh.ui.person.bean.QueryProTotalInfoBean;
 import com.example.kadh.ui.person.bean.RoleManageBean;
 import com.example.kadh.ui.person.bean.UpFieldBean;
+import com.example.kadh.ui.work.bean.ProcessAlReadyBean;
 import com.example.kadh.ui.work.bean.ProcessContentBean;
 import com.example.kadh.ui.work.bean.ProcessListBean;
 import com.example.kadh.ui.work.bean.ProcessModuleBean;
@@ -448,9 +449,24 @@ public class RxApi {
      * @param pcondition_text
      * @return
      */
-    public Flowable submitProcess(
-            FlowableSubscriber<BaseResponse<String>> subscriber, String processid, String puid, String title, String pcondition_text) {
+    public Flowable submitProcess(FlowableSubscriber<BaseResponse<String>> subscriber, String processid, String puid, String title, String pcondition_text) {
         Flowable flowable = mRxService.submitProcess(processid, puid, title, pcondition_text, version);
+        toSubscribe(flowable, subscriber);
+        return flowable;
+    }
+
+
+    /**
+     * 获取已发起流程列表
+     *
+     * @param subscriber
+     * @param type
+     * @param keyword
+     * @param page
+     * @return
+     */
+    public Flowable getProcessAlReadyList(FlowableSubscriber<BaseResponse<List<ProcessAlReadyBean>>> subscriber, String type, String keyword, String page) {
+        Flowable flowable = mRxService.getProcessAlReadyList(type, keyword, page, version);
         toSubscribe(flowable, subscriber);
         return flowable;
     }

@@ -5,6 +5,7 @@ import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.widget.Button;
+import android.widget.Toast;
 
 import com.example.kadh.R;
 import com.example.kadh.base.BaseActivityView;
@@ -105,8 +106,13 @@ public class ProcessSubmitActivity extends BaseActivityView<ProcessSubmitPresent
         mRvProcess.addItemDecoration(new DividerItemDecoration(mContext, DividerItemDecoration.VERTICAL));
         mRvProcess.setLayoutManager(layoutManager);
         mRvProcess.setAdapter(mProcessSubmitAdapter);
-        // TODO: 2018/6/27  
 
+    }
+
+    @Override
+    public void processSubmitSuccess() {
+        Toast.makeText(mContext, "提交成功", Toast.LENGTH_SHORT).show();
+        this.finish();
     }
 
     @Override

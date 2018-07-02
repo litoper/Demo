@@ -17,6 +17,7 @@ import com.example.kadh.ui.main.bean.WeatherBean;
 import com.example.kadh.ui.person.bean.QueryProTotalInfoBean;
 import com.example.kadh.ui.person.bean.RoleManageBean;
 import com.example.kadh.ui.person.bean.UpFieldBean;
+import com.example.kadh.ui.work.bean.ProcessAlReadyBean;
 import com.example.kadh.ui.work.bean.ProcessContentBean;
 import com.example.kadh.ui.work.bean.ProcessListBean;
 import com.example.kadh.ui.work.bean.ProcessModuleBean;
@@ -201,11 +202,7 @@ interface RxService {
 
     @FormUrlEncoded
     @POST(RxUrl.Url.POSTUSERINFO)
-    Flowable<BaseResponse<String>> postUserInfo(
-            @Field("uimage") String uimage,
-            @Field("urole") String id,
-            @Field("uemail") String uemail,
-            @Field("version") String version);
+    Flowable<BaseResponse<String>> postUserInfo(@Field("uimage") String uimage, @Field("urole") String id, @Field("uemail") String uemail, @Field("version") String version);
 
     @GET(RxUrl.Url.GETCONTACTUPDATEDATA)
     Flowable<BaseResponse<String>> getContactUpdateData(@Query("updateTime") String updateTime, @Query("version") String version);
@@ -227,5 +224,7 @@ interface RxService {
     @POST(RxUrl.Url.SUBMITPROCESS)
     Flowable<BaseResponse<String>> submitProcess(@Field("pro_process__id") String processid, @Field("puid") String puid, @Field("ptitle") String title, @Field("pcondition_text") String pcondition_text, @Query("version") String version);
 
+    @GET(RxUrl.Url.GETPROCESSALREADYLIST)
+    Flowable<BaseResponse<List<ProcessAlReadyBean>>> getProcessAlReadyList(@Query("type") String type, @Query("keyword") String keyword, @Query("page") String page, @Query("version") String version);
 
 }

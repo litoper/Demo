@@ -1,6 +1,5 @@
 package com.example.kadh.ui.work.presenter;
 
-import android.util.Log;
 import android.widget.Toast;
 
 import com.ess.filepicker.model.EssFile;
@@ -24,7 +23,6 @@ import org.json.JSONObject;
 
 import java.io.File;
 import java.util.ArrayList;
-import java.util.LinkedHashMap;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -45,10 +43,14 @@ import okhttp3.RequestBody;
  */
 public class ProcessSubmitPresenter extends BaseBindingImpl<ProcessSubmitContract.View> implements ProcessSubmitContract.Presenter {
     private RxApi mRxApi;
+    private List<UpFieldBean> mSavePhotos;
+    private List<UpFieldBean> mSaveFiles;
 
     @Inject
     public ProcessSubmitPresenter(RxApi rxApi) {
         mRxApi = rxApi;
+        mSaveFiles = new ArrayList<>();
+        mSavePhotos = new ArrayList<>();
     }
 
     @Override
@@ -140,21 +142,20 @@ public class ProcessSubmitPresenter extends BaseBindingImpl<ProcessSubmitContrac
         mRxApi.submitProcess(new SubProtect<BaseResponse<String>>(new SubNextImpl<BaseResponse<String>>() {
             @Override
             public void onSubSuccess(BaseResponse<String> response) {
-                // TODO: 2018/7/2 流程提交成功处理
-                Log.d("ProcessSubmitPresenter", "response:" + response);
+                mView.processSubmitSuccess();
 
             }
         }), processid, pid, pname, json);
     }
 
     @Override
-    public void upLoadField(ArrayList<String> selectedPhotos, final LinkedHashMap<String, UpFieldBean> savePhotos, final BGASortableNinePhotoLayout bgaLytImage) {
+    public void upLoadField(ArrayList<String> selectedPhotos, final BGASortableNinePhotoLayout bgaLytImage) {
         List<Flowable> flowableList = new ArrayList<>();
         for (final String selectedPhoto : selectedPhotos) {
             File file = new File(selectedPhoto);
             RequestBody requestBody = RequestBody.create(MediaType.parse("form-data"), file);
             MultipartBody.Part part = MultipartBody.Part.createFormData("file", file.getName(), requestBody);
-            Flowable flowable = mRxApi.upLoadField(part, file.getName()).map(new Function<BaseResponse<List<UpFieldBean>>,BaseResponse<List<UpFieldBean>>>() {
+            Flowable flowable = mRxApi.upLoadField(part, file.getName()).map(new Function<BaseResponse<List<UpFieldBean>>, BaseResponse<List<UpFieldBean>>>() {
                 @Override
                 public BaseResponse<List<UpFieldBean>> apply(BaseResponse<List<UpFieldBean>> response) throws Exception {
                     response.data.get(0).setLocalPath(selectedPhoto);
@@ -164,22 +165,43 @@ public class ProcessSubmitPresenter extends BaseBindingImpl<ProcessSubmitContrac
             flowableList.add(flowable);
         }
 
-        Flowable[] flowables = new Flowable[flowableList.size()];
-        flowableList.toArray(flowables);
+        Flowable[] flowables = flowableList.toArray(new Flowable[selectedPhotos.size()]);
         mRxApi.toConcatSub(new SubProtect<BaseResponse<List<UpFieldBean>>>(new SubNextImpl<BaseResponse<List<UpFieldBean>>>() {
             @Override
             public void onSubSuccess(BaseResponse<List<UpFieldBean>> response) {
                 UpFieldBean upFieldBean = response.data.get(0);
+                mSavePhotos.add(upFieldBean);
                 bgaLytImage.addLastItem(upFieldBean.getLocalPath());
-                savePhotos.put(upFieldBean.getLocalPath(), upFieldBean);
             }
         }), flowables);
     }
 
-
     @Override
-    public void upLoadField(ArrayList<String> selectedPhotos, LinkedHashMap<String, EssFile> savaPhoto, ProcessItemAttAdapter itemAttAdapter) {
-        // TODO: 2018/7/2  
+    public void upLoadField(List<EssFile> selectedFiles, final ProcessItemAttAdapter itemAttAdapter) {
+        List<Flowable> flowableList = new ArrayList<>();
+        for (final EssFile selectFile : selectedFiles) {
+            File file = selectFile.getFile();
+            RequestBody requestBody = RequestBody.create(MediaType.parse("form-data"), file);
+            MultipartBody.Part part = MultipartBody.Part.createFormData("file", file.getName(), requestBody);
+            Flowable flowable = mRxApi.upLoadField(part, file.getName()).map(new Function<BaseResponse<List<UpFieldBean>>, BaseResponse<List<UpFieldBean>>>() {
+                @Override
+                public BaseResponse<List<UpFieldBean>> apply(BaseResponse<List<UpFieldBean>> response) throws Exception {
+                    response.data.get(0).setLocalPath(selectFile.getAbsolutePath());
+                    return response;
+                }
+            });
+            flowableList.add(flowable);
+        }
+
+        Flowable[] flowables = flowableList.toArray(new Flowable[selectedFiles.size()]);
+        mRxApi.toConcatSub(new SubProtect<BaseResponse<List<UpFieldBean>>>(new SubNextImpl<BaseResponse<List<UpFieldBean>>>() {
+            @Override
+            public void onSubSuccess(BaseResponse<List<UpFieldBean>> response) {
+                UpFieldBean upFieldBean = response.data.get(0);
+                mSaveFiles.add(upFieldBean);
+                itemAttAdapter.addData(new EssFile(upFieldBean.getLocalPath()));
+            }
+        }), flowables);
     }
 
     private boolean checkMulit(ProcessContentBean bean) {
@@ -200,11 +222,26 @@ public class ProcessSubmitPresenter extends BaseBindingImpl<ProcessSubmitContrac
     }
 
     private void checkAtt(ProcessContentBean bean) {
-        // TODO: 2018/6/29 流程提交附件处理
+        String docName = "";
+        String docValue = "";
+        for (UpFieldBean saveFile : mSaveFiles) {
+            docName = docName + "," + saveFile.getFileName();
+            docValue = docValue + "," + saveFile.getCode();
+        }
+        if (docValue.length() > 0) {
+            bean.setContext(docName.substring(1));
+            bean.setChooseValue(docValue.substring(1));
+        }
     }
 
     private void checkPic(ProcessContentBean bean) {
-        // TODO: 2018/6/29 流程提交图片处理
+        String photoValues = "";
+        for (UpFieldBean savePhoto : mSavePhotos) {
+            photoValues = photoValues + "," + savePhoto.getCode();
+        }
+        if (photoValues.length() > 0) {
+            bean.setContext(photoValues.substring(1));
+        }
     }
 
     private void checkDate(ProcessContentBean bean) {

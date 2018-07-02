@@ -22,7 +22,6 @@ import com.ess.filepicker.model.EssFile;
 import com.ess.filepicker.util.Const;
 import com.example.kadh.R;
 import com.example.kadh.base.BaseViewHolderImpl;
-import com.example.kadh.ui.person.bean.UpFieldBean;
 import com.example.kadh.ui.work.activity.ProcessSubmitActivity;
 import com.example.kadh.ui.work.bean.ProcessContentBean;
 import com.example.kadh.ui.work.bean.ProcessSingleChoiceBean;
@@ -37,7 +36,6 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
-import java.util.LinkedHashMap;
 import java.util.List;
 
 import cn.bingoogolapple.photopicker.activity.BGAPhotoPickerActivity;
@@ -65,8 +63,6 @@ public class ProcessSubmitAdapter extends BaseMultiItemQuickAdapter<ProcessConte
     private ArrayList<String> mSelectedPhotos;
     private List<EssFile> mSelectedFiles;
 
-    private LinkedHashMap<String, UpFieldBean> mSavePhotos;
-    private LinkedHashMap<String, EssFile> mSaveFiles;
 
     /**
      * Same as QuickAdapter#QuickAdapter(Context,int) but with
@@ -82,8 +78,6 @@ public class ProcessSubmitAdapter extends BaseMultiItemQuickAdapter<ProcessConte
         mActivity = activity;
         mPresenter = presenter;
         mSelectedPhotos = new ArrayList<>();
-        mSavePhotos = new LinkedHashMap<>();
-        mSaveFiles = new LinkedHashMap<>();
         mCurrentTime = DateUtils.getCurrentDate(DateUtils.DateFormat.FORMAT_MM);
         addItemType(ProcessContentBean.NORMAL, R.layout.item_process_submit_normal);
         addItemType(ProcessContentBean.TEXT, R.layout.item_process_submit_text);
@@ -259,18 +253,16 @@ public class ProcessSubmitAdapter extends BaseMultiItemQuickAdapter<ProcessConte
         switch (requestCode) {
             case 888:
                 mSelectedPhotos = data.getStringArrayListExtra("EXTRA_SELECTED_PHOTOS");
-//                mBgaLytImage.setData(BGAPhotoPickerActivity.getSelectedPhotos(data));
-                mPresenter.upLoadField(mSelectedPhotos, mSavePhotos,mBgaLytImage);
+                mPresenter.upLoadField(mSelectedPhotos, mBgaLytImage);
                 break;
             case 666:
                 mSelectedPhotos = data.getStringArrayListExtra("EXTRA_SELECTED_PHOTOS");
                 mBgaLytImage.setData(BGAPhotoPickerPreviewActivity.getSelectedPhotos(data));
-                mPresenter.upLoadField(mSelectedPhotos,mSavePhotos, mBgaLytImage);
+                mPresenter.upLoadField(mSelectedPhotos, mBgaLytImage);
                 break;
             case 168:
                 mSelectedFiles = data.getParcelableArrayListExtra(Const.EXTRA_RESULT_SELECTION);
-                mItemAttAdapter.setNewData(mSelectedFiles);
-                mPresenter.upLoadField(mSelectedPhotos, mSaveFiles,mItemAttAdapter);
+                mPresenter.upLoadField(mSelectedFiles, mItemAttAdapter);
                 break;
             default:
                 break;

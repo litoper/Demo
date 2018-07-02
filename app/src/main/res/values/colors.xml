@@ -56,4 +56,7 @@
     <color name="common_divider_narrow">#E3E3E3</color>
     <!--通用分割线粗-->
     <color name="common_divider_wide">@color/light_white</color>
+
+
+    <color name="green_agree">#1ABC9C</color>
 </resources>
