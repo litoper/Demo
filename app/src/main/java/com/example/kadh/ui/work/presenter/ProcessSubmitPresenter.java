@@ -146,21 +146,23 @@ public class ProcessSubmitPresenter extends BaseBindingImpl<ProcessSubmitContrac
 
     @Override
     public void upLoadField(ArrayList<String> selectedPhotos, BGASortableNinePhotoLayout bgaLytImage) {
-
-        ArrayList<Flowable> flowables = new ArrayList<>();
+        List<Flowable> flowableList = new ArrayList<>();
         for (String selectedPhoto : selectedPhotos) {
             File file = new File(selectedPhoto);
             RequestBody requestBody = RequestBody.create(MediaType.parse("form-data"), file);
             MultipartBody.Part part = MultipartBody.Part.createFormData("file", file.getName(), requestBody);
-
-            Flowable flowable = mRxApi.upLoadField(new SubProtect<BaseResponse<List<UpFieldBean>>>(new SubNextImpl<BaseResponse<List<UpFieldBean>>>() {
-                @Override
-                public void onSubSuccess(BaseResponse<List<UpFieldBean>> response) {
-                    Log.d("ProcessSubmitPresenter", "response.data:" + response.data);
-                }
-            }), part, file.getName());
-            flowables.add(flowable);
+            Flowable flowable = mRxApi.upLoadField(part, file.getName());
+            flowableList.add(flowable);
         }
+
+        Flowable[] flowables = new Flowable[flowableList.size()];
+        flowableList.toArray(flowables);
+        mRxApi.toConcatSub(new SubProtect<BaseResponse<List<UpFieldBean>>>(new SubNextImpl<BaseResponse<List<UpFieldBean>>>() {
+            @Override
+            public void onSubSuccess(BaseResponse<List<UpFieldBean>> response) {
+                Log.d("ProcessSubmitPresenter", "response.data:" + response.data);
+            }
+        }), flowables);
     }
 
 

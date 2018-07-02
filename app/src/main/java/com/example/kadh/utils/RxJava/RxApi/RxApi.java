@@ -344,6 +344,11 @@ public class RxApi {
         return flowable;
     }
 
+    public Flowable upLoadField(MultipartBody.Part file, String filename) {
+        Flowable flowable = mRxService.upLoadField(file, version, filename);
+        return flowable;
+    }
+
 //    /**
 //     * upLoadField多文件上传
 //     */
@@ -448,7 +453,6 @@ public class RxApi {
         Flowable flowable = mRxService.submitProcess(processid, puid, title, pcondition_text, version);
         toSubscribe(flowable, subscriber);
         return flowable;
-
     }
 
 
