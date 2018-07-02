@@ -1,9 +1,12 @@
 package com.example.kadh.ui.work.presenter;
 
+import android.util.Log;
 import android.widget.Toast;
 
 import com.example.kadh.app.App;
 import com.example.kadh.base.BaseBindingImpl;
+import com.example.kadh.ui.person.bean.UpFieldBean;
+import com.example.kadh.ui.work.adapter.ProcessItemAttAdapter;
 import com.example.kadh.ui.work.bean.ProcessContentBean;
 import com.example.kadh.ui.work.bean.ProcessUserDetailBean;
 import com.example.kadh.ui.work.contract.ProcessSubmitContract;
@@ -14,9 +17,21 @@ import com.example.kadh.utils.RxJava.RxApi.RxApi;
 import com.example.kadh.utils.RxJava.RxSubscriber.SubNextImpl;
 import com.example.kadh.utils.RxJava.RxSubscriber.SubProtect;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.File;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.inject.Inject;
+
+import cn.bingoogolapple.photopicker.widget.BGASortableNinePhotoLayout;
+import io.reactivex.Flowable;
+import okhttp3.MediaType;
+import okhttp3.MultipartBody;
+import okhttp3.RequestBody;
 
 /**
  * @author: kadh
@@ -71,18 +86,11 @@ public class ProcessSubmitPresenter extends BaseBindingImpl<ProcessSubmitContrac
 
     @Override
     public void processSubmit(List<ProcessContentBean> data, String processid, String pid, String pname) {
-        this.checkSubmitData(data);
-    }
 
-
-    /**
-     * Ptype    1:单选 2:多选 3:单文本 4:多文本 5:日期 6:图片 7:附件
-     * Pcheck （0-不需要校验、1-整型 2-浮点型 3-手机号 4-邮箱 5-身份证 6-座机）
-     *
-     * @param data
-     */
-    @Override
-    public void checkSubmitData(List<ProcessContentBean> data) {
+        /*
+         * Ptype    1:单选 2:多选 3:单文本 4:多文本 5:日期 6:图片 7:附件
+         * Pcheck （0-不需要校验、1-整型 2-浮点型 3-手机号 4-邮箱 5-身份证 6-座机）
+         */
         for (ProcessContentBean bean : data) {
             switch (NullUtils.filterNull(bean.getPtype())) {
                 case "1"://单选
@@ -105,10 +113,60 @@ public class ProcessSubmitPresenter extends BaseBindingImpl<ProcessSubmitContrac
                     checkAtt(bean);
                     break;
                 default:
-                    bean.setContext(NullUtils.filterNull(bean.getContext(), "未填写"));
                     break;
             }
+            bean.setContext(NullUtils.filterNull(bean.getContext(), "未填写"));
         }
+
+
+        JSONArray jsonArray = new JSONArray();
+        for (ProcessContentBean contentBean : data) {
+            JSONObject jsonObject = new JSONObject();
+            try {
+                jsonObject.put("title", NullUtils.filterEmpty(contentBean.getPtitle()));
+                jsonObject.put("context", NullUtils.filterEmpty(contentBean.getContext()));
+                jsonObject.put("type", NullUtils.filterEmpty(contentBean.getPtype()));
+                jsonObject.put("pvalue", NullUtils.filterEmpty(contentBean.getPtype_chooseValue()));
+                jsonArray.put(jsonObject);
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+        }
+        String json = jsonArray.toString();
+
+        mRxApi.submitProcess(new SubProtect<BaseResponse<String>>(new SubNextImpl<BaseResponse<String>>() {
+            @Override
+            public void onSubSuccess(BaseResponse<String> response) {
+                // TODO: 2018/7/2 流程提交成功处理
+                Log.d("ProcessSubmitPresenter", "response:" + response);
+
+            }
+        }), processid, pid, pname, json);
+    }
+
+    @Override
+    public void upLoadField(ArrayList<String> selectedPhotos, BGASortableNinePhotoLayout bgaLytImage) {
+
+        ArrayList<Flowable> flowables = new ArrayList<>();
+        for (String selectedPhoto : selectedPhotos) {
+            File file = new File(selectedPhoto);
+            RequestBody requestBody = RequestBody.create(MediaType.parse("form-data"), file);
+            MultipartBody.Part part = MultipartBody.Part.createFormData("file", file.getName(), requestBody);
+
+            Flowable flowable = mRxApi.upLoadField(new SubProtect<BaseResponse<List<UpFieldBean>>>(new SubNextImpl<BaseResponse<List<UpFieldBean>>>() {
+                @Override
+                public void onSubSuccess(BaseResponse<List<UpFieldBean>> response) {
+                    Log.d("ProcessSubmitPresenter", "response.data:" + response.data);
+                }
+            }), part, file.getName());
+            flowables.add(flowable);
+        }
+    }
+
+
+    @Override
+    public void upLoadField(ArrayList<String> selectedPhotos, ProcessItemAttAdapter itemAttAdapter) {
+
     }
 
     private boolean checkMulit(ProcessContentBean bean) {
@@ -125,7 +183,7 @@ public class ProcessSubmitPresenter extends BaseBindingImpl<ProcessSubmitContrac
     }
 
     private void checkSingle(ProcessContentBean bean) {
-        //nothing
+        //do nothing
     }
 
     private void checkAtt(ProcessContentBean bean) {
@@ -137,7 +195,7 @@ public class ProcessSubmitPresenter extends BaseBindingImpl<ProcessSubmitContrac
     }
 
     private void checkDate(ProcessContentBean bean) {
-
+        //do nothing
     }
 
     /**

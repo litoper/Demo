@@ -36,7 +36,9 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 
 import cn.bingoogolapple.photopicker.activity.BGAPhotoPickerActivity;
 import cn.bingoogolapple.photopicker.activity.BGAPhotoPickerPreviewActivity;
@@ -53,15 +55,17 @@ import io.reactivex.functions.Consumer;
 public class ProcessSubmitAdapter extends BaseMultiItemQuickAdapter<ProcessContentBean, BaseViewHolderImpl> implements BGASortableNinePhotoLayout.Delegate, BaseQuickAdapter.OnItemChildClickListener {
 
     private String mCurrentTime;
+    private TimeSelector mTimeSelector;
     private RecyclerView mRvProcess;
-    private ProcessSubmitActivity mActivity;
-    private ProcessSubmitPresenter mPresenter;
-    private ArrayList<String> mSelectedPhotos;
-    private List<EssFile> mSelectedFiles;
-    private BGASortableNinePhotoLayout mBgaLytImage;
     private RecyclerView mRvAttValue;
     private ProcessItemAttAdapter mItemAttAdapter;
-    private TimeSelector mTimeSelector;
+    private ProcessSubmitActivity mActivity;
+    private ProcessSubmitPresenter mPresenter;
+    private BGASortableNinePhotoLayout mBgaLytImage;
+    private ArrayList<String> mSelectedPhotos;
+    private List<EssFile> mSelectedFiles;
+
+    private Map<String, String> mSavePhoto;
 
     /**
      * Same as QuickAdapter#QuickAdapter(Context,int) but with
@@ -77,6 +81,7 @@ public class ProcessSubmitAdapter extends BaseMultiItemQuickAdapter<ProcessConte
         mActivity = activity;
         mPresenter = presenter;
         mSelectedPhotos = new ArrayList<>();
+        mSavePhoto = new LinkedHashMap<>();
         mCurrentTime = DateUtils.getCurrentDate(DateUtils.DateFormat.FORMAT_MM);
         addItemType(ProcessContentBean.NORMAL, R.layout.item_process_submit_normal);
         addItemType(ProcessContentBean.TEXT, R.layout.item_process_submit_text);
@@ -253,14 +258,17 @@ public class ProcessSubmitAdapter extends BaseMultiItemQuickAdapter<ProcessConte
             case 888:
                 mSelectedPhotos = data.getStringArrayListExtra("EXTRA_SELECTED_PHOTOS");
                 mBgaLytImage.setData(BGAPhotoPickerActivity.getSelectedPhotos(data));
+                mPresenter.upLoadField(mSelectedPhotos, mBgaLytImage);
                 break;
             case 666:
                 mSelectedPhotos = data.getStringArrayListExtra("EXTRA_SELECTED_PHOTOS");
                 mBgaLytImage.setData(BGAPhotoPickerPreviewActivity.getSelectedPhotos(data));
+                mPresenter.upLoadField(mSelectedPhotos, mBgaLytImage);
                 break;
             case 168:
                 mSelectedFiles = data.getParcelableArrayListExtra(Const.EXTRA_RESULT_SELECTION);
                 mItemAttAdapter.setNewData(mSelectedFiles);
+                mPresenter.upLoadField(mSelectedPhotos, mItemAttAdapter);
                 break;
             default:
                 break;
@@ -365,7 +373,7 @@ public class ProcessSubmitAdapter extends BaseMultiItemQuickAdapter<ProcessConte
                         bean.setContext(value.substring(0, value.length() - 1));
 
                         TextView tvValue = (TextView) adapter.getViewByPosition(mRvProcess, pos, R.id.item_process_submit_normal_tv_value);
-                        tvValue.setText(bean.getContext());
+                        tvValue.setText(NullUtils.filterEmpty(bean.getContext()));
                         dialog.dismiss();
                         return false;
                     }

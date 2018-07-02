@@ -172,6 +172,10 @@ interface RxService {
     @GET
     Flowable<ResponseBody> download(@Url String url);
 
+    @Multipart
+    @POST(RxUrl.Url.UPLOADFIELD)
+    Flowable<BaseResponse<List<UpFieldBean>>> upLoadField(@Part MultipartBody.Part file, @Query("version") String version, @Query("fileName") String filename);
+
 
     @Multipart
     @POST(RxUrl.Url.UPFIELD)
@@ -218,6 +222,10 @@ interface RxService {
 
     @GET(RxUrl.Url.PROCESSUSERDETAIL)
     Flowable<BaseResponse<List<ProcessUserDetailBean>>> processUserDetail(@Query("pid") String pid, @Query("version") String version);
+
+    @FormUrlEncoded
+    @POST(RxUrl.Url.SUBMITPROCESS)
+    Flowable<BaseResponse<String>> submitProcess(@Field("pro_process__id") String processid, @Field("puid") String puid, @Field("ptitle") String title, @Field("pcondition_text") String pcondition_text, @Query("version") String version);
 
 
 }

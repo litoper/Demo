@@ -1,10 +1,14 @@
 package com.example.kadh.ui.work.contract;
 
 import com.example.kadh.base.BaseContract;
+import com.example.kadh.ui.work.adapter.ProcessItemAttAdapter;
 import com.example.kadh.ui.work.bean.ProcessContentBean;
 import com.example.kadh.ui.work.bean.ProcessUserDetailBean;
 
+import java.util.ArrayList;
 import java.util.List;
+
+import cn.bingoogolapple.photopicker.widget.BGASortableNinePhotoLayout;
 
 /**
  * @author: kadh
@@ -22,11 +26,26 @@ public interface ProcessSubmitContract {
     interface Presenter extends BaseContract.BasePresenter {
         void getProcessContent(String processid, List<ProcessUserDetailBean> data);
 
+        /*
+         *
+         */
         void processUserDetail(String pid, String processid);
 
+        /*
+         *  流程提交
+         */
         void processSubmit(List<ProcessContentBean> data, String processid, String pid, String pname);
 
-        void checkSubmitData(List<ProcessContentBean> data);
+        /*
+         *  图片上传
+         */
+        void upLoadField(ArrayList<String> selectedPhotos, BGASortableNinePhotoLayout bgaLytImage);
+
+        /*
+         *  附件上传
+         */
+        void upLoadField(ArrayList<String> selectedPhotos, ProcessItemAttAdapter itemAttAdapter);
+
     }
 
 }

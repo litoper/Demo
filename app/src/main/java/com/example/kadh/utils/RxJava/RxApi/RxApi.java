@@ -330,6 +330,31 @@ public class RxApi {
         return flowable;
     }
 
+    /**
+     * 图片及附件上传
+     *
+     * @param subscriber
+     * @param file
+     * @param filename
+     * @return
+     */
+    public Flowable upLoadField(FlowableSubscriber<BaseResponse<List<UpFieldBean>>> subscriber, MultipartBody.Part file, String filename) {
+        Flowable flowable = mRxService.upLoadField(file, version, filename);
+        toSubscribe(flowable, subscriber);
+        return flowable;
+    }
+
+//    /**
+//     * upLoadField多文件上传
+//     */
+//    public Flowable upLoadField(FlowableSubscriber<BaseResponse<List<UpFieldBean>>> subscriber, List<MultipartBody.Part> files, List<String> filenames) {
+//        Flowable[] os = new Flowable[files.size()];
+//        for (int i = 0; i < files.size(); i++) {
+//            Flowable observable = mRxService.upLoadField(files.get(i), version, filenames.get(i));
+//            os[i] = observable;
+//        }
+//        toSubscribe(Flowable.merge(os), subscriber);
+//    }
 
     /**
      * 上传修改的个人信息
@@ -405,6 +430,25 @@ public class RxApi {
         Flowable flowable = mRxService.processUserDetail(pid, version);
         toSubscribe(flowable, subscriber);
         return flowable;
+    }
+
+
+    /**
+     * 流程提交
+     *
+     * @param subscriber
+     * @param processid
+     * @param puid
+     * @param title
+     * @param pcondition_text
+     * @return
+     */
+    public Flowable submitProcess(
+            FlowableSubscriber<BaseResponse<String>> subscriber, String processid, String puid, String title, String pcondition_text) {
+        Flowable flowable = mRxService.submitProcess(processid, puid, title, pcondition_text, version);
+        toSubscribe(flowable, subscriber);
+        return flowable;
+
     }
 
 
