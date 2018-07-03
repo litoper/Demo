@@ -117,7 +117,7 @@ public class LoginNormalFragment extends BaseFragmentView<LoginNormalPresenter> 
             }
         });
 
-        RxView.clicks(mBtnLogin).debounce(500, TimeUnit.MILLISECONDS).observeOn(AndroidSchedulers.mainThread()).subscribe(new Consumer<Object>() {
+        RxView.clicks(mBtnLogin).debounce(200, TimeUnit.MILLISECONDS).observeOn(AndroidSchedulers.mainThread()).subscribe(new Consumer<Object>() {
 
             @Override
             public void accept(Object o) throws Exception {

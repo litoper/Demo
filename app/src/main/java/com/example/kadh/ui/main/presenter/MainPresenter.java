@@ -104,7 +104,7 @@ public class MainPresenter extends BaseBindingImpl<MainAtyContract.View> impleme
 
                     switch (response.data.getUpdateStatus()) {
                         case "1":
-                            mContactsFragment.updating();
+//                            mContactsFragment.updating();
                             getContactUpdateData(response.data.getNowTime());
                             break;
                         default:
@@ -149,7 +149,7 @@ public class MainPresenter extends BaseBindingImpl<MainAtyContract.View> impleme
                 CmpDBHelper.getInstance().endTransaction();
             }
         }
-        mContactsFragment.complete();
+//        mContactsFragment.complete();
     }
 
 }

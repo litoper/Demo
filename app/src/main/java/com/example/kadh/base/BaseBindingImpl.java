@@ -1,5 +1,8 @@
 package com.example.kadh.base;
 
+import io.reactivex.disposables.CompositeDisposable;
+import io.reactivex.disposables.Disposable;
+
 /**
  * @author: kadh
  * @email : 36870855@qq.com
@@ -9,8 +12,22 @@ package com.example.kadh.base;
  */
 public class BaseBindingImpl<T extends BaseContract.BaseView> implements BaseContract.BaseBinding<T> {
     protected T mView;
+    protected CompositeDisposable mDisposable;
 
     public BaseBindingImpl() {
+    }
+
+    protected void unSubscribe() {
+        if (mDisposable != null) {
+            mDisposable.dispose();
+        }
+    }
+
+    protected void addSubscrebe(Disposable disposable) {
+        if (mDisposable == null) {
+            mDisposable = new CompositeDisposable();
+        }
+        mDisposable.add(disposable);
     }
 
     @Override
@@ -21,5 +38,6 @@ public class BaseBindingImpl<T extends BaseContract.BaseView> implements BaseCon
     @Override
     public void detachView() {
         mView = null;
+        unSubscribe();
     }
 }

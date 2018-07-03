@@ -4,7 +4,6 @@ import android.Manifest;
 import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.os.PersistableBundle;
-import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
 import android.view.KeyEvent;
@@ -22,14 +21,12 @@ import com.example.kadh.ui.main.bean.IsHasUnReadBean;
 import com.example.kadh.ui.main.bean.WeatherBean;
 import com.example.kadh.ui.main.contract.MainAtyContract;
 import com.example.kadh.ui.main.presenter.MainPresenter;
-import com.example.kadh.ui.tension.activity.TensionActivity;
 import com.tbruyelle.rxpermissions2.Permission;
 import com.tbruyelle.rxpermissions2.RxPermissions;
 
 import java.util.List;
 
 import butterknife.BindView;
-import butterknife.OnClick;
 import io.reactivex.functions.Consumer;
 
 /**
@@ -45,8 +42,6 @@ public class MainActivity extends BaseActivityView<MainPresenter> implements Mai
     ViewPager mVp;
     @BindView(R.id.activity_main_bnb)
     BottomNavigationBar mBottomNavigationBar;
-    @BindView(R.id.activity_main_fab)
-    FloatingActionButton mFab;
 
     private long mExittime;
     private ShapeBadgeItem mBadgeItem;
@@ -103,7 +98,7 @@ public class MainActivity extends BaseActivityView<MainPresenter> implements Mai
     @Override
     public void showViewPager(List<Fragment> fragmentList) {
         mVp.setAdapter(new MainPagerAdapter(getSupportFragmentManager(), fragmentList));
-        mVp.setOffscreenPageLimit(4);
+//        mVp.setOffscreenPageLimit(4);
         mVp.setCurrentItem(0);
         mVp.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
@@ -236,8 +231,4 @@ public class MainActivity extends BaseActivityView<MainPresenter> implements Mai
         mPresenter.isHasUnRead();
     }
 
-    @OnClick(R.id.activity_main_fab)
-    public void onViewClicked() {
-        openActivity(TensionActivity.class);
-    }
 }

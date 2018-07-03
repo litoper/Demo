@@ -1,5 +1,6 @@
 package com.example.kadh.ui.work.activity;
 
+import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
@@ -13,6 +14,7 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.example.kadh.R;
 import com.example.kadh.base.BaseActivity;
 import com.example.kadh.component.AppComponent;
@@ -115,19 +117,36 @@ public class ProcessStartedActivity extends BaseActivity {
                 getProcessAlReadyList(mPage = 1);
             }
         });
+
+        mStartedAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
+                Bundle bundle = new Bundle();
+                bundle.putString("publishId", mReadyBeanList.get(position).getPublishId());
+                bundle.putString("type", "0");//用于判断是否是审核人
+                openActivity(ProcessStartedScheuleActivity.class, bundle);
+            }
+        });
+
     }
 
     @Override
     public void initDatas() {
+        mStartedAdapter = new ProcessStartedAdapter(R.layout.item_process_started, mReadyBeanList);
+        mRvProcess.setLayoutManager(new LinearLayoutManager(mContext));
+        mRvProcess.addItemDecoration(new DividerItemDecoration(mContext, DividerItemDecoration.VERTICAL));
+        mRvProcess.setAdapter(mStartedAdapter);
+
         getProcessAlReadyList(mPage = 1);
+
     }
 
     private void getProcessAlReadyList(int i) {
         RxManager.getInstant().getRxApi().getProcessAlReadyList(new SubProtect<BaseResponse<List<ProcessAlReadyBean>>>(new SubNextImpl<BaseResponse<List<ProcessAlReadyBean>>>() {
             @Override
             public void onSubSuccess(BaseResponse<List<ProcessAlReadyBean>> response) {
-                mSrl.finishLoadMore();
-                mSrl.finishRefresh();
+                mSrl.finishLoadMore(500);
+                mSrl.finishRefresh(500);
 
                 if (NullUtils.isNull(response.data)) {
                     mLoading.showEmpty();
@@ -141,15 +160,9 @@ public class ProcessStartedActivity extends BaseActivity {
 
                 mReadyBeanList.addAll(response.data);
 
-                if (mStartedAdapter == null) {
-                    mStartedAdapter = new ProcessStartedAdapter(R.layout.item_process_started, mReadyBeanList);
-                    mRvProcess.setLayoutManager(new LinearLayoutManager(mContext));
-                    mRvProcess.addItemDecoration(new DividerItemDecoration(mContext, DividerItemDecoration.VERTICAL));
-                    mRvProcess.setAdapter(mStartedAdapter);
-                    mLoading.showContent();
-                } else {
-                    mStartedAdapter.setNewData(mReadyBeanList);
-                }
+                mStartedAdapter.notifyDataSetChanged();
+
+                mLoading.showContent();
 
                 if (mReadyBeanList.size() >= Integer.parseInt(response.total)) {
                     mSrl.setEnableLoadMore(false);

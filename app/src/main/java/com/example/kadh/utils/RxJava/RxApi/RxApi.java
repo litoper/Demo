@@ -21,6 +21,7 @@ import com.example.kadh.ui.work.bean.ProcessAlReadyBean;
 import com.example.kadh.ui.work.bean.ProcessContentBean;
 import com.example.kadh.ui.work.bean.ProcessListBean;
 import com.example.kadh.ui.work.bean.ProcessModuleBean;
+import com.example.kadh.ui.work.bean.ProcessScheuleBean;
 import com.example.kadh.ui.work.bean.ProcessStatusBean;
 import com.example.kadh.ui.work.bean.ProcessUserDetailBean;
 import com.example.kadh.utils.RxJava.BaseResponse;
@@ -467,6 +468,18 @@ public class RxApi {
      */
     public Flowable getProcessAlReadyList(FlowableSubscriber<BaseResponse<List<ProcessAlReadyBean>>> subscriber, String type, String keyword, String page) {
         Flowable flowable = mRxService.getProcessAlReadyList(type, keyword, page, version);
+        toSubscribe(flowable, subscriber);
+        return flowable;
+    }
+
+    /**
+     * 查询单个流程的进度
+     *
+     * @param subscriber
+     * @param processid
+     */
+    public Flowable getProcessSchedule(FlowableSubscriber<BaseResponse<List<ProcessScheuleBean>>> subscriber, String processid) {
+        Flowable flowable = mRxService.getProcessSchedule(processid, version);
         toSubscribe(flowable, subscriber);
         return flowable;
     }

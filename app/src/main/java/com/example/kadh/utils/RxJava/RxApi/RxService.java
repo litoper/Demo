@@ -21,6 +21,7 @@ import com.example.kadh.ui.work.bean.ProcessAlReadyBean;
 import com.example.kadh.ui.work.bean.ProcessContentBean;
 import com.example.kadh.ui.work.bean.ProcessListBean;
 import com.example.kadh.ui.work.bean.ProcessModuleBean;
+import com.example.kadh.ui.work.bean.ProcessScheuleBean;
 import com.example.kadh.ui.work.bean.ProcessStatusBean;
 import com.example.kadh.ui.work.bean.ProcessUserDetailBean;
 import com.example.kadh.utils.RxJava.BaseResponse;
@@ -226,5 +227,8 @@ interface RxService {
 
     @GET(RxUrl.Url.GETPROCESSALREADYLIST)
     Flowable<BaseResponse<List<ProcessAlReadyBean>>> getProcessAlReadyList(@Query("type") String type, @Query("keyword") String keyword, @Query("page") String page, @Query("version") String version);
+
+    @GET(RxUrl.Url.GETPROCESSSCHEDULE)
+    Flowable<BaseResponse<List<ProcessScheuleBean>>> getProcessSchedule(@Query("publishid") String processid, @Query("version") String version);
 
 }

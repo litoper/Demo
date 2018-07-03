@@ -5,7 +5,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.ContextWrapper;
 
-import cn.pedant.SweetAlert.SweetAlertDialog;
+import com.afollestad.materialdialogs.MaterialDialog;
 
 
 /**
@@ -16,7 +16,7 @@ import cn.pedant.SweetAlert.SweetAlertDialog;
  * @desc :
  */
 
-public class SubDialog {
+public class SubMdDialog {
     public static final int NODIALOG = 0;
     public static final int LOADING = 1;
     public static final int LOGINING = 2;
@@ -25,15 +25,15 @@ public class SubDialog {
     public static final int DOWNLOADING = 5;
     public static final int SYNCING = 6;
 
-    private SweetAlertDialog mSweetAlertDialog;
 
-    private Context context;
-    private SubProtect mSubProtect;
+    private Context mContext;
+    private SubProgress mSubProtect;
     private boolean mCancelable;
     private int mTag;
+    private MaterialDialog mMaterialDialog;
 
-    public SubDialog(Context context, SubProtect subProtect, boolean cancelable, int tag) {
-        this.context = context;
+    public SubMdDialog(Context context, SubProgress subProtect, boolean cancelable, int tag) {
+        this.mContext = context;
         mSubProtect = subProtect;
         mCancelable = cancelable;
         mTag = tag;
@@ -42,35 +42,36 @@ public class SubDialog {
 
     @SuppressLint("NewApi")
     public void initSubDialog() {
-        if (mSweetAlertDialog == null) {
-            mSweetAlertDialog = new SweetAlertDialog(context, SweetAlertDialog.PROGRESS_TYPE);
+        if (mMaterialDialog == null) {
+            mMaterialDialog = new MaterialDialog.Builder(mContext).canceledOnTouchOutside(mCancelable).progress(true, 0).build();
             switch (mTag) {
                 case LOADING:
-                    mSweetAlertDialog.setTitleText("加载中...");
+                    mMaterialDialog.setContent("加载中...");
                     break;
                 case LOGINING:
-                    mSweetAlertDialog.setTitleText("登录中...");
+                    mMaterialDialog.setContent("登录中...");
                     break;
                 case UPLOADING:
-                    mSweetAlertDialog.setTitleText("上传中...");
+                    mMaterialDialog.setContent("上传中...");
                     break;
                 case LAUNCHING:
-                    mSweetAlertDialog.setTitleText("发布中...");
+                    mMaterialDialog.setContent("发布中...");
                     break;
                 case DOWNLOADING:
-                    mSweetAlertDialog.setTitleText("下载中...");
+                    mMaterialDialog.setContent("下载中...");
                     break;
                 case SYNCING:
-                    mSweetAlertDialog.setTitleText("同步中...");
+                    mMaterialDialog.setContent("同步中...");
                     break;
                 default:
+                    mMaterialDialog.setContent("加载中...");
                     break;
             }
-            if (!((Activity) context).isFinishing() && !((Activity) context).isDestroyed()) {
-                mSweetAlertDialog.show();
+            if (!((Activity) mContext).isFinishing() && !((Activity) mContext).isDestroyed()) {
+                mMaterialDialog.show();
             }
 //            if (mCancelable) {
-//                mSweetAlertDialog.setOnDismissListener(new DialogInterface.OnDismissListener() {
+//                mMaterialDialog.setOnDismissListener(new DialogInterface.OnDismissListener() {
 //                    @Override
 //                    public void onDismiss(DialogInterface dialog) {
 //                        if (mSubProtect != null) {
@@ -79,29 +80,29 @@ public class SubDialog {
 //                    }
 //                });
 //            } else {
-//                mSweetAlertDialog.setCancelable(mCancelable);
+//                mMaterialDialog.setCancelable(mCancelable);
 //            }
-//            if (!mSweetAlertDialog.isShowing() && !((Activity) context).isFinishing() && !((Activity) context).isDestroyed()) {
-//                mSweetAlertDialog.show();
+//            if (!mMaterialDialog.isShowing() && !((Activity) mContext).isFinishing() && !((Activity) mContext).isDestroyed()) {
+//                mMaterialDialog.show();
 //            }
         }
     }
 
     @SuppressLint("NewApi")
     public void dismissSubDialog() {
-        if (mSweetAlertDialog != null) {
-            if (mSweetAlertDialog.isShowing()) {
+        if (mMaterialDialog != null) {
+            if (mMaterialDialog.isShowing()) {
                 //https://stackoverflow.com/questions/2745061/java-lang-illegalargumentexception-view-not-attached-to-window-manager
-                Context context = ((ContextWrapper) mSweetAlertDialog.getContext()).getBaseContext();
+                Context context = ((ContextWrapper) mMaterialDialog.getContext()).getBaseContext();
                 if (context instanceof Activity) {
                     if (!((Activity) context).isFinishing() && !((Activity) context).isDestroyed()) {
-                        mSweetAlertDialog.dismiss();
+                        mMaterialDialog.dismiss();
                     }
                 } else {
-                    mSweetAlertDialog.dismiss();
+                    mMaterialDialog.dismiss();
                 }
             }
-            mSweetAlertDialog = null;
+            mMaterialDialog = null;
         }
     }
 }
