@@ -179,7 +179,7 @@ public abstract class BaseActivity extends AppCompatActivity {
     @Override
     public void finish() {
         super.finish();
-        overridePendingTransition(R.anim.anim_left_to_middle, R.anim.anim_middle_to_right);//上一步
+//        overridePendingTransition(R.anim.anim_left_to_middle, R.anim.anim_middle_to_right);//上一步
     }
 
     @Override

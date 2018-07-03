@@ -61,9 +61,7 @@
             </intent-filter>
         </activity>
 
-        <activity
-            android:name=".ui.main.activity.MainActivity"
-            android:launchMode="singleInstance" />
+        <activity android:name=".ui.main.activity.MainActivity" />
 
         <!--company on-->
         <activity android:name=".ui.company.activity.NoticeDetailActivity" />
