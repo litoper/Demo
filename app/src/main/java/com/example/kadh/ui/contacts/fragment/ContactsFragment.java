@@ -101,6 +101,7 @@ public class ContactsFragment extends BaseFragmentView<ContactsPresenter> implem
                 openActivity(ContactsGroupActivity.class, bundle);
             }
         });
+        complete();
     }
 
     @Override

@@ -89,4 +89,10 @@
     </declare-styleable>
     <!---->
 
+    <declare-styleable name="IndexBar">
+        <attr name="indexBarTextSize"/>
+        <attr name="indexBarPressBackground" format="color"/>
+    </declare-styleable>
+
+
 </resources>

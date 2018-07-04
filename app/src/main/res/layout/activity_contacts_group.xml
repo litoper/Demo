@@ -1,7 +1,49 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
+
+    <include layout="@layout/common_toolbar" />
+
+    <com.example.kadh.view.LoadingLayout
+        android:id="@+id/activity_contacts_group_loading"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/activity_contacts_group_rv_content"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
+
+            <com.example.kadh.view.indexbar.widget.IndexBar
+                android:id="@+id/activity_contacts_group_indexbar"
+                android:layout_width="15dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="right|center"
+                app:indexBarPressBackground="@color/transparent"
+                app:indexBarTextSize="10sp" />
+
+            <TextView
+                android:id="@+id/activity_contacts_group_tv_barhint"
+                android:layout_width="80dp"
+                android:layout_height="80dp"
+                android:layout_gravity="center"
+                android:alpha="0.8"
+                android:background="@drawable/shape_bg_side_bar"
+                android:gravity="center"
+                android:textColor="@android:color/white"
+                android:textSize="48sp"
+                android:visibility="gone"
+                tools:text="A"
+                tools:visibility="visible" />
+        </FrameLayout>
+    </com.example.kadh.view.LoadingLayout>
 
 </LinearLayout>

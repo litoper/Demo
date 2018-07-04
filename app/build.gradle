@@ -98,5 +98,6 @@ dependencies {
     implementation 'cn.imlibo:FilePicker:v0.0.5_alpha'
     implementation 'com.oguzdev:CircularFloatingActionMenu:1.0.2'
 
+    implementation 'com.github.promeg:tinypinyin:1.0.0'
     debugImplementation 'com.amitshekhar.android:debug-db:1.0.3'
 }
