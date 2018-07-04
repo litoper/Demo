@@ -2,6 +2,7 @@ package com.example.kadh.ui.contacts.adapter;
 
 import android.support.annotation.Nullable;
 import android.view.View;
+import android.widget.Toast;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.example.kadh.R;
@@ -17,18 +18,20 @@ import java.util.List;
  * @blog : http://www.nicaicaicai.com
  * @desc :
  */
-public class ContactsGroupAdapter extends BaseQuickAdapter<ContactsBean, BaseViewHolderImpl> implements BaseQuickAdapter.OnItemClickListener {
-    private String mLevel;
+public class ContactsGroupAdapter extends BaseQuickAdapter<ContactsBean, BaseViewHolderImpl> implements BaseQuickAdapter.OnItemChildClickListener {
+    @Nullable
+    private List<ContactsBean> mData;
+    private String             mLevel;
 
     public ContactsGroupAdapter(int layoutResId, @Nullable List data, String level) {
         super(layoutResId, data);
+        mData = data;
         mLevel = level;
     }
 
     @Override
     protected void convert(BaseViewHolderImpl helper, ContactsBean item) {
         helper.setText(R.id.item_contacts_group_tv_name, item.getUname());
-        // TODO: 2018/7/3
         helper.setText(R.id.item_contacts_group_tv_positional, "2".equals(mLevel) ? item.getRname() : item.getUposition());
         helper.setText(R.id.item_contacts_group_tv_phone, item.getUphone());
         if ("0".equals(item.getUshort_phone())) {
@@ -40,13 +43,16 @@ public class ContactsGroupAdapter extends BaseQuickAdapter<ContactsBean, BaseVie
     }
 
     @Override
-    public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
+    public void onItemChildClick(BaseQuickAdapter adapter, View view, int position) {
         switch (view.getId()) {
             case R.id.item_contacts_group_btn_call:
-
+                Toast.makeText(mContext, "电话拨打待添加" + mData.get(position).getUphone(), Toast.LENGTH_SHORT).show();
                 break;
             default:
                 break;
         }
     }
+
+
+
 }

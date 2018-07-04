@@ -71,7 +71,7 @@ public class ContactsGroupActivity extends BaseActivity {
                 .setNeedRealIndex(true)//设置需要真实的索引
                 .setmLayoutManager(mLayoutManager);//设置RecyclerView的LayoutManager
         mGroupAdapter = new ContactsGroupAdapter(R.layout.item_contacts_group, mDisplayModels, mLevel);
-        mGroupAdapter.setOnItemClickListener(mGroupAdapter);
+        mGroupAdapter.setOnItemChildClickListener(mGroupAdapter);
         mRvContent.setAdapter(mGroupAdapter);
     }
 
@@ -83,12 +83,13 @@ public class ContactsGroupActivity extends BaseActivity {
         mTitle = getIntent().getStringExtra("title");
         mLevel = getIntent().getStringExtra("level");
         mCommonToolbar.setTitle(mTitle);
-        mDbHelper = CmpDBHelper.getInstance();
+
 
         Observable
                 .create(new ObservableOnSubscribe<Object>() {
                     @Override
                     public void subscribe(ObservableEmitter<Object> emitter) throws Exception {
+                        mDbHelper = CmpDBHelper.getInstance();
                         switch (NullUtils.filterEmpty(mLevel)) {
                             case "0"://公司
                                 mContactLists = mDbHelper.queryListMap("select id,uname,uphone,ushort_phone,ufirstspell,uwholespell,uposition from cmp_user where isdel='0'  order by uwholespell asc"
@@ -111,6 +112,7 @@ public class ContactsGroupActivity extends BaseActivity {
                         }
                         processContactModel(mContactLists);
                         emitter.onNext("");
+                        emitter.onComplete();
                     }
                 })
                 .subscribeOn(Schedulers.io())
@@ -129,9 +131,9 @@ public class ContactsGroupActivity extends BaseActivity {
                             default:
                                 break;
                         }
+                        mGroupAdapter.notifyDataSetChanged();
                         mLoading.showContent();
                     }
-
                 });
 
     }
