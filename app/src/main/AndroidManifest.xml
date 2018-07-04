@@ -70,7 +70,10 @@
         <activity android:name=".ui.company.activity.MessageActivity" />
         <!--company off-->
 
+        <!--person on-->
         <activity android:name=".ui.person.activity.PersonInfoActivity" />
+        <activity android:name=".ui.person.activity.HelpActivity" />
+        <!--person off-->
 
         <!--work on-->
         <activity android:name=".ui.work.activity.ProcessListActivity" />

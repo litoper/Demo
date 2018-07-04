@@ -13,6 +13,7 @@ import android.widget.TextView;
 import com.example.kadh.R;
 import com.example.kadh.base.BaseFragment;
 import com.example.kadh.component.AppComponent;
+import com.example.kadh.ui.person.activity.HelpActivity;
 import com.example.kadh.ui.person.activity.PersonInfoActivity;
 import com.example.kadh.ui.person.bean.QueryProTotalInfoBean;
 import com.example.kadh.ui.setting.SettingActivity;
@@ -137,7 +138,7 @@ public class PersonFragment extends BaseFragment {
 //                openActivity(CultureActivity.class);
                 break;
             case R.id.person_ll_help://帮助与反馈页面
-//                openActivity(HelpActivity.class);
+                openActivity(HelpActivity.class);
                 break;
             case R.id.person_ll_setting://进入设置页面
                 openActivity(SettingActivity.class);
