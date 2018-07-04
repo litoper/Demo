@@ -109,6 +109,7 @@ public class ContactsFragment extends BaseFragmentView<ContactsPresenter> implem
         LinearLayoutManager layoutManager = new LinearLayoutManager(mContext);
         mRvRecent.addItemDecoration(new DividerItemDecoration(mContext, DividerItemDecoration.VERTICAL));
         ContactRecentAdapter recentAdapter = new ContactRecentAdapter(R.layout.item_contact_recent, data.getContactList());
+        recentAdapter.setOnItemChildClickListener(recentAdapter);
         mRvRecent.setLayoutManager(layoutManager);
         mRvRecent.setAdapter(recentAdapter);
     }

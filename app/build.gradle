@@ -97,6 +97,7 @@ dependencies {
     implementation 'org.jsoup:jsoup:1.10.3'
     implementation 'cn.imlibo:FilePicker:v0.0.5_alpha'
     implementation 'com.oguzdev:CircularFloatingActionMenu:1.0.2'
+    implementation 'com.github.mcxtzhang:SwipeDelMenuLayout:V1.3.0'
 
     implementation 'com.github.promeg:tinypinyin:1.0.0'
     debugImplementation 'com.amitshekhar.android:debug-db:1.0.3'
