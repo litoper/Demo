@@ -8,6 +8,41 @@
 
     <include layout="@layout/common_toolbar" />
 
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:background="@color/white"
+        android:focusable="true"
+        android:focusableInTouchMode="true">
+
+        <EditText
+            android:id="@+id/activity_contacts_group_et_search"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginBottom="10dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:layout_marginTop="10dp"
+            android:background="@drawable/edittext_comment_backround"
+            android:drawableLeft="@mipmap/common_btn_search"
+            android:drawablePadding="8dp"
+            android:hint="搜索"
+            android:paddingLeft="5dp"
+            android:singleLine="true"
+            android:textColorHint="#7482ff"
+            android:textSize="17sp" />
+
+        <ImageView
+            android:id="@+id/activity_contacts_group_iv_change"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="right|center_vertical"
+            android:layout_marginRight="20dp"
+            android:src="@mipmap/common_arrow_down_blue"
+            android:visibility="gone" />
+    </FrameLayout>
+
+
     <com.example.kadh.view.LoadingLayout
         android:id="@+id/activity_contacts_group_loading"
         android:layout_width="match_parent"
