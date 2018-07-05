@@ -17,8 +17,8 @@ import java.util.List;
  * @blog : http://www.nicaicaicai.com
  * @desc :
  */
-public class ProcessPendingSingleAdapter extends BaseQuickAdapter<BacklogListBean, BaseViewHolderImpl> {
-    public ProcessPendingSingleAdapter(int layoutResId, @Nullable List data) {
+public class PendingSingleAdapter extends BaseQuickAdapter<BacklogListBean, BaseViewHolderImpl> {
+    public PendingSingleAdapter(int layoutResId, @Nullable List data) {
         super(layoutResId, data);
     }
 

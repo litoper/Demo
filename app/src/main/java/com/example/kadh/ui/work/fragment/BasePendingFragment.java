@@ -12,7 +12,7 @@ import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.example.kadh.R;
 import com.example.kadh.base.BaseFragment;
 import com.example.kadh.component.AppComponent;
-import com.example.kadh.ui.work.adapter.ProcessPendingSingleAdapter;
+import com.example.kadh.ui.work.adapter.PendingSingleAdapter;
 import com.example.kadh.ui.work.bean.BacklogListBean;
 import com.example.kadh.utils.NullUtils;
 import com.example.kadh.utils.RxJava.BaseResponse;
@@ -44,7 +44,7 @@ public abstract class BasePendingFragment extends BaseFragment {
     @BindView(R.id.fragment_work_process_pending_base_srl)
     SmartRefreshLayout mSrl;
     private List<BacklogListBean> mBacklogListBeans;
-    private ProcessPendingSingleAdapter mSingleAdapter;
+    private PendingSingleAdapter mSingleAdapter;
     private DividerItemDecoration mItemDecoration;
     private SubProtect<BaseResponse<List<BacklogListBean>>> mSubProtect;
 
@@ -91,6 +91,7 @@ public abstract class BasePendingFragment extends BaseFragment {
         mSubProtect = new SubProtect<>(new SubNextImpl<BaseResponse<List<BacklogListBean>>>() {
             @Override
             public void onSubSuccess(BaseResponse<List<BacklogListBean>> response) {
+                mSrl.finishRefresh();
                 mBacklogListBeans.clear();
                 mBacklogListBeans.addAll(response.data);
                 mSingleAdapter.notifyDataSetChanged();
@@ -108,7 +109,7 @@ public abstract class BasePendingFragment extends BaseFragment {
     protected void attachView() {
         Log.e("888888", "attachView: " + mType);
         mLayoutManager = new LinearLayoutManager(mContext);
-        mSingleAdapter = new ProcessPendingSingleAdapter(R.layout.item_process_pending_single, mBacklogListBeans);
+        mSingleAdapter = new PendingSingleAdapter(R.layout.item_process_pending_child, mBacklogListBeans);
         mItemDecoration = new DividerItemDecoration(mContext, DividerItemDecoration.VERTICAL);
         mRv.setLayoutManager(mLayoutManager);
         mRv.addItemDecoration(mItemDecoration);

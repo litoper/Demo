@@ -1,5 +1,7 @@
 package com.example.kadh.ui.work.bean;
 
+import com.chad.library.adapter.base.entity.MultiItemEntity;
+
 /**
  * @author: kadh
  * @email : 36870855@qq.com
@@ -7,7 +9,7 @@ package com.example.kadh.ui.work.bean;
  * @blog : http://www.nicaicaicai.com
  * @desc :
  */
-public class BacklogListBean {
+public class BacklogListBean implements MultiItemEntity {
     private String id;//待办id
     private String ptitle;// 事项名称
     private String ptitle_remark;// 事项备注
@@ -19,6 +21,11 @@ public class BacklogListBean {
     private String ptype;//: 类型 3-流程 4-会议 5-知会 6-价值观 7-张力 8-目标
     private String type;//:
     private String markNode;// markNode 0-正常张力审核 1-价值张力审核.
+
+    /**
+     * 用于扩张头条目参数
+     */
+    private String header;
 
 
     public String getId() {
@@ -124,5 +131,10 @@ public class BacklogListBean {
                 ", type='" + type + '\'' +
                 ", markNode='" + markNode + '\'' +
                 '}';
+    }
+
+    @Override
+    public int getItemType() {
+        return 1;
     }
 }
