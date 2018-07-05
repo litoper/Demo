@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                xmlns:app="http://schemas.android.com/apk/res-auto"
+                android:layout_width="match_parent"
+                android:layout_height="30dp"
+                android:clipChildren="false"
+                android:clipToPadding="false"
+                android:gravity="center_vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_marginStart="15dp"
+            android:text="处理满意度:"
+            android:textColor="#7D8B9F"
+            android:textSize="16sp"/>
+
+        <com.willy.ratingbar.ScaleRatingBar
+            android:id="@+id/item_process_deal_evaluate_srb"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            app:srb_clickable="false"
+            app:srb_drawableEmpty="@color/float_transparent"
+            app:srb_drawableFilled="@mipmap/tension_icon_star_small"
+            app:srb_numStars="5"/>
+    </LinearLayout>
+
+    <ImageView
+        android:id="@+id/item_process_deal_iv_seal"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_marginEnd="8dp"
+        android:layout_marginTop="-30dp"
+        android:visibility="gone"/>
+
+
+</RelativeLayout>

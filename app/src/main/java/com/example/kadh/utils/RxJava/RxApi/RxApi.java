@@ -20,6 +20,7 @@ import com.example.kadh.ui.person.bean.UpFieldBean;
 import com.example.kadh.ui.work.bean.BacklogListBean;
 import com.example.kadh.ui.work.bean.ProcessAlReadyBean;
 import com.example.kadh.ui.work.bean.ProcessContentBean;
+import com.example.kadh.ui.work.bean.ProcessDetailedBean;
 import com.example.kadh.ui.work.bean.ProcessListBean;
 import com.example.kadh.ui.work.bean.ProcessModuleBean;
 import com.example.kadh.ui.work.bean.ProcessScheuleBean;
@@ -496,6 +497,15 @@ public class RxApi {
      */
     public Flowable getBacklogList(FlowableSubscriber<BaseResponse<List<BacklogListBean>>> subscriber, String type) {
         Flowable flowable = mRxService.getBacklogList(type, version);
+        toSubscribe(flowable, subscriber);
+        return flowable;
+    }
+
+    /**
+     * publishHandledDetailed 获取待办已办详情
+     */
+    public Flowable publishHandledDetailed(FlowableSubscriber<BaseResponse<ProcessDetailedBean>> subscriber, String id, String allowid) {
+        Flowable flowable = mRxService.publishHandledDetailed(id, allowid, version);
         toSubscribe(flowable, subscriber);
         return flowable;
     }

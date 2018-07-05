@@ -16,7 +16,7 @@ import com.example.kadh.base.BaseFragmentView;
 import com.example.kadh.component.AppComponent;
 import com.example.kadh.component.DaggerMainComponent;
 import com.example.kadh.ui.work.activity.ProcessListActivity;
-import com.example.kadh.ui.work.activity.ProcessPendingActivity;
+import com.example.kadh.ui.work.activity.pending.PendingListActivity;
 import com.example.kadh.ui.work.activity.ProcessStartedActivity;
 import com.example.kadh.ui.work.adapter.WorkGridAdapter;
 import com.example.kadh.ui.work.bean.ProcessModuleBean;
@@ -152,7 +152,7 @@ public class WorkFragment extends BaseFragmentView<WorkPresenter> implements Wor
             case R.id.fragment_main_work_ll_finish:
                 break;
             case R.id.fragment_main_work_ll_pending:
-                openActivity(ProcessPendingActivity.class);
+                openActivity(PendingListActivity.class);
                 break;
             default:
                 break;

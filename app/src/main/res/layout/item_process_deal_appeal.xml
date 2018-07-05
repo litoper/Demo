@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="#ececec"
+    android:clipChildren="false"
+    android:clipToPadding="false"
+    android:gravity="center_horizontal">
+
+    <TextView
+        android:id="@+id/item_process_deal_appeal_tv_title"
+        android:layout_width="wrap_content"
+        android:layout_height="70dp"
+        android:paddingBottom="10dp"
+        android:paddingEnd="20dp"
+        android:paddingStart="20dp"
+        android:paddingTop="10dp"
+        android:textColor="@color/colorAccent"
+        android:textSize="16sp" />
+
+    <ImageView
+        android:id="@+id/item_process_deal_iv_seal"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_marginEnd="8dp"
+        android:layout_marginTop="-30dp"
+        android:visibility="gone" />
+
+</RelativeLayout>

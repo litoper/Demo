@@ -1,4 +1,4 @@
-package com.example.kadh.ui.work.activity;
+package com.example.kadh.ui.work.activity.pending;
 
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
@@ -28,10 +28,10 @@ import butterknife.BindView;
  * @blog : http://www.nicaicaicai.com
  * @desc :
  */
-public class ProcessPendingActivity extends BaseActivity {
-    @BindView(R.id.activity_work_process_pending_tablayout)
+public class PendingListActivity extends BaseActivity {
+    @BindView(R.id.activity_work_process_pending_list_tablayout)
     TabLayout mTablayout;
-    @BindView(R.id.activity_work_process_pending_viewpager)
+    @BindView(R.id.activity_work_process_pending_list_viewpager)
     ViewPager mViewpager;
 
     @Override

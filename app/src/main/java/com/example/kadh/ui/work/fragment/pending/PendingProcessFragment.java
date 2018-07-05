@@ -5,6 +5,7 @@ import android.view.View;
 import android.widget.Toast;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
+import com.example.kadh.ui.work.activity.pending.PendingDealProcessActivity;
 import com.example.kadh.ui.work.bean.BacklogListBean;
 import com.example.kadh.ui.work.fragment.BasePendingFragment;
 
@@ -32,7 +33,7 @@ public class PendingProcessFragment extends BasePendingFragment {
         String id = backlogListBean.getId();
         bundle.putString("allowId", allowid);
         bundle.putString("id", id);
-
+        openActivity(PendingDealProcessActivity.class, bundle);
         Toast.makeText(mContext, "流程处理页面待添加", Toast.LENGTH_SHORT).show();
     }
 }

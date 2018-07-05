@@ -76,10 +76,12 @@
         <!--person off-->
 
         <!--work on-->
-        <activity android:name=".ui.work.activity.ProcessPendingActivity" />
+        <activity android:name=".ui.work.activity.pending.PendingListActivity" />
         <activity android:name=".ui.work.activity.ProcessListActivity" />
         <activity android:name=".ui.work.activity.ProcessStartedActivity" />
         <activity android:name=".ui.work.activity.ProcessStartedScheuleActivity" />
+        <activity android:name=".ui.work.activity.BasePendingDealActivity" />
+        <activity android:name=".ui.work.activity.pending.PendingDealProcessActivity" />
         <activity
             android:name=".ui.work.activity.ProcessSubmitActivity"
             android:windowSoftInputMode="adjustPan|stateAlwaysHidden" />

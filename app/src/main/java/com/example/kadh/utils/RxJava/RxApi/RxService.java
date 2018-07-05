@@ -20,6 +20,7 @@ import com.example.kadh.ui.person.bean.UpFieldBean;
 import com.example.kadh.ui.work.bean.BacklogListBean;
 import com.example.kadh.ui.work.bean.ProcessAlReadyBean;
 import com.example.kadh.ui.work.bean.ProcessContentBean;
+import com.example.kadh.ui.work.bean.ProcessDetailedBean;
 import com.example.kadh.ui.work.bean.ProcessListBean;
 import com.example.kadh.ui.work.bean.ProcessModuleBean;
 import com.example.kadh.ui.work.bean.ProcessScheuleBean;
@@ -234,4 +235,8 @@ interface RxService {
 
     @GET(RxUrl.Url.BACKLOGLIST)
     Flowable<BaseResponse<List<BacklogListBean>>> getBacklogList(@Query("type") String type, @Query("version") String version);
+
+    @GET(RxUrl.Url.PUBLISHHANDLEDDETAILED)
+    Flowable<BaseResponse<ProcessDetailedBean>> publishHandledDetailed(@Query("id") String id, @Query("allowid") String allowid, @Query("version") String version);
+
 }
