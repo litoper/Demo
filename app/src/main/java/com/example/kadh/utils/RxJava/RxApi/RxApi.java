@@ -17,6 +17,7 @@ import com.example.kadh.ui.main.bean.WeatherBean;
 import com.example.kadh.ui.person.bean.QueryProTotalInfoBean;
 import com.example.kadh.ui.person.bean.RoleManageBean;
 import com.example.kadh.ui.person.bean.UpFieldBean;
+import com.example.kadh.ui.work.bean.BacklogListBean;
 import com.example.kadh.ui.work.bean.ProcessAlReadyBean;
 import com.example.kadh.ui.work.bean.ProcessContentBean;
 import com.example.kadh.ui.work.bean.ProcessListBean;
@@ -351,6 +352,7 @@ public class RxApi {
         return flowable;
     }
 
+
 //    /**
 //     * upLoadField多文件上传
 //     */
@@ -480,6 +482,20 @@ public class RxApi {
      */
     public Flowable getProcessSchedule(FlowableSubscriber<BaseResponse<List<ProcessScheuleBean>>> subscriber, String processid) {
         Flowable flowable = mRxService.getProcessSchedule(processid, version);
+        toSubscribe(flowable, subscriber);
+        return flowable;
+    }
+
+
+    /**
+     * 获取待办最新列表
+     *
+     * @param subscriber
+     * @param type
+     * @return
+     */
+    public Flowable getBacklogList(FlowableSubscriber<BaseResponse<List<BacklogListBean>>> subscriber, String type) {
+        Flowable flowable = mRxService.getBacklogList(type, version);
         toSubscribe(flowable, subscriber);
         return flowable;
     }

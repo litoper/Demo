@@ -6,7 +6,7 @@ import android.support.v4.view.ViewPager;
 
 import com.example.kadh.R;
 import com.example.kadh.base.BaseActivity;
-import com.example.kadh.base.TabAdapter;
+import com.example.kadh.base.BaseTabAdapter;
 import com.example.kadh.component.AppComponent;
 import com.example.kadh.ui.login.fragment.LoginNormalFragment;
 import com.example.kadh.ui.login.fragment.LoginVerifyFragment;
@@ -33,7 +33,7 @@ public class LoginActivity extends BaseActivity {
     ViewPager mViewpager;
     private ArrayList<String> mListTitle;
     private ArrayList<Fragment> mListFragment;
-    private TabAdapter mTabAdapter;
+    private BaseTabAdapter mTabAdapter;
 
 
     @Override
@@ -52,7 +52,7 @@ public class LoginActivity extends BaseActivity {
         mListTitle.add("登陆");
         mListTitle.add("验证码登陆");
         //设置适配器
-        mTabAdapter = new TabAdapter(getSupportFragmentManager(), mListFragment, mListTitle);
+        mTabAdapter = new BaseTabAdapter(getSupportFragmentManager(), mListFragment, mListTitle);
         mViewpager.setAdapter(mTabAdapter);
         //设置选项卡的模式
         mTablayout.setTabMode(TabLayout.MODE_FIXED);//MODE_FIXED代表tab不能滚动，平分屏幕宽度

@@ -50,6 +50,7 @@ public class ProcessStartedScheuleActivity extends BaseActivity {
 
     @Override
     public void initToolBar() {
+        mCommonToolbar.setTitle("");
         mCommonToolbar.setNavigationIcon(R.drawable.common_back);
     }
 

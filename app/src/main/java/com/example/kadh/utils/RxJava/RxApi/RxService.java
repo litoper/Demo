@@ -17,6 +17,7 @@ import com.example.kadh.ui.main.bean.WeatherBean;
 import com.example.kadh.ui.person.bean.QueryProTotalInfoBean;
 import com.example.kadh.ui.person.bean.RoleManageBean;
 import com.example.kadh.ui.person.bean.UpFieldBean;
+import com.example.kadh.ui.work.bean.BacklogListBean;
 import com.example.kadh.ui.work.bean.ProcessAlReadyBean;
 import com.example.kadh.ui.work.bean.ProcessContentBean;
 import com.example.kadh.ui.work.bean.ProcessListBean;
@@ -231,4 +232,6 @@ interface RxService {
     @GET(RxUrl.Url.GETPROCESSSCHEDULE)
     Flowable<BaseResponse<List<ProcessScheuleBean>>> getProcessSchedule(@Query("publishid") String processid, @Query("version") String version);
 
+    @GET(RxUrl.Url.BACKLOGLIST)
+    Flowable<BaseResponse<List<BacklogListBean>>> getBacklogList(@Query("type") String type, @Query("version") String version);
 }

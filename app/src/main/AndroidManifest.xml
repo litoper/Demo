@@ -76,6 +76,7 @@
         <!--person off-->
 
         <!--work on-->
+        <activity android:name=".ui.work.activity.ProcessPendingActivity" />
         <activity android:name=".ui.work.activity.ProcessListActivity" />
         <activity android:name=".ui.work.activity.ProcessStartedActivity" />
         <activity android:name=".ui.work.activity.ProcessStartedScheuleActivity" />
@@ -344,6 +345,7 @@
             android:launchMode="singleTop"
             android:screenOrientation="portrait"
             android:theme="@android:style/Theme.DeviceDefault.Light.Dialog.NoActionBar" />
+
 
         <!--华为推送 off-->
 

@@ -108,7 +108,7 @@ public interface RxUrl {
         static final String GETPROCESSLIST = "app_ProcessList.do";//获取流程列表
         static final String GETPROCESSMODULELIST = "app_ProcessModuleList.do";//获取流程列表
         static final String GETPROCESSDEALTLIST = "app_ProcessDealtList.do";//获取待办列表
-        static final String GETPROCESSDEALTLIST1 = "app_BacklogList.do";//获取待办列表 最新
+        static final String BACKLOGLIST = "app_BacklogList.do";//获取待办列表 最新
 
         static final String SETPROCESSREADED = "app_ProcessReaded.do";//设置为已阅
         static final String GETPROCESSFINISHLIST = "app_ProcessFinishList.do";//获取已办列表
