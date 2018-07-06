@@ -8,9 +8,8 @@ import android.widget.Button;
 
 import com.example.kadh.R;
 import com.example.kadh.base.BaseActivity;
-import com.example.kadh.base.BaseViewHolderImpl;
 import com.example.kadh.component.AppComponent;
-import com.example.kadh.ui.work.adapter.BaseProcessDetaiAdapter;
+import com.example.kadh.ui.work.adapter.ProcessDetailAdapter;
 import com.example.kadh.ui.work.bean.ProcessDetailedBean;
 import com.example.kadh.utils.NullUtils;
 import com.example.kadh.utils.RxJava.BaseResponse;
@@ -18,8 +17,6 @@ import com.example.kadh.utils.RxJava.RxApi.RxManager;
 import com.example.kadh.utils.RxJava.RxSubscriber.SubNextImpl;
 import com.example.kadh.utils.RxJava.RxSubscriber.SubProtect;
 import com.example.kadh.view.LoadingLayout;
-
-import java.util.ArrayList;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -43,7 +40,8 @@ public class PendingDealProcessActivity extends BaseActivity {
     private String mId;
     private String mAllowid;
     private ProcessDetailedBean mProcessDetailedBean;
-    private BaseProcessDetaiAdapter mProcessDetaiAdapter;
+    private ProcessDetailAdapter mProcessDetaiAdapter;
+    private LinearLayoutManager mLayoutManager;
 
     @Override
     public void configViews() {
@@ -52,23 +50,29 @@ public class PendingDealProcessActivity extends BaseActivity {
 
     @Override
     public void initDatas() {
+        mId = getIntent().getStringExtra("id");
+        mAllowid = getIntent().getStringExtra("allowid");
+        getIntent().getStringExtra("ptype");
 
         RxManager.getInstant().getRxApi().publishHandledDetailed(new SubProtect<BaseResponse<ProcessDetailedBean>>(new SubNextImpl<BaseResponse<ProcessDetailedBean>>() {
             @Override
             public void onSubSuccess(BaseResponse<ProcessDetailedBean> response) {
-                // TODO: 2018/7/5 待完善
-                mProcessDetaiAdapter.notifyDataSetChanged();
-                mLoading.showContent();
+                if (mProcessDetaiAdapter == null) {
+                    mProcessDetaiAdapter = new ProcessDetailAdapter(response.data.getPthing(), response.data);
+                    mLayoutManager = new LinearLayoutManager(mContext);
+                    mRv.addItemDecoration(new DividerItemDecoration(mContext, DividerItemDecoration.VERTICAL));
+                    mRv.setLayoutManager(mLayoutManager);
+                    mRv.setAdapter(mProcessDetaiAdapter);
+                    mLoading.showContent();
+                } else {
+                    mProcessDetaiAdapter.notifyDataSetChanged();
+                }
             }
         }), mId, NullUtils.filterNull(mAllowid));
     }
 
     @Override
     public void initToolBar() {
-        mId = getIntent().getStringExtra("id");
-        mAllowid = getIntent().getStringExtra("allowid");
-        getIntent().getStringExtra("ptype");
-
 
         mCommonToolbar.setTitle("流程审批");
         mCommonToolbar.setNavigationIcon(R.drawable.common_back);
@@ -76,19 +80,7 @@ public class PendingDealProcessActivity extends BaseActivity {
 
     @Override
     protected void attachView() {
-        mProcessDetailedBean = new ProcessDetailedBean();
-        mProcessDetailedBean.setPthing(new ArrayList<ProcessDetailedBean.PthingModel>());
 
-        mProcessDetaiAdapter = new BaseProcessDetaiAdapter(mProcessDetailedBean) {
-            @Override
-            public void setSteal(BaseViewHolderImpl helper, ProcessDetailedBean.PthingModel item) {
-
-            }
-        };
-        LinearLayoutManager layoutManager = new LinearLayoutManager(mContext);
-        mRv.addItemDecoration(new DividerItemDecoration(mContext, DividerItemDecoration.VERTICAL));
-        mRv.setLayoutManager(layoutManager);
-        mRv.setAdapter(mProcessDetaiAdapter);
 
     }
 

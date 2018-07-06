@@ -6,56 +6,50 @@
 
     <include layout="@layout/common_toolbar" />
 
-    <RelativeLayout
+    <com.example.kadh.view.LoadingLayout
+        android:id="@+id/activity_pending_deal_process_loading"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="0dp"
+        android:layout_weight="1">
 
-        <LinearLayout
-            android:id="@+id/activity_pending_deal_process_ll"
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/activity_pending_deal_process_rv"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
-            android:layout_marginBottom="5dp"
-            android:background="@color/white">
+            android:layout_height="match_parent"
+            android:clipChildren="false"
+            android:clipToPadding="false"
+            android:overScrollMode="never"
+            android:scrollbars="none" />
+    </com.example.kadh.view.LoadingLayout>
 
-            <Button
-                android:id="@+id/activity_pending_deal_process_btn_reject"
-                android:layout_width="0dp"
-                android:layout_height="40dp"
-                android:layout_margin="5dp"
-                android:layout_weight="1"
-                android:background="@drawable/btn_bg_process_blue"
-                android:text="驳回"
-                android:textColor="#1886e3"
-                android:textSize="18sp" />
+    <LinearLayout
+        android:id="@+id/activity_pending_deal_process_ll"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="5dp"
+        android:background="@color/white">
 
-            <Button
-                android:id="@+id/activity_pending_deal_process_btn_agree"
-                android:layout_width="0dp"
-                android:layout_height="40dp"
-                android:layout_margin="5dp"
-                android:layout_weight="1"
-                android:background="@drawable/btn_back_blue"
-                android:text="同意"
-                android:textColor="@color/white"
-                android:textSize="18sp" />
-        </LinearLayout>
+        <Button
+            android:id="@+id/activity_pending_deal_process_btn_reject"
+            android:layout_width="0dp"
+            android:layout_height="40dp"
+            android:layout_margin="5dp"
+            android:layout_weight="1"
+            android:background="@drawable/btn_bg_process_blue"
+            android:text="驳回"
+            android:textColor="#1886e3"
+            android:textSize="18sp" />
 
-        <com.example.kadh.view.LoadingLayout
-            android:id="@+id/activity_pending_deal_process_loading"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
-
-            <android.support.v7.widget.RecyclerView
-                android:id="@+id/activity_pending_deal_process_rv"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_above="@id/activity_pending_deal_process_ll"
-                android:clipChildren="false"
-                android:clipToPadding="false"
-                android:overScrollMode="never"
-                android:scrollbars="none" />
-        </com.example.kadh.view.LoadingLayout>
-    </RelativeLayout>
+        <Button
+            android:id="@+id/activity_pending_deal_process_btn_agree"
+            android:layout_width="0dp"
+            android:layout_height="40dp"
+            android:layout_margin="5dp"
+            android:layout_weight="1"
+            android:background="@drawable/btn_back_blue"
+            android:text="同意"
+            android:textColor="@color/white"
+            android:textSize="18sp" />
+    </LinearLayout>
 
 </LinearLayout>

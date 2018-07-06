@@ -5,9 +5,9 @@ import com.example.kadh.R;
 import com.example.kadh.base.BaseViewHolderImpl;
 import com.example.kadh.ui.work.bean.ProcessDetailedBean;
 import com.example.kadh.utils.NullUtils;
-import com.willy.ratingbar.ScaleRatingBar;
 
 import java.text.NumberFormat;
+import java.util.List;
 import java.util.Locale;
 
 /**
@@ -22,57 +22,63 @@ public abstract class BaseProcessDetaiAdapter extends BaseMultiItemQuickAdapter<
 
     private ProcessDetailedBean mProcessDetailedBean;
 
-    public BaseProcessDetaiAdapter(ProcessDetailedBean processDetailedBean) {
-        super(processDetailedBean.getPthing());
+    /**
+     * Same as QuickAdapter#QuickAdapter(Context,int) but with
+     * some initialization data.
+     *
+     * @param data A new list is created out of this one to avoid mutable list
+     */
+    public BaseProcessDetaiAdapter(List<ProcessDetailedBean.PthingModel> data, ProcessDetailedBean processDetailedBean) {
+        super(data);
         mProcessDetailedBean = processDetailedBean;
-        addItemType(R.layout.item_process_deal_normal, ProcessDetailedBean.PthingModel.NORMAL);
-        addItemType(R.layout.item_process_deal_text, ProcessDetailedBean.PthingModel.TEXT);
-        addItemType(R.layout.item_process_deal_photo, ProcessDetailedBean.PthingModel.PHOTO);
-        addItemType(R.layout.item_process_deal_att, ProcessDetailedBean.PthingModel.ATT);
-        addItemType(R.layout.item_process_deal_url, ProcessDetailedBean.PthingModel.URL_);
-        addItemType(R.layout.item_process_deal_space, ProcessDetailedBean.PthingModel.SPACE);
-        addItemType(R.layout.item_process_deal_notify, ProcessDetailedBean.PthingModel.NOTIFY);
-        addItemType(R.layout.item_process_deal_tension, ProcessDetailedBean.PthingModel.TENSION);
-        addItemType(R.layout.item_process_deal_evaluate, ProcessDetailedBean.PthingModel.EVALUATE);
-        addItemType(R.layout.item_process_deal_appeal, ProcessDetailedBean.PthingModel.APPEAL);
-        addItemType(R.layout.item_process_deal_upgrade, ProcessDetailedBean.PthingModel.UPGRADE);
+        addItemType(ProcessDetailedBean.NORMAL, R.layout.item_process_deal_normal);
+        addItemType(ProcessDetailedBean.TEXT, R.layout.item_process_deal_text);
+        addItemType(ProcessDetailedBean.PHOTO, R.layout.item_process_deal_photo);
+        addItemType(ProcessDetailedBean.ATT, R.layout.item_process_deal_att);
+        addItemType(ProcessDetailedBean.URL_, R.layout.item_process_deal_url);
+        addItemType(ProcessDetailedBean.SPACE, R.layout.item_process_deal_space);
+        addItemType(ProcessDetailedBean.NOTIFY, R.layout.item_process_deal_notify);
+        addItemType(ProcessDetailedBean.TENSION, R.layout.item_process_deal_tension);
+        addItemType(ProcessDetailedBean.EVALUATE, R.layout.item_process_deal_evaluate);
+        addItemType(ProcessDetailedBean.APPEAL, R.layout.item_process_deal_appeal);
+        addItemType(ProcessDetailedBean.UPGRADE, R.layout.item_process_deal_upgrade);
     }
 
 
     @Override
     protected void convert(BaseViewHolderImpl helper, ProcessDetailedBean.PthingModel item) {
-        switch (helper.getItemViewType()) {
-            case ProcessDetailedBean.PthingModel.NORMAL:
+        switch (item.getItemType()) {
+            case ProcessDetailedBean.NORMAL:
                 logicNormal(helper, item);
                 break;
-            case ProcessDetailedBean.PthingModel.TEXT:
+            case ProcessDetailedBean.TEXT:
                 logicText(helper, item);
                 break;
-            case ProcessDetailedBean.PthingModel.PHOTO:
+            case ProcessDetailedBean.PHOTO:
                 logicPhoto(helper, item);
                 break;
-            case ProcessDetailedBean.PthingModel.ATT:
+            case ProcessDetailedBean.ATT:
                 logicAtt(helper, item);
                 break;
-            case ProcessDetailedBean.PthingModel.URL_:
+            case ProcessDetailedBean.URL_:
                 logicUrl(helper, item);
                 break;
-            case ProcessDetailedBean.PthingModel.SPACE:
+            case ProcessDetailedBean.SPACE:
                 logicSpace(helper, item);
                 break;
-            case ProcessDetailedBean.PthingModel.NOTIFY:
+            case ProcessDetailedBean.NOTIFY:
                 logicNotify(helper, item);
                 break;
-            case ProcessDetailedBean.PthingModel.TENSION:
+            case ProcessDetailedBean.TENSION:
                 logicTension(helper, item);
                 break;
-            case ProcessDetailedBean.PthingModel.EVALUATE:
+            case ProcessDetailedBean.EVALUATE:
                 logicEvaluate(helper, item);
                 break;
-            case ProcessDetailedBean.PthingModel.APPEAL:
+            case ProcessDetailedBean.APPEAL:
                 logicAppeal(helper, item);
                 break;
-            case ProcessDetailedBean.PthingModel.UPGRADE:
+            case ProcessDetailedBean.UPGRADE:
                 logicUpgrade(helper, item);
                 break;
             default:
@@ -94,8 +100,8 @@ public abstract class BaseProcessDetaiAdapter extends BaseMultiItemQuickAdapter<
     }
 
     private void logicEvaluate(BaseViewHolderImpl helper, ProcessDetailedBean.PthingModel item) {
-        ScaleRatingBar srb = helper.getView(R.id.item_process_deal_evaluate_srb);
-        srb.setRating(Integer.parseInt(String.valueOf(item.getContext())));
+//        ScaleRatingBar srb = helper.getView(R.id.item_process_deal_evaluate_srb);
+//        srb.setRating(Integer.parseInt(String.valueOf(item.getContext())));
     }
 
     private void logicTension(BaseViewHolderImpl helper, ProcessDetailedBean.PthingModel item) {
@@ -125,12 +131,11 @@ public abstract class BaseProcessDetaiAdapter extends BaseMultiItemQuickAdapter<
     private void logicUrl(BaseViewHolderImpl helper, ProcessDetailedBean.PthingModel item) {
         helper.setText(R.id.item_process_deal_url_tv_title, NullUtils.filterEmpty(item.getTitle()));
         helper.setText(R.id.item_process_deal_url_tv_player, NullUtils.filterEmpty(String.valueOf(item.getContext())));
-        helper.addOnClickListener(R.id.item_process_deal_url_tv_player);
     }
 
     private void logicText(BaseViewHolderImpl helper, ProcessDetailedBean.PthingModel item) {
-        helper.setText(R.id.item_process_deal_normal_tv_title, NullUtils.filterEmpty(item.getTitle()));
-        helper.setText(R.id.item_process_deal_normal_tv_player, NullUtils.filterEmpty(String.valueOf(item.getContext())));
+        helper.setText(R.id.item_process_deal_text_tv_title, NullUtils.filterEmpty(item.getTitle()));
+        helper.setText(R.id.item_process_deal_text_tv_value, NullUtils.filterEmpty(String.valueOf(item.getContext())));
     }
 
     private void logicNormal(BaseViewHolderImpl helper, ProcessDetailedBean.PthingModel item) {
@@ -138,7 +143,7 @@ public abstract class BaseProcessDetaiAdapter extends BaseMultiItemQuickAdapter<
         if (item.getTitle().contains("金额")) {
             try {
                 NumberFormat instance = NumberFormat.getInstance(Locale.CHINA);
-                helper.setText(R.id.item_process_deal_normal_tv_player, instance.format(Double.parseDouble(String.valueOf(item.getContext()))));
+                helper.setText(R.id.item_process_deal_normal_tv_player, String.valueOf(instance.format(Double.parseDouble(String.valueOf(item.getContext())))));
             } catch (NumberFormatException e) {
                 e.printStackTrace();
             }

@@ -13,6 +13,20 @@ import java.util.List;
  * @desc :
  */
 public class ProcessDetailedBean {
+    public static final int UNDEFINE = -1;//未定义
+    public static final int NORMAL = 0;//普通
+    public static final int TEXT = 1;//多文本
+    public static final int PHOTO = 2;//图片
+    public static final int ATT = 3;//附件
+    public static final int URL_ = 4;//URL
+    public static final int SPACE = 5;//间距
+    public static final int NOTIFY = 6;//知会人
+    public static final int TENSION = 7;//张力责任部门、责任人、完成时间
+    public static final int EVALUATE = 8;//张力评分
+    public static final int APPEAL = 9;//申诉
+    public static final int UPGRADE = 10;//升级
+
+
     private String publishId;
     private String allowId;
 
@@ -177,18 +191,6 @@ public class ProcessDetailedBean {
     }
 
     public static class PthingModel implements MultiItemEntity {
-        public static final int UNDEFINE = -1;//未定义
-        public static final int NORMAL = 0;//普通
-        public static final int TEXT = 1;//多文本
-        public static final int PHOTO = 2;//图片
-        public static final int ATT = 3;//附件
-        public static final int URL_ = 4;//URL
-        public static final int SPACE = 5;//间距
-        public static final int NOTIFY = 6;//知会人
-        public static final int TENSION = 7;//张力责任部门、责任人、完成时间
-        public static final int EVALUATE = 8;//张力评分
-        public static final int APPEAL = 9;//申诉
-        public static final int UPGRADE = 10;//升级
 
         private Object context;
         private String title;
@@ -247,10 +249,13 @@ public class ProcessDetailedBean {
 
         @Override
         public int getItemType() {
-            switch (NullUtils.filterEmpty(type)) {
+            switch (NullUtils.filterEmpty(getType())) {
                 case "1":
+                    return NORMAL;
                 case "2":
+                    return NORMAL;
                 case "3":
+                    return NORMAL;
                 case "5":
                     return NORMAL;
                 case "4":
@@ -273,9 +278,8 @@ public class ProcessDetailedBean {
                     return APPEAL;
                 case "14":
                     return UPGRADE;
-                default:
-                    return UNDEFINE;
             }
+            return 0;
         }
     }
 }
