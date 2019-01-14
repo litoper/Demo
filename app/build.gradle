@@ -9,7 +9,7 @@ android {
         applicationId "com.example.kadh"
         minSdkVersion 17
         targetSdkVersion 27
-        versionCode 3
+        versionCode 1000100104
         versionName "1.1.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
         multiDexEnabled true
